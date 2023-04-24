@@ -52,6 +52,7 @@ function Banner() {
       const formData = {
         data: value,
         image: imagename,
+        product: productId,
       };
       await createBanner(formData);
       notification.success({ message: "Banner created successfully" });
@@ -68,7 +69,6 @@ function Banner() {
       reader.readAsDataURL(info.file.originFileObj);
       reader.onload = () => {
         setImageName(reader.result);
-        // console.log(reader.result);
       };
     },
     showUploadList: true,
@@ -159,17 +159,17 @@ function Banner() {
             </Select>
           </Form.Item>
 
-          <Form.Item name="Product Id" rules={[{ required: true }]}>
+          {/* <Form.Item name="Product Id" rules={[{ required: true }]}>
             {/* <Input
               size="large"
               value={productId}
               placeholder="Enter product Id"
             /> */}
 
-            <Select size="large">
+          {/* <Select size="large">
               <Option value={productId}>{productId}</Option>
             </Select>
-          </Form.Item>
+          </Form.Item>  */}
           <Form.Item>
             <Tooltip>
               {imagename ? (

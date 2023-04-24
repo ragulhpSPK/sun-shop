@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const bannerSchema = new mongoose.Schema({
-  imaga: {
+  image: {
     type: String,
     required: true,
   },
@@ -11,4 +11,5 @@ const bannerSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose?.models?.banner("banner", bannerSchema);
+module.exports =
+  mongoose?.models?.banner || mongoose.model("banner", bannerSchema);
