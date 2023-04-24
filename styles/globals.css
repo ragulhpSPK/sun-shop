@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Alkatra&family=Montserrat:wght@700&family=Poppins:wght@400;600&family=Rancho&family=Tilt+Warp&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Rancho";
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  opacity: 1;
+}
+
+button.ant-btn.css-dev-only-do-not-override-1e3x2xa.ant-btn-primary {
+  color: black;
+  background-color: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  color: red;
+}
+
+.swiper-wrapper {
+  flex-direction: row !important;
+}
+
+.swiper-button-prev {
+  display: none !important;
+}
+
+.swiper-button-next::clicked .swiper-button-prev {
+  display: block !important;
+}
+
+.swiper-button-next {
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 30px;
+  z-index: 999;
+  box-shadow: rgba(0, 0, 0, 0.34) 10px 12px 20px;
+  color: black !important;
+  font-size: small;
+}
+
+.swiper-button-next:hover {
+  transform: scale(0.8) !important;
+  transition: 0.5s;
+}
+
+.rc-menu-submenu-selected {
+  background-color: transparent !important;
+}
+
+:root {
+  --first-color: #953ba0;
+  --second-color: #943074;
+  --third-color: #943074;
+  --four-color: #cb7bcc;
+  --fifth-color: #f092be;
+}
+
+/* antd Modal Override */
+
+.ant-modal-close-icon {
+  display: none !important;
+}
+
+/* antd table */
+
+/* antd search box */
+
+.ant-input-group-wrapper {
+  background-color: var(--third-color) !important;
+  border-radius: 8px;
+  color: #fff !important;
+}
+
+.ant-input {
+  height: 5vh;
+}
+
+.ant-btn {
+  padding: 5px 10px;
+  border-radius: 5px !important;
+  color: white !important;
+}
+
+.ant-input-group-addon {
+  background-color: none;
+}
+
+.ant-btn-primary {
+  background-color: none !important;
+}
+
+.ant-btn-primary {
+  background-color: var(--third-color) !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--third-color) !important;
+}
+
+/* ant design menu override */
+
+.ant-menu {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 20px !important;
+  border: none !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #943074 !important;
+  color: white !important;
+  border-radius: 1px !important;
+}
+
+/* antd tab override */
+.ant-tabs-tab-btn {
+  color: #943074 !important;
+}
+
+/* antd collapse */
+.ant-collapse,
+.ant-table-thead {
+  background-color: white !important;
+}
+
+/* antd pagination */
+.ant-pagination-item-active a {
+  color: #943074 !important;
+}
+.ant-pagination .ant-pagination-item-active {
+  border-color: #943074 !important;
+}
