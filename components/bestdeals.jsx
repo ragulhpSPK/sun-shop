@@ -23,9 +23,9 @@ function Bestdeals() {
             </div>
             <div className="flex flex-col justify-around">
               <img src="/assets/deals2.png" className="w-16 h-14" />
-              <Link href="/Allbestdeals">
+              {/* <Link href="/Allbestdeals">
                 <p className="text-white">See More &#8594;</p>
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className="flex gap-x-5">

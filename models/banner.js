@@ -8,8 +8,7 @@ const bannerSchema = new mongoose.Schema({
 
   name: {
     type: String,
-    required: true,
   },
 });
 
-module.exports = mongoose.models.Banner("Banner", bannerSchema);
+module.exports = mongoose?.models?.banner("banner", bannerSchema);

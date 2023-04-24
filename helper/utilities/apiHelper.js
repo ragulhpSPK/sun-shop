@@ -57,15 +57,16 @@ export const deleteProducts = (formData) => {
 
 //Banner starting...
 export const createBanner = (formData) => {
-  return axios.post("api/banner", formData);
+  console.log("createBanner", formData);
+  return axios.post("/api/banner", formData);
 };
 
 export const getAllBanner = () => {
-  return axios.get("api/banner");
+  return axios.get("/api/banner");
 };
 
 export const updateBanner = (formData) => {
-  return axios.put("api/banner", formData);
+  return axios.put("/api/banner", formData);
 };
 
 export const deleteBanner = (formData) => {

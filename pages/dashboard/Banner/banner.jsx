@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidenavbar from "../shared/Sidenavbar";
 import {
   Modal,
@@ -10,6 +10,8 @@ import {
   Button,
   Tooltip,
   Image,
+  notification,
+  message,
 } from "antd";
 import AddCardOutlinedIcon from "@mui/icons-material/AddCardOutlined";
 import {
@@ -18,19 +20,44 @@ import {
   PlusOutlined,
   RedoOutlined,
 } from "@ant-design/icons";
+import { getAllproducts, createBanner } from "@/helper/utilities/apiHelper";
+import { get } from "lodash";
 
 function Banner() {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [imagename, setImageName] = useState();
+  const [allProducts, setAllProducts] = useState([]);
+  const [productId, setProductId] = useState([]);
 
   const { Dragger } = Upload;
   const { Option } = Select;
 
-  console.log(imagename);
+  const fetchData = async () => {
+    try {
+      const result = await getAllproducts();
 
-  const handleFinish = (value) => {
-    console.log(value);
+      setAllProducts(get(result, "data.data", []));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleFinish = async (value) => {
+    try {
+      const formData = {
+        data: value,
+        image: imagename,
+      };
+      await createBanner(formData);
+      notification.success({ message: "Banner created successfully" });
+    } catch (err) {
+      notification.error({ message: "something went wrong" });
+    }
   };
 
   const props = {
@@ -53,20 +80,26 @@ function Banner() {
 
   const columns = [
     {
-      title: "Product Id",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
       title: "IMAGE",
       dataIndex: "image",
       key: "image",
     },
     {
-      title: "Banner",
+      title: "Banner Name",
       dataIndex: "banner",
       key: "banner",
     },
+    {
+      title: "Product name",
+      dataIndex: "product",
+      key: "product",
+    },
+    {
+      title: "Product Id",
+      dataIndex: "id",
+      key: "id",
+    },
+
     {
       title: "Update",
       render: (value) => {
@@ -88,6 +121,10 @@ function Banner() {
       },
     },
   ];
+
+  // const handlevalue = (value) => {
+  //   console.log("pro", value);
+  // };
   return (
     <div className="flex pt-5">
       <div>
@@ -103,14 +140,34 @@ function Banner() {
 
       <Modal open={open} footer={false}>
         <Form onFinish={handleFinish}>
-          <Form.Item
-            name="name"
-            rules={[{ required: true }]}
-            size="large"
-          ></Form.Item>
+          <Form.Item name="name" rules={[{ required: true }]}>
+            <Input size="large" placeholder="Enter Banner Name" />
+          </Form.Item>
           <Form.Item name="image" rules={[{ required: true }]}>
-            <Select size="large" placeholder="Select Image here">
-              <Option></Option>
+            <Select
+              size="large"
+              placeholder="Select product name here"
+              onChange={(e) => setProductId(e)}
+            >
+              {allProducts.map((data) => {
+                return (
+                  <Option value={data._id} key={data._id}>
+                    {data.title}
+                  </Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="Product Id" rules={[{ required: true }]}>
+            {/* <Input
+              size="large"
+              value={productId}
+              placeholder="Enter product Id"
+            /> */}
+
+            <Select size="large">
+              <Option value={productId}>{productId}</Option>
             </Select>
           </Form.Item>
           <Form.Item>
