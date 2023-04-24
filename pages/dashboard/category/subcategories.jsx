@@ -286,8 +286,12 @@ const Subcategories = (properties) => {
                           selectedSetcategorieName(e);
                         }}
                       >
-                        {category.map((res) => {
-                          return <Option value={res._id}>{res.name}</Option>;
+                        {category.map((res, index) => {
+                          return (
+                            <Option value={res._id} key={index}>
+                              {res.name}
+                            </Option>
+                          );
                         })}
                       </Select>
                     </Form.Item>

@@ -65,8 +65,12 @@ export default function App() {
             <h1 className="text-2xl font-semibold">{data.producttitle}</h1>
             <p className="text-xl text-slate-800 pt-1">Rs:{data.price}</p>
             <h2 className="text-2xl pt-5 font-bold">Product Specifications</h2>
-            {data.highlights.map((res) => {
-              return <li className="text-xl pt-2">{res}</li>;
+            {data.highlights.map((res, index) => {
+              return (
+                <li className="text-xl pt-2" key={index}>
+                  {res}
+                </li>
+              );
             })}
 
             <div className="pt-10 flex gap-7 justify-between w-fit pl-5">

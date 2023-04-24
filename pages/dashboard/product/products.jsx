@@ -440,9 +440,12 @@ function Products() {
                         <Image.PreviewGroup>
                           <div className="flex w-[100%]  flex-wrap gap-x-2 gap-y-2">
                             {imagename &&
-                              imagename.map((res) => {
+                              imagename.map((res, index) => {
                                 return (
-                                  <div className="border group w-[100px] h-[100px] relative ">
+                                  <div
+                                    className="border group w-[100px] h-[100px] relative"
+                                    key={index}
+                                  >
                                     <Image
                                       src={res}
                                       width={100}
@@ -519,9 +522,12 @@ function Products() {
           <Image.PreviewGroup>
             <div className="flex w-[100%]  flex-wrap gap-x-2 gap-y-2">
               {imagename &&
-                imagename.map((res) => {
+                imagename.map((res, index) => {
                   return (
-                    <div className="border group w-[100px] h-[100px] relative ">
+                    <div
+                      className="border group w-[100px] h-[100px] relative"
+                      key={index}
+                    >
                       <Image src={res} width={100} height={100} alt="o" />
                       <DeleteIcon
                         onClick={() => {
