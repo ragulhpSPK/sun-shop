@@ -103,6 +103,11 @@ function Banner() {
 
       <Modal open={open} footer={false}>
         <Form onFinish={handleFinish}>
+          <Form.Item
+            name="name"
+            rules={[{ required: true }]}
+            size="large"
+          ></Form.Item>
           <Form.Item name="image" rules={[{ required: true }]}>
             <Select size="large" placeholder="Select Image here">
               <Option></Option>

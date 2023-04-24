@@ -13,17 +13,8 @@ function Allbestdeals() {
           <p className="text-5xl text-white w-[300px]">Upto 50% Offers</p>
         </div>
         <p className="text-[32px] text-white w-[80vw] text-center m-auto">
-          {/* <TypeAnimation
-            sequence={[
-              ` Unbeatable daily deals on top-rated products,with discounts upto 30%
-          offer...`,
-              1000,
-            ]}
-            wrapper="span"
-            cursor={true}
-            repeat={Infinity}
-            style={{ fontSize: "1em", display: "inline-block" }}
-          /> */}
+          Unbeatable daily deals on top-rated products,with discounts upto 30%
+          offer...
         </p>
       </div>
 
