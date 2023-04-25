@@ -98,7 +98,7 @@ export default function App() {
           return (
             <SwiperSlide key={index}>
               <div
-                className={`h-[35vh] bg-right bg-no-repeat bg-[url(/assets/bg-6.webp)] bg-cover flex ${
+                className={`h-[35vh] bg-right bg-no-repeat !bg-[url(/assets/bg-6.webp)]  bg-cover flex ${
                   data.flex === "reverse" ? "flex-row-reverse" : "flex-row"
                 } justify-center items-center `}
               >
