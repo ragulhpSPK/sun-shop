@@ -134,7 +134,13 @@ const Categories = (properties) => {
       key: "image",
       align: "start",
       render: (name) => {
-        return <Image className="!w-[50px] !h-[50px] rounded-box" src={name} />;
+        return (
+          <Image
+            alt="logo"
+            className="!w-[50px] !h-[50px] rounded-box"
+            src={name}
+          />
+        );
       },
       width: 200,
     },
@@ -276,7 +282,11 @@ const Categories = (properties) => {
                         >
                           <RedoOutlined />
                         </Tooltip>
-                        <Image src={imagename} className=" w-[100%]" />
+                        <Image
+                          alt="logo"
+                          src={imagename}
+                          className=" w-[100%]"
+                        />
                       </div>
                     ) : (
                       <Dragger {...props}>

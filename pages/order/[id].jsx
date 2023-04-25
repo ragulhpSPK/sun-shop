@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../../styles/Home.module.css";
 import { useState } from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import { Image } from "antd";
 
 function Order() {
   const [out, setOut] = useState(false);
@@ -44,7 +45,13 @@ function Order() {
             {out ? (
               <div className="flex flex-col">
                 <div className="">
-                  <img src="/assets/checked.png" className="w-10 m-auto" />
+                  <Image
+                    width={100}
+                    height={100}
+                    alt="logo"
+                    src="/assets/checked.png"
+                    className="w-10 m-auto"
+                  />
                 </div>
                 <p className="text-[28px] pt-10">your product Shipped</p>
               </div>
@@ -66,7 +73,10 @@ function Order() {
           <div>
             {received ? (
               <div>
-                <img
+                <Image
+                  width={100}
+                  height={100}
+                  alt="logo"
                   src="/assets/checked.png"
                   className={` m-auto ${
                     received ? "animation-none w-10" : "animate-ping w-5"
@@ -76,7 +86,10 @@ function Order() {
               </div>
             ) : (
               <div>
-                <img
+                <Image
+                  width={100}
+                  height={100}
+                  alt="logo"
                   src="/assets/bike.png"
                   className={` m-auto ${
                     way
@@ -100,7 +113,10 @@ function Order() {
         </span>
         <div className="py-5 px-3 border w-[16vw]">
           <div>
-            <img
+            <Image
+              width={100}
+              height={100}
+              alt="logo"
               src="/assets/checked.png"
               className={` m-auto ${
                 received ? "animation-none w-10" : "animate-ping w-5"

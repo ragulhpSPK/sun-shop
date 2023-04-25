@@ -1,6 +1,7 @@
 import React from "react";
 
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import Image from "next/image";
 
 function FlashDeals() {
   return (
@@ -32,7 +33,13 @@ function FlashDeals() {
       </div>
       <div className="w-[90vw] m-auto mt-10 grid grid-cols-5 gap-28">
         <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <img src="/assets/watch2.png" className="w-40 m-auto" />
+          <Image
+            width={100}
+            height={100}
+            alt="logo"
+            src="/assets/watch2.png"
+            className="w-40 m-auto"
+          />
           <div>
             <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
             <div className="flex justify-between w-[100%]">
@@ -49,7 +56,13 @@ function FlashDeals() {
           </p>
         </div>
         <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <img src="/assets/watch2.png" className="w-40 m-auto" />
+          <Image
+            width={100}
+            height={100}
+            alt="logo"
+            src="/assets/watch2.png"
+            className="w-40 m-auto"
+          />
           <div>
             <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
             <div className="flex justify-between w-[100%]">
@@ -66,7 +79,13 @@ function FlashDeals() {
           </p>
         </div>
         <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <img src="/assets/watch2.png" className="w-40 m-auto" />
+          <Image
+            width={100}
+            height={100}
+            alt="logo"
+            src="/assets/watch2.png"
+            className="w-40 m-auto"
+          />
           <div>
             <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
             <div className="flex justify-between w-[100%]">
@@ -83,7 +102,13 @@ function FlashDeals() {
           </p>
         </div>
         <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <img src="/assets/watch2.png" className="w-40 m-auto" />
+          <Image
+            width={100}
+            height={100}
+            alt="logo"
+            src="/assets/watch2.png"
+            className="w-40 m-auto"
+          />
           <div>
             <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
             <div className="flex justify-between w-[100%]">
@@ -100,7 +125,13 @@ function FlashDeals() {
           </p>
         </div>
         <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <img src="/assets/watch2.png" className="w-40 m-auto" />
+          <Image
+            width={100}
+            height={100}
+            alt="logo"
+            src="/assets/watch2.png"
+            className="w-40 m-auto"
+          />
           <div>
             <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
             <div className="flex justify-between w-[100%]">

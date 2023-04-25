@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import { Grid, Pagination, Navigation, Autoplay } from "swiper";
 import { Category } from "@/helper/categories";
 import { useRouter } from "next/router";
+import { Image } from "antd";
 // import { createCatagory } from "../helper/utilities/apiHelper";
 
 function Categories() {
@@ -48,7 +49,13 @@ function Categories() {
                 }}
               >
                 <div className="flex justify-center">
-                  <img src={data.image} className="w-20 h-20" />
+                  <Image
+                    width={100}
+                    height={100}
+                    alt="logo"
+                    src={data.image}
+                    className="w-20 h-20"
+                  />
                 </div>
                 <div className="flex flex-col   items-center">
                   <h1 className="text-justify text-lg">{data.category}</h1>

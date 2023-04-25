@@ -2,6 +2,7 @@ import React from "react";
 import { Category } from "../helper/categories";
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 function AllProducts() {
   const router = useRouter();
@@ -20,7 +21,13 @@ function AllProducts() {
               }}
             >
               <figure>
-                <img src={data.image} alt="products" className="h-[150px]" />
+                <Image
+                  width={100}
+                  height={100}
+                  alt="logo"
+                  src={data.image}
+                  className="h-[150px]"
+                />
               </figure>
               <div className="card-body">
                 <h2 className="card-title m-auto w-fit">{data.category}</h2>
