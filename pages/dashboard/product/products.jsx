@@ -22,7 +22,7 @@ import {
   Drawer,
 } from "antd";
 
-import "react-quill/dist/quill.snow.css";
+
 import SearchIcon from "@mui/icons-material/Search";
 
 import Sidenavbar from "../shared/Sidenavbar";
@@ -197,24 +197,6 @@ function Products() {
       console.log("Dropped files", e.dataTransfer.files);
     },
   };
-
-  // let encoded_image;
-
-  // const props = {
-  //   name: "file",
-  //   onChange(info) {
-  //     var reader = new FileReader();
-  //     reader.readAsDataURL(info.file.originFileObj);
-  //     reader.onload = function () {
-  //       console.log(reader.result);
-  //       setImageName({ ...reader.result });
-  //       encoded_image = reader.result;
-  //     };
-  //     reader.onerror = function (error) {
-  //       console.log("Error: ", error);
-  //     };
-  //   },
-  // };
 
   const columns = [
     {

@@ -6,7 +6,6 @@ import { items } from "./menu";
 function Sidenavbar() {
   return (
     <div>
-      {" "}
       <div className="shadow">
         <Menu mode="inline" className="!h-[91.5vh] !w-[10vw] " items={items} />
       </div>

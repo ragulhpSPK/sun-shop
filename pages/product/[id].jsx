@@ -39,7 +39,7 @@ export default function App() {
         <div className={styles.left}>
           <div className={`${styles.left_2} pl-24`}>
             <Image
-              width={100}
+              width={500}
               height={100}
               alt="logo"
               src={current || img}

@@ -67,5 +67,6 @@ export const updateBanner = (formData) => {
 };
 
 export const deleteBanner = (formData) => {
+  console.log(formData);
   return axios.delete(`/api/banner/${formData}`);
 };
