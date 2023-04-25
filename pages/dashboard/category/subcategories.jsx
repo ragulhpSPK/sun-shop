@@ -46,6 +46,8 @@ const Subcategories = (properties) => {
   const [update, setUpdate] = useState([]);
   const { Dragger } = Upload;
 
+
+
   const handleFinish = async (value) => {
     if (update === "") {
       setLoading(true);
@@ -292,9 +294,9 @@ const Subcategories = (properties) => {
                           selectedSetcategorieName(e);
                         }}
                       >
-                        {category.map((res, index) => {
+                        {category.map((res) => {
                           return (
-                            <Option value={res._id} key={index}>
+                            <Option value={res._id} key={res._id}>
                               {res.name}
                             </Option>
                           );
