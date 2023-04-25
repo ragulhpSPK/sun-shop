@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 import { Divider, Menu } from "antd";
-import { items } from "./menu"
+import {items} from "./menu"
+
 function Sidenavbar() {
   return (
     <div>

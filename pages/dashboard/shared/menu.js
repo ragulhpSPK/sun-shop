@@ -46,5 +46,3 @@ export const items = [
     <ViewCarouselOutlinedIcon className="!text-xl" />
   ),
 ];
-
-export default getItem;

@@ -294,7 +294,7 @@ const Subcategories = (properties) => {
                           selectedSetcategorieName(e);
                         }}
                       >
-                        {category.map((res) => {
+                        {category && category.map((res) => {
                           return (
                             <Option value={res._id} key={res._id}>
                               {res.name}
