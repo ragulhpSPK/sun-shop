@@ -20,7 +20,6 @@ export const deleteCatagory = (formData) => {
 
 //SubCategory Starting
 export const createSubCatagory = (formData) => {
-  console.log(formData);
   return axios.post("/api/subcategory", formData);
 };
 export const getAllSubCatagory = () => {
@@ -38,7 +37,6 @@ export const deleteSubCategory = (formData) => {
 
 //products Starting...
 export const createProducts = (formData) => {
-  console.log("sdjsif", formData);
   return axios.post("/api/products", formData);
 };
 
@@ -57,7 +55,6 @@ export const deleteProducts = (formData) => {
 
 //Banner starting...
 export const createBanner = (formData) => {
-  console.log("createBanner", formData);
   return axios.post("/api/banner", formData);
 };
 

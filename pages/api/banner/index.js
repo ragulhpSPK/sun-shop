@@ -15,7 +15,6 @@ export default async function bannerController(req, res) {
 
     case "POST": {
       try {
-        console.log("REQ", req.body);
         const Banner = await createBanner({ ...req.body });
         const result = Banner.save();
         res.status(200).send({ data: result });

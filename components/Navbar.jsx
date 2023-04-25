@@ -22,8 +22,6 @@ function Navbar() {
 
   const dispatch = useDispatch();
 
-  console.log(data);
-
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       setSearch(event.target.value);
@@ -64,7 +62,7 @@ function Navbar() {
             />
           </div>
           <div className="pt-2 relative lg:w-[36vw] xsm:w-[50vw] text-gray-600">
-            <div class="pt-2 relative mx-auto  text-gray-600 h-[6vh] w-[42vw] ">
+            <div className="pt-2 relative mx-auto  text-gray-600 h-[6vh] w-[42vw] ">
               <input
                 className="border-2 border-gray-300 bg-white px-5 pr-16 w-[80%] h-[100%] rounded-lg text-sm focus:outline-none"
                 type="search"

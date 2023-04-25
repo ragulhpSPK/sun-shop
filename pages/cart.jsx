@@ -14,8 +14,6 @@ function Cart() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
-  console.log(cart.products.length);
-
   return (
     <div className="flex relative">
       <div className="flex">

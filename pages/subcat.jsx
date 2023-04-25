@@ -11,8 +11,6 @@ function Subcat() {
   const [categories, setCategories] = useState();
   const [product, setProduct] = useState([]);
 
-  console.log(router.query);
-
   const getItem = (label, key, icon, children, type) => {
     return {
       key,

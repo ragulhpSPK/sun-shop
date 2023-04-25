@@ -5,7 +5,7 @@ import { isEmpty } from "lodash";
 
 export default async function catagoryController(req, res) {
   dbconnect();
-  console.log("cat", dbconnect());
+
   switch (req.method) {
     case "GET":
       break;

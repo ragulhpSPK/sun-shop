@@ -313,7 +313,6 @@ function Products() {
     );
   };
 
-  console.log(subCategory);
   return (
     <div className="flex flex-col">
       <div>
