@@ -48,11 +48,14 @@ function Banner() {
   }, []);
 
   const handleFinish = async (value) => {
+    console.log(value);
     try {
       const formData = {
-        data: value,
-        image: imagename,
-        product: productId,
+        data: {
+          image: imagename,
+          name: value.name,
+          productid: value.productid,
+        },
       };
       await createBanner(formData);
       notification.success({ message: "Banner created successfully" });
@@ -89,15 +92,15 @@ function Banner() {
       dataIndex: "banner",
       key: "banner",
     },
-    {
-      title: "Product name",
-      dataIndex: "product",
-      key: "product",
-    },
+    // {
+    //   title: "Product name",
+    //   dataIndex: "product",
+    //   key: "product",
+    // },
     {
       title: "Product Id",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "productid",
+      key: "productid",
     },
 
     {
@@ -143,7 +146,7 @@ function Banner() {
           <Form.Item name="name" rules={[{ required: true }]}>
             <Input size="large" placeholder="Enter Banner Name" />
           </Form.Item>
-          <Form.Item name="image" rules={[{ required: true }]}>
+          <Form.Item name="productid" rules={[{ required: true }]}>
             <Select
               size="large"
               placeholder="Select product name here"

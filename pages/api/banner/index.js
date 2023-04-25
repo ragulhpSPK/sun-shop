@@ -2,6 +2,7 @@ import dbconnect from "@/connection/conn";
 import Banner from "../../../models/banner";
 
 export default async function bannerController(req, res) {
+  console.log("schema", Banner);
   dbconnect();
   switch (req.method) {
     case "GET": {
@@ -14,10 +15,12 @@ export default async function bannerController(req, res) {
     }
 
     case "POST": {
+      console.log("body", req.body.data);
       try {
-        console.log("REQ", req.body);
-        const Banner = await createBanner({ ...req.body });
-        const result = Banner.save();
+        const banner = new Banner({ ...req.body.data });
+        // console.log("REQ", banner);
+        const result = await banner.save();
+        // console.log("REQ bANNER", result);
         res.status(200).send({ data: result });
       } catch (err) {
         res.status(500).send({ message: "failed" });
