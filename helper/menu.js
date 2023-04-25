@@ -7,6 +7,7 @@ import Link from "next/link";
 import StayCurrentPortraitOutlinedIcon from "@mui/icons-material/StayCurrentPortraitOutlined";
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 import ViewCarouselOutlinedIcon from "@mui/icons-material/ViewCarouselOutlined";
+import React from "react";
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -16,7 +17,7 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
-export const items = [
+export const Items = [
   getItem(
     <Link href="/dashboard">
       <h1 className="!text-xl">Dashboard</h1>
