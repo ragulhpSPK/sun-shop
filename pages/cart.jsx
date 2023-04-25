@@ -5,6 +5,7 @@ import styles from "../styles/form.module.css";
 import { useRouter } from "next/router";
 import { InputNumber } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 
 function Cart() {
   const [check, setCheck] = useState(false);
@@ -13,8 +14,6 @@ function Cart() {
   const router = useRouter();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-
-  console.log(cart.products.length);
 
   return (
     <div className="flex relative">
@@ -42,7 +41,13 @@ function Cart() {
                       <tbody>
                         <tr>
                           <td className="border-r">
-                            <img src={data.image[0]} className="w-20" />
+                            <Image
+                              width={100}
+                              height={100}
+                              alt="logo"
+                              src={data.image[0]}
+                              className="w-20"
+                            />
                           </td>
 
                           <td className="border-r">{data.producttitle}</td>
@@ -57,9 +62,6 @@ function Cart() {
                               />
                             </div>
                           </td>
-                          {useEffect(() => {
-                            setPrice(data.price);
-                          })}
 
                           <td className="border-r">Rs:{Qty * data.price}</td>
                         </tr>
@@ -71,10 +73,13 @@ function Cart() {
             </div>
           ) : (
             <div className="w-[70vw] flex  flex-col-reverse pt-10 relative ">
-              <img
+              <Image
+                width={100}
+                height={100}
+                alt="logo"
                 src="/assets/No_Product_Found.png"
                 className="text-center m-auto w-[20vw] animate-pulse absolute top-[5vh] left-[30vw]"
-              ></img>
+              ></Image>
             </div>
           )}
         </div>

@@ -5,13 +5,12 @@ import { Cat } from "@/helper/product";
 import { useRouter } from "next/router";
 import { SubCategory } from "@/helper/Subcategory";
 import "rc-menu/assets/index.css";
+import Image from "next/image";
 
 function Subcat() {
   const router = useRouter();
   const [categories, setCategories] = useState();
   const [product, setProduct] = useState([]);
-
-  console.log(router.query);
 
   const getItem = (label, key, icon, children, type) => {
     return {
@@ -96,7 +95,13 @@ function Subcat() {
               }}
             >
               <div className="h-[25vh] pt-5">
-                <img src={data.image} className="w-auto h-[25vh] m-auto p-5" />
+                <Image
+                  width={100}
+                  height={100}
+                  alt="logo"
+                  src={data.image}
+                  className="w-auto h-[25vh] m-auto p-5"
+                />
               </div>
               <p className="text-center">{data.name}</p>
               <p className="text-center">{data.price}</p>

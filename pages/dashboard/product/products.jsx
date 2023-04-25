@@ -110,6 +110,7 @@ function Products() {
   useEffect(() => {
     fetchData();
     setValue(values.toString().replace(/<[^>]+>/g, ""));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   let result = products.filter((res) => {
@@ -196,7 +197,6 @@ function Products() {
       console.log("Dropped files", e.dataTransfer.files);
     },
   };
-  console.log(imagename);
 
   // let encoded_image;
 
@@ -313,7 +313,6 @@ function Products() {
     );
   };
 
-  console.log(subCategory);
   return (
     <div className="flex flex-col">
       <div>

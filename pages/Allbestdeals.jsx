@@ -1,5 +1,6 @@
 import React from "react";
 import { BestDeals } from "@/helper/bestDeals";
+import Image from "next/image";
 
 function Allbestdeals() {
   return (
@@ -9,7 +10,13 @@ function Allbestdeals() {
           <h1 className="text-6xl text-white w-[400px] pl-10">
             Daily Best Deals
           </h1>
-          <img src="/assets/bestdeals.png" className="w-[500px] h-[250px] " />
+          <Image
+            width={100}
+            height={100}
+            alt="logo"
+            src="/assets/bestdeals.png"
+            className="w-[500px] h-[250px] "
+          />
           <p className="text-5xl text-white w-[300px]">Upto 50% Offers</p>
         </div>
         <p className="text-[32px] text-white w-[80vw] text-center m-auto">
@@ -26,7 +33,13 @@ function Allbestdeals() {
                 className="relative   w-[13vw] h-[32vh] border bg-[#fff] border-gray-200 m-auto shadow-lg"
                 key={data.id}
               >
-                <img src={data.image} className="h-[220px] pt-10 m-auto" />
+                <Image
+                  width={100}
+                  height={100}
+                  alt="logo"
+                  src={data.image}
+                  className="h-[220px] pt-10 m-auto"
+                />
                 <p className="bg-[--fifth-color] text-sm font-semibold text-black w-14 h-10 absolute top-0 right-0  flex flex-col  text-center">
                   <span>{data.offer[0]}</span>
                   {data.offer[1]}

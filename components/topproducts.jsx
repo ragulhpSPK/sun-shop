@@ -1,4 +1,5 @@
 import { TopProducts } from "@/helper/topProducts";
+import Image from "next/image";
 import React from "react";
 
 function Topproducts() {
@@ -17,14 +18,26 @@ function Topproducts() {
               key={data.id}
             >
               <div className="h-[18vh]">
-                <img src={data.image} className="w-[20vw] h-[18vh]" />
+                <Image
+                  width={100}
+                  height={100}
+                  alt="logo"
+                  src={data.image}
+                  className="w-[20vw] h-[18vh]"
+                />
               </div>
 
               <div className="h-[5vh] ">
                 <h1 className="text-center">{data.name}</h1>
                 <p className="text-center">Rs:{data.price}</p>
                 <div className="bg-[var(--fifth-color)] w-[45px] h-[35px] absolute right-0 bottom-0">
-                  <img src="/assets/cart2.png" className="w-6 m-auto pt-1" />
+                  <Image
+                    width={100}
+                    height={100}
+                    alt="logo"
+                    src="/assets/cart2.png"
+                    className="w-6 m-auto pt-1"
+                  />
                 </div>
               </div>
             </div>

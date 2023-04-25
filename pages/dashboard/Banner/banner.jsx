@@ -20,6 +20,8 @@ import {
   PlusOutlined,
   RedoOutlined,
 } from "@ant-design/icons";
+import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { getAllproducts, createBanner } from "@/helper/utilities/apiHelper";
 import { get } from "lodash";
 

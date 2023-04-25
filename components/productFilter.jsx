@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Cat } from "@/helper/product";
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 function ProductFilter() {
   const [produts, setProduts] = useState([""]);
@@ -33,7 +34,7 @@ function ProductFilter() {
             search.length === 0 ? "hidden" : "block"
           } grid grid-cols-5 gap-3 w-[80vw] m-auto`}
         >
-          {produts.map((data) => {
+          {produts.map((data, index) => {
             return (
               <div
                 className="card w-[13vw] h-[35vh] bg-base-100 shadow-xl pt-10"
@@ -41,9 +42,12 @@ function ProductFilter() {
                 onClick={() => {
                   router.push({ pathname: `product/${data.id}`, query: data });
                 }}
+                key={index}
               >
                 <figure className="h-[18vh]">
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     src={data.image}
                     alt="Shoes"
                     className="w-[8vw] h-[100%] m-auto"
@@ -59,10 +63,13 @@ function ProductFilter() {
         </div>
       ) : (
         <div className="w-[70vw] flex  flex-col-reverse pt-10 relative ">
-          <img
+          <Image
+            width={100}
+            height={100}
+            alt="logo"
             src="/assets/searchempty2.gif"
             className="text-center m-auto w-[25vw] animate-pulse absolute top-[2vh] left-[22vw]"
-          ></img>
+          ></Image>
           <p className="text-xl text-slate-400 top-[3vh]  absolute left-[26vw]">
             No products matches your search
           </p>

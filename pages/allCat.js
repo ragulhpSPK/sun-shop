@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Category } from "@/helper/categories";
 import { SubCategory } from "@/helper/Subcategory";
 
-function allCat() {
+function AllCat() {
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState();
   //   const [subCategory, setSubCategory] = useState();
@@ -27,7 +27,6 @@ function allCat() {
 
         <div className="flex flex-col ">
           {Category.map((data) => {
-            console.log(data.category);
             return (
               <div
                 className="p-3 pl-[3vw] flex flex-col justify-between min-h-[5vh]"
@@ -58,4 +57,4 @@ function allCat() {
   );
 }
 
-export default allCat;
+export default AllCat;

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 function About() {
@@ -10,7 +11,10 @@ function About() {
         </h1>
         <div className="grid grid-cols-2 pt-16 gap-y-28 ml-28">
           <div>
-            <img
+            <Image
+              width={100}
+              height={100}
+              alt="logo"
               src="/assets/about.jpg"
               className="w-[26vw] rounded-[50%] h-[46vh] ml-20"
             />
@@ -28,7 +32,7 @@ function About() {
 
               <p className="tracking-wider pt-3">
                 We believe that everyone deserves access to quality products,
-                and that's why we offer a diverse range of products to suit
+                and that&apos;s why we offer a diverse range of products to suit
                 different tastes and budgets. Our team is constantly updating
                 our inventory with the latest and greatest products, so you can
                 find what you need and want all in one place.
@@ -46,7 +50,7 @@ function About() {
               </p>
               <p className="text-xl tracking-wider pt-3">
                 We believe that everyone deserves access to quality products,
-                and that's why we offer a diverse range of products to suit
+                and that&apos;s why we offer a diverse range of products to suit
                 different tastes and budgets. Our team is constantly updating
                 our inventory with the latest and greatest products, so you can
                 find what you need and want all in one place.
@@ -54,13 +58,19 @@ function About() {
             </div>
           </div>
           <div>
-            <img
+            <Image
+              width={100}
+              height={100}
+              alt="logo"
               src="/assets/about2.jpg"
               className="w-[26vw] rounded-[50%] h-[46vh] ml-10"
             />
           </div>
           <div>
-            <img
+            <Image
+              width={100}
+              height={100}
+              alt="logo"
               src="/assets/about4.avif"
               className="w-[26vw] rounded-[50%] h-[46vh] ml-20"
             />
@@ -78,7 +88,7 @@ function About() {
                 We are committed to providing exceptional customer service, and
                 we strive to respond to all inquiries in a timely and
                 professional manner. If you have any questions or concerns,
-                please don't hesitate to contact us.
+                please don&apos;t hesitate to contact us.
               </p>
             </div>
           </div>

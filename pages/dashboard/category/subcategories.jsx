@@ -139,7 +139,13 @@ const Subcategories = (properties) => {
       dataIndex: "image",
       key: "image",
       render: (name) => {
-        return <Image className="!w-[50px] !h-[50px] rounded-box" src={name} />;
+        return (
+          <Image
+            alt="logo"
+            className="!w-[50px] !h-[50px] rounded-box"
+            src={name}
+          />
+        );
       },
     },
     {

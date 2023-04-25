@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { AddCart } from "@/helper/Addcart";
 import Link from "next/link";
 import style from "../../styles/Home.module.css";
+import Image from "next/image";
 
 export default function App() {
   const [addcart, setAddCart] = useState();
@@ -37,7 +38,13 @@ export default function App() {
       <div className={`${styles.container} w-[30vw] m-auto`}>
         <div className={styles.left}>
           <div className={`${styles.left_2} pl-24`}>
-            <img src={current || img} alt="product" className="h-[60vh]" />
+            <Image
+              width={100}
+              height={100}
+              alt="logo"
+              src={current || img}
+              className="h-[60vh]"
+            />
           </div>
           <div className={styles.left_1}>
             {result.map((img) => {
@@ -51,7 +58,13 @@ export default function App() {
                     key={i}
                     onMouseEnter={() => setCurrentImage(image)}
                   >
-                    <img src={image} alt="Mobile" className="w-40" />
+                    <Image
+                      width={100}
+                      height={100}
+                      alt="logo"
+                      src={image}
+                      className="w-40"
+                    />
                   </div>
                 );
               });
@@ -59,9 +72,9 @@ export default function App() {
           </div>
         </div>
       </div>
-      {result.map((data) => {
+      {result.map((data, index) => {
         return (
-          <div className="pt-32 w-[60vw] pl-28">
+          <div className="pt-32 w-[60vw] pl-28" key={index}>
             <h1 className="text-2xl font-semibold">{data.producttitle}</h1>
             <p className="text-xl text-slate-800 pt-1">Rs:{data.price}</p>
             <h2 className="text-2xl pt-5 font-bold">Product Specifications</h2>
