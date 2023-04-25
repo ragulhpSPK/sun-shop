@@ -26,9 +26,9 @@ function Categories() {
           </Link>
         </div>
       </div>
-      <div className="h-[40vh] w-[80vw] m-auto shadow-xl">
+      <div className="h-[38vh] w-[80vw] m-auto shadow-xl ">
         <Swiper
-          slidesPerView={7}
+          slidesPerView={8}
           grid={{
             rows: 2,
           }}
@@ -42,21 +42,21 @@ function Categories() {
           {Category.map((data) => {
             return (
               <SwiperSlide
-                className=" w-[80px]  border py-5 cursor-pointer"
+                className=" !w-[10vw] !h-[17vh] border py-5 cursor-pointer !flex flex-col items-center justify-center"
                 key={data.id}
                 onClick={() => {
                   router.push({ pathname: "/subcat", query: data });
                 }}
               >
-                <div className="flex justify-center">
+                <div className="flex justify-center items-center">
                   <Image
                     width={100}
                     height={100}
                     alt="logo"
                     src={data.image}
-                    className="w-20 h-20"
+                    className="!w-[3vw] !h-[6vh] m-auto mt-6"
                   />
-                </div>
+                </div>      
                 <div className="flex flex-col   items-center">
                   <h1 className="text-justify text-lg">{data.category}</h1>
                   <p className="text-justify text-md">{data.items}</p>

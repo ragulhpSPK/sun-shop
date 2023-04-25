@@ -78,9 +78,9 @@ function Banner() {
         await createBanner(formData);
         setOpen(false);
         fetchData();
-        setImageName("");
         setLoading(false);
-
+        setImageName("");
+        form.resetFields();
         notification.success({ message: "Banner created successfully" });
       } catch (err) {
         notification.error({ message: "something went wrong" });
@@ -103,6 +103,7 @@ function Banner() {
         await updateBanner(formData);
         fetchData();
         setLoading(false);
+         setImageName("");
         notification.success({ message: "Banner updated successfully" });
       } catch (err) {
         notification.error({ message: "something went wrong" });

@@ -36,9 +36,9 @@ function Bestdeals() {
                 src="/assets/deals2.png"
                 className="w-16 h-14"
               />
-              {/* <Link href="/Allbestdeals">
+              <Link href="/Allbestdeals">
                 <p className="text-white">See More &#8594;</p>
-              </Link> */}
+              </Link>
             </div>
           </div>
           <div className="flex gap-x-5">
@@ -49,7 +49,7 @@ function Bestdeals() {
                   key={data.id}
                 >
                   <Image
-                    width={100}
+                    width={180}
                     height={100}
                     alt="logo"
                     src={data.image}

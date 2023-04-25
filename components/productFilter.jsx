@@ -50,7 +50,7 @@ function ProductFilter() {
                     height={100}
                     src={data.image}
                     alt="Shoes"
-                    className="w-[8vw] h-[100%] m-auto"
+                    className="!w-[8vw] h-[100%] m-auto"
                   />
                 </figure>
                 <div className="card-body">

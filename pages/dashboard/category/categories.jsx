@@ -100,8 +100,10 @@ const Categories = (properties) => {
   };
 
   const handleDelete = async (value) => {
+ 
     try {
       const result = await deleteCatagory(value._id);
+       
       if (get(result, "data.message", "") === "mapped with subcategory") {
         Modal.warning({
           title: "This Category Mapped With SubCategory",

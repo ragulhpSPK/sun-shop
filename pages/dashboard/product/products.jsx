@@ -140,6 +140,7 @@ function Products() {
         fetchData();
         setLoading(false);
         setOpen(false);
+        setImageName("")
       } catch (err) {
         setOpen(false);
 
@@ -167,11 +168,23 @@ function Products() {
 
   const deleteHandler = async (value) => {
     setLoading(true);
+    
     try {
-      await deleteProducts(value._id);
-      notification.success({ message: "products deleted successfully" });
-      fetchData();
+      const result = await deleteProducts(value._id);
+      console.log(result)
+      if (get(result, "data.message", "") === "Product mapped with Banner") {
+        Modal.warning({
+          title: "this product is mapped with Banner",
+          content:"If you sure delete this product.First delete this product in Banner"
+        })
+      }
+      else {
+         notification.success({ message: "products deleted successfully" });
+     
+      }
+       fetchData();
       setLoading(false);
+     
     } catch (err) {
       notification.error({ message: "Something went wrong" });
     }
@@ -250,11 +263,11 @@ function Products() {
       title: "Highlights",
       dataIndex: "highlight",
       key: "highlight",
-      render: (name) => {
-        return (
-          <p className="w-[20vw]">{name.toString().replace(/<[^>]+>/g, "")}</p>
-        );
-      },
+      // render: (name) => {
+      //   return (
+      //     // <p className="w-[20vw]">{name.toString().replace(/<[^>]+>/g, "")}</p>
+      //   );
+      // },
     },
     {
       title: "update",
@@ -329,7 +342,7 @@ function Products() {
                 />
               </div>
             </div>
-            <Drawer width={600} open={open} destroyOnClose placement="right">
+            <Drawer width={600} open={open}   destroyOnClose placement="right">
               <Form
                 className="flex flex-col gap-8 relative"
                 form={form}
