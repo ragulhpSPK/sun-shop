@@ -312,7 +312,11 @@ const Subcategories = (properties) => {
                             >
                               <RedoOutlined />
                             </Tooltip>
-                            <Image src={imagename} className=" w-[100%]" />
+                            <Image
+                              src={imagename}
+                              className=" w-[100%]"
+                              alt="not found"
+                            />
                           </div>
                         ) : (
                           <Dragger {...props}>

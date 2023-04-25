@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Cat } from "@/helper/product";
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 function ProductFilter() {
   const [produts, setProduts] = useState([""]);
@@ -41,12 +42,15 @@ function ProductFilter() {
                 onClick={() => {
                   router.push({ pathname: `product/${data.id}`, query: data });
                 }}
+                key={data.id}
               >
                 <figure className="h-[18vh]">
-                  <img
+                  <Image
                     src={data.image}
                     alt="Shoes"
                     className="w-[8vw] h-[100%] m-auto"
+                    width={300}
+                    height={300}
                   />
                 </figure>
                 <div className="card-body">
@@ -59,10 +63,13 @@ function ProductFilter() {
         </div>
       ) : (
         <div className="w-[70vw] flex  flex-col-reverse pt-10 relative ">
-          <img
+          <Image
             src="/assets/searchempty2.gif"
             className="text-center m-auto w-[25vw] animate-pulse absolute top-[2vh] left-[22vw]"
-          ></img>
+            alt="not found"
+            width={300}
+            height={300}
+          ></Image>
           <p className="text-xl text-slate-400 top-[3vh]  absolute left-[26vw]">
             No products matches your search
           </p>

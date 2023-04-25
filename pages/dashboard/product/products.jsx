@@ -226,6 +226,7 @@ function Products() {
           <Image
             src={name[0]}
             className="!w-[50px] !h-[50px] rounded-box"
+            alt="not found"
           ></Image>
         );
       },
@@ -449,7 +450,7 @@ function Products() {
                                       src={res}
                                       width={100}
                                       height={100}
-                                      alt="o"
+                                      alt="not found"
                                     />
                                     <DeleteIcon
                                       onClick={() => {
@@ -527,7 +528,12 @@ function Products() {
                       className="border group w-[100px] h-[100px] relative"
                       key={index}
                     >
-                      <Image src={res} width={100} height={100} alt="o" />
+                      <Image
+                        src={res}
+                        width={100}
+                        height={100}
+                        alt="not found"
+                      />
                       <DeleteIcon
                         onClick={() => {
                           setImageName(

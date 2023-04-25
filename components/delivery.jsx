@@ -1,6 +1,7 @@
 import React from "react";
 import { delivery } from "@/helper/delivery";
 import styles from "../styles/Home.module.css";
+import Image from "next/image";
 
 function Delivery() {
   return (
@@ -8,14 +9,20 @@ function Delivery() {
       className="flex justify-evenly mt-14  pt-[3vh] w-[80vw] m-auto  text-black "
       id={styles.shadow}
     >
-      {delivery.map((data) => {
+      {delivery.map((data, index) => {
         return (
-          <div className="w-40 m-auto " key={data.id}>
+          <div className="w-40 m-auto " key={index}>
             <div className="pl-5">
               <div
                 className={`w-[30%] h-10 flex items-center justify-center  border rounded-2xl hover:scale-125 duration-1000`}
               >
-                <img src={data.image} alt="Icons" className="w-12" />
+                <Image
+                  src={data.image}
+                  alt="Icons"
+                  className="w-12"
+                  width={300}
+                  height={300}
+                />
               </div>
             </div>
 

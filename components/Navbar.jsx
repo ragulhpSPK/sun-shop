@@ -11,6 +11,7 @@ import { Input } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { addSearch } from "@/redux/searchSlice";
+import Image from "next/image";
 
 function Navbar() {
   const { Search } = Input;
@@ -55,10 +56,12 @@ function Navbar() {
         </div>
         <div className="w-screen flex justify-around items-center h-[60%]">
           <div className="pl-24">
-            <img
+            <Image
               src="/assets/sunn.png"
               className="xl:w-20 xsm:w-14"
               alt="Logo"
+              width={300}
+              height={300}
             />
           </div>
           <div className="pt-2 relative lg:w-[36vw] xsm:w-[50vw] text-gray-600">
@@ -84,10 +87,12 @@ function Navbar() {
           </div>
           <Link href="/cart">
             <div className="xsm:min-w-[20px] lg:w-[37px] relative">
-              <img
+              <Image
                 src="/assets/cart2.png"
                 className="lg:w-7 xsm:w-[30px]"
                 alt="Cart"
+                width={300}
+                height={300}
               />
               {Quantity === 0 ? (
                 ""

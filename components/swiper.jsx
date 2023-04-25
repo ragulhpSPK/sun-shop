@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import styles from "../styles/navbar.module.css";
 import { swipperContent } from "@/helper/swipper";
+import Image from "next/image";
 
 export default function App() {
   return (
@@ -95,14 +96,19 @@ export default function App() {
       >
         {swipperContent.map((data, index) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={index}>
               <div
                 className={`h-[35vh] bg-right bg-no-repeat bg-[url(/assets/bg-6.webp)] bg-cover flex ${
                   data.flex === "reverse" ? "flex-row-reverse" : "flex-row"
                 } justify-center items-center `}
-                key={data.id}
               >
-                <img src={data.image} className="w-[18vw] pr-10 "></img>
+                <Image
+                  src={data.image}
+                  className="w-[18vw] pr-10 "
+                  width={300}
+                  height={300}
+                  alt="not found"
+                ></Image>
                 <div className="pl-10">
                   <span className="text-[36px] leading-tight font-extralight w-[25vw]">
                     {data.content1}
@@ -127,17 +133,41 @@ export default function App() {
       <div className="flex flex-col gap-[4.8px] text-white">
         <div className="bg-[#F28500] from-current h-[17.2vh] w-[23.5vw] flex justify-center items-center gap-10">
           <p className="text-4xl">
-            <img src="/assets/sony.png" className="w-20" />
+            <Image
+              src="/assets/sony.png"
+              className="w-20"
+              width={300}
+              height={300}
+              alt="not found"
+            />
           </p>
-          <img src="/assets/sonyspeaker.png" className="w-[120px] " />
+          <Image
+            src="/assets/sonyspeaker.png"
+            className="w-[120px] "
+            width={300}
+            height={300}
+            alt="not found"
+          />
           <p className="text-3xl w-28">Upto 20% Offer</p>
         </div>
 
         <div className="bg-[#613f75] from-current h-[17.2vh] w-[23.5vw] flex justify-center items-center gap-6">
           <p className="text-4xl">
-            <img src="/assets/logojbl.jpg" className="w-16" />
+            <Image
+              src="/assets/logojbl.jpg"
+              className="w-16"
+              width={300}
+              height={300}
+              alt="not found"
+            />
           </p>
-          <img src="/assets/headset-4.png" className="w-[160px] " />
+          <Image
+            src="/assets/headset-4.png"
+            className="w-[160px]"
+            width={300}
+            height={300}
+            alt="not found"
+          />
           <p className="text-3xl w-28">Upto 30% Offer</p>
         </div>
       </div>
