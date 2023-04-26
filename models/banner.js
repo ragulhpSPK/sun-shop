@@ -23,6 +23,9 @@ const bannerSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    status: {
+      type: String,
+    },
   },
   {
     timestamps: true,

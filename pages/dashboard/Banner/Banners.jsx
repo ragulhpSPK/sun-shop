@@ -18,6 +18,7 @@ import {
   notification,
   Image,
   Skeleton,
+  Badge,
 } from "antd";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -45,11 +46,9 @@ function Banner() {
   const [productId, setProductId] = useState([]);
   const [updateid, setUpdateId] = useState("");
   const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState([]);
   const [form] = Form.useForm();
   const { Option } = Select;
-
-
-  
 
   const fetchData = async () => {
     setLoading(true);
@@ -68,6 +67,7 @@ function Banner() {
   }, []);
 
   const handleFinish = async (value) => {
+    console.log("finsih", value);
     if (updateid === "") {
       setLoading(true);
       try {
@@ -80,6 +80,7 @@ function Banner() {
               return data._id == productId;
               // if (data._id == productId) console.log(data.title);
             })[0].title,
+            status: value.status,
           },
         };
         await createBanner(formData);
@@ -95,6 +96,7 @@ function Banner() {
     } else {
       try {
         setLoading(true);
+        console.log("val",value)
         const formData = {
           data: {
             image: imagename,
@@ -104,6 +106,7 @@ function Banner() {
               return data._id == productId;
               // if (data._id == productId) console.log(data.title);
             })[0].title,
+            status: value.status,
           },
           id: updateid,
         };
@@ -170,15 +173,20 @@ function Banner() {
             <AddOutlinedIcon className="text-[--third-color] mr-2" />
           </div>
 
-          <div className="mt-5 grid grid-cols-5  gap-14 justify-start">
+          <div className="mt-5 grid grid-cols-5  gap-14 justify-start relative">
             {banner.map((data) => {
+              console.log("data",data)
               return (
                 <Skeleton
                   active
                   loading={loading ? true : false}
                   key={data._id}
                 >
-                  <Card className="w-[11vw] h-[25vh] relative shadow-lg">
+                  <Card className="w-[10vw] h-[25vh]  shadow-lg">
+                    <div className="float-left relative pl-[15px] w-[25px]">
+                      <Badge.Ribbon text={data.status} color={`${data.status==="Bottom"?"volcano":data.status==="Top"?"purple":"magenta"}`} className="absolute top-[-20px] left-[-35px]"></Badge.Ribbon>
+                    </div>
+
                     <EditNoteOutlinedIcon
                       className="absolute right-8 top-[3px] text-[--third-color]"
                       onClick={() => {
@@ -193,7 +201,7 @@ function Banner() {
                         handleDelete();
                       }}
                     />
-                    <div className="text-center h-[10vh] pt-[8px] ">
+                    <div className="text-center h-[10vh] pt-[15px] ">
                       <Image
                         src={data.image}
                         alt="not found"
@@ -202,14 +210,17 @@ function Banner() {
                     </div>
 
                     <div>
-                      <h1 className="text-center">{data.name}</h1>
+                      <h1 className="text-center font-bold">{data.name}</h1>
                     </div>
-                    <div className="flex justify-between h-[3vh]">
-                      <p className="text-[12px]">{data.productname}</p>
-                      <p className="text-[12px] pl-3">{data.productid}</p>
+                    <div className="flex justify-between h-[7vh] w-[10vw] absolute left-1">
+                      <p className="text-[12px] font-bold">{data.productname}</p>
+                      <p className="text-[12px] pr-3 font-bold">{data.productid}</p>
                     </div>
-                    <div className="m-auto w-[11vw] pl-8 pt-5">
-                      <Button type="link" className="bg-[--third-color] hover:bg-[#780c78] !hover:text-[#000] hover:scale-95 duration-1000">
+                    <div className="m-auto w-[11vw] pl-8 pt-10">
+                      <Button
+                        type="link"
+                        className="bg-[--third-color] hover:bg-[#780c78] !hover:text-[#000] hover:scale-95 duration-1000"
+                      >
                         View More
                       </Button>
                     </div>
@@ -237,6 +248,18 @@ function Banner() {
                     </Option>
                   );
                 })}
+              </Select>
+            </Form.Item>
+
+            <Form.Item name="status" rules={[{ required: true }]}>
+              <Select
+                size="large"
+                placeholder="Select your status here.."
+                onChange={(e) => setStatus(e)}
+              >
+                <Option value="Left">left</Option>
+                <Option value="Top">Top</Option>
+                <Option value="Bottom">Bottom</Option>
               </Select>
             </Form.Item>
 

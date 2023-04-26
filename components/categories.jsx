@@ -33,7 +33,7 @@ function Categories() {
   }, []);
 
   return (
-    <div className="w-screen pt-10">
+    <div className="w-screen pt-5">
       <div className="w-screen flex justify-center">
         <div className="flex h-[7vh] text-[--first-color] justify-between items-center  w-[80vw]  rounded-sm">
           <h1 className=" text-2xl text-center pt-3 font-semibold">
