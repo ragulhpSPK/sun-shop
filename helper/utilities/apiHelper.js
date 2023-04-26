@@ -63,10 +63,10 @@ export const getAllBanner = () => {
 };
 
 export const updateBanner = (formData) => {
+  console.log(formData);
   return axios.put("/api/banner", formData);
 };
 
 export const deleteBanner = (formData) => {
-  console.log(formData);
   return axios.delete(`/api/banner/${formData}`);
 };

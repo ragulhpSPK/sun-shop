@@ -19,14 +19,14 @@ function Categories() {
   const fetchData = async () => {
     try {
       const result = await getAllCatagory();
-      console.log("hkdkjf", result);
+      
       setCategory(get(result, "data.data"));
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(category);
+ 
 
   useEffect(() => {
     fetchData();
@@ -61,7 +61,7 @@ function Categories() {
         >
           {category &&
             category.map((data) => {
-              console.log(data);
+             
               return (
                 <SwiperSlide
                   className=" !w-[10vw] !h-[17vh] border py-5 cursor-pointer !flex flex-col items-center justify-center"

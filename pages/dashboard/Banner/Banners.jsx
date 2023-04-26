@@ -35,6 +35,7 @@ import {
 import { get } from "lodash";
 import Sidenavbar from "../shared/Sidenavbar";
 import AdminNavbar from "../shared/AdminNavbar";
+import { Co2Sharp } from "@mui/icons-material";
 
 function Banner() {
   const { Dragger } = Upload;
@@ -67,11 +68,12 @@ function Banner() {
   }, []);
 
   const handleFinish = async (value) => {
-    console.log("finsih", value);
+    console.log("value",value)
     if (updateid === "") {
       setLoading(true);
       try {
-        const formData = {
+       
+         const formData = {
           data: {
             image: imagename,
             name: value.name,
@@ -82,6 +84,7 @@ function Banner() {
             })[0].title,
             status: value.status,
           },
+          id: updateid,
         };
         await createBanner(formData);
         setOpen(false);
@@ -94,9 +97,10 @@ function Banner() {
         notification.error({ message: "something went wrong" });
       }
     } else {
+     
       try {
         setLoading(true);
-        console.log("val",value)
+
         const formData = {
           data: {
             image: imagename,
@@ -110,12 +114,23 @@ function Banner() {
           },
           id: updateid,
         };
+
+        console.log(
+          allProducts.filter((data) => {
+            return data._id == productId;
+            // if (data._id == productId) console.log(data.title);
+          })[0].title
+        );
+
         await updateBanner(formData);
-        fetchData();
         setLoading(false);
         setImageName("");
+        fetchData();
+        setUpdateId("");
+        form.resetFields()
         notification.success({ message: "Banner updated successfully" });
       } catch (err) {
+        console.log(err);
         notification.error({ message: "something went wrong" });
       }
     }
@@ -141,15 +156,17 @@ function Banner() {
   const handleEdit = (data) => {
     setOpen(!open);
     form.setFieldsValue(data);
-    console.log(data);
     setImageName(data.image);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (updateid) => {
+
+    console.log(updateid)
     try {
       deleteBanner(updateid);
-      fetchData();
+
       setLoading(false);
+      fetchData();
       notification.success({ message: "Banner deleted successfully" });
     } catch (err) {
       notification.error({ message: "something went wrong" });
@@ -175,16 +192,25 @@ function Banner() {
 
           <div className="mt-5 grid grid-cols-5  gap-14 justify-start relative">
             {banner.map((data) => {
-              console.log("data",data)
               return (
                 <Skeleton
                   active
                   loading={loading ? true : false}
                   key={data._id}
                 >
-                  <Card className="w-[10vw] h-[25vh]  shadow-lg">
+                  <Card className="w-[15vw] h-[32vh]  shadow-lg">
                     <div className="float-left relative pl-[15px] w-[25px]">
-                      <Badge.Ribbon text={data.status} color={`${data.status==="Bottom"?"volcano":data.status==="Top"?"purple":"magenta"}`} className="absolute top-[-20px] left-[-35px]"></Badge.Ribbon>
+                      <Badge.Ribbon
+                        text={data.status}
+                        color={`${
+                          data.status === "Bottom"
+                            ? "volcano"
+                            : data.status === "Top"
+                            ? "purple"
+                            : "magenta"
+                        }`}
+                        className="absolute top-[-20px] left-[-35px]"
+                      ></Badge.Ribbon>
                     </div>
 
                     <EditNoteOutlinedIcon
@@ -198,32 +224,38 @@ function Banner() {
                       className=" absolute right-0 top-0 pr-2 font-bold text-3xl text-[--third-color]"
                       onClick={() => {
                         setUpdateId(data._id);
-                        handleDelete();
+                        handleDelete(updateid);
                       }}
                     />
-                    <div className="text-center h-[10vh] pt-[15px] ">
+
+                    <div className="flex flex-col gap-2  items-center justify-center w-[100%]">
+                        <div className="text-center h-[10vh] pt-[10px] ">
                       <Image
                         src={data.image}
                         alt="not found"
-                        className=" !w-[5vw]"
+                        className=" !w-[12vw] !h-[12vh]  mt-4"
                       />
                     </div>
 
-                    <div>
-                      <h1 className="text-center font-bold">{data.name}</h1>
+                    <div className="pt-12">
+                      <h1 className="text-center font-bold text-[16px]">{data.name}</h1>
                     </div>
-                    <div className="flex justify-between h-[7vh] w-[10vw] absolute left-1">
-                      <p className="text-[12px] font-bold">{data.productname}</p>
-                      <p className="text-[12px] pr-3 font-bold">{data.productid}</p>
+                    <div className="flex gap-[15px] ">
+                      <p className="text-[16px] font-bold tracking-wider">
+                        {data.productname}
+                      </p>
+                     
                     </div>
-                    <div className="m-auto w-[11vw] pl-8 pt-10">
+                    <div className=" self-center ">
                       <Button
                         type="link"
-                        className="bg-[--third-color] hover:bg-[#780c78] !hover:text-[#000] hover:scale-95 duration-1000"
+                        className="bg-[--third-color] hover:bg-[#780c78] w-[6vw] !h-[4vh] !hover:text-[#000] hover:scale-95 duration-1000"
                       >
                         View More
                       </Button>
                     </div>
+                    </div>
+                  
                   </Card>
                 </Skeleton>
               );
