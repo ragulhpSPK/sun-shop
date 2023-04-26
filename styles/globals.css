@@ -175,9 +175,9 @@ opacity: 0 !important;
   
 }
 
-.swiper-wrapper{
-  width: 1800px !important;
-}
+/* .swiper-wrapper{
+  min-width: 2800px !important;
+} */
 
 
 

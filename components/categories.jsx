@@ -7,11 +7,31 @@ import "swiper/css/pagination";
 import { Grid, Pagination, Navigation, Autoplay } from "swiper";
 import { Category } from "@/helper/categories";
 import { useRouter } from "next/router";
-import { Image } from "antd";
-// import { createCatagory } from "../helper/utilities/apiHelper";
+import { Image, notification } from "antd";
+import { getAllCatagory } from "../helper/utilities/apiHelper";
+import { useEffect } from "react";
+import { get } from "lodash";
 
 function Categories() {
   const router = useRouter();
+  const [category, setCategory] = useState();
+
+  const fetchData = async () => {
+    try {
+      const result = await getAllCatagory();
+      console.log("hkdkjf", result);
+      setCategory(get(result, "data.data"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(category);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="w-screen pt-10">
       <div className="w-screen flex justify-center">
@@ -39,31 +59,33 @@ function Categories() {
           autoplay={{ delay: 2000 }}
           className={`mySwiper flex w-[80vw]`}
         >
-          {Category.map((data) => {
-            return (
-              <SwiperSlide
-                className=" !w-[10vw] !h-[17vh] border py-5 cursor-pointer !flex flex-col items-center justify-center"
-                key={data.id}
-                onClick={() => {
-                  router.push({ pathname: "/subcat", query: data });
-                }}
-              >
-                <div className="flex justify-center items-center">
-                  <Image
-                    width={100}
-                    height={100}
-                    alt="logo"
-                    src={data.image}
-                    className="!w-[3vw] !h-[6vh] m-auto mt-6"
-                  />
-                </div>      
-                <div className="flex flex-col   items-center">
-                  <h1 className="text-justify text-lg">{data.category}</h1>
-                  <p className="text-justify text-md">{data.items}</p>
-                </div>
-              </SwiperSlide>
-            );
-          })}
+          {category &&
+            category.map((data) => {
+              console.log(data);
+              return (
+                <SwiperSlide
+                  className=" !w-[10vw] !h-[17vh] border py-5 cursor-pointer !flex flex-col items-center justify-center"
+                  key={data.id}
+                  onClick={() => {
+                    router.push({ pathname: "/subcat", query: data });
+                  }}
+                >
+                  <div className="flex justify-center items-center">
+                    <Image
+                      width={100}
+                      height={100}
+                      alt="logo"
+                      src={data.image}
+                      className="!w-[3vw] !h-[6vh] m-auto mt-6"
+                    />
+                  </div>
+                  <div className="flex flex-col   items-center">
+                    <h1 className="text-justify text-lg">{data.name}</h1>
+                    <p className="text-justify text-md">{data.items}</p>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </div>

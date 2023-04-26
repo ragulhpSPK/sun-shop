@@ -129,7 +129,7 @@ function Banner() {
   };
 
   const handleEdit = (value) => {
-    console.log(value);
+    console.log("de",value);
     setUpdateId(value._id);
     setImageName(value.image);
     setOpen(!open);
