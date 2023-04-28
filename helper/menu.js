@@ -40,7 +40,7 @@ export const Items = [
     <AppsOutlinedIcon className="!text-xl" />
   ),
   getItem(
-    <Link href="/dashboard/banner/Banners">
+    <Link href="/dashboard/Banner/Banners">
       <h1 className="!text-xl">Banner</h1>
     </Link>,
     "menu4",
