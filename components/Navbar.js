@@ -36,8 +36,7 @@ function Navbar() {
   const fetchData = async () => {
     try {
       const result = await getAllCart();
-      let temp = result;
-      setProduct(get(temp, "data.message"));
+      setProduct(get(result, "data.message"));
     } catch (err) {
       console.log(err);
     }

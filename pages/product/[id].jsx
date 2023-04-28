@@ -8,7 +8,7 @@ import { AddCart } from "@/helper/Addcart";
 import Link from "next/link";
 import style from "../../styles/Home.module.css";
 import Image from "next/image";
-import { createCart } from "../../helper/utilities/apiHelper";
+import { createCart,getAllCart } from "../../helper/utilities/apiHelper";
 import { message, notification } from "antd";
 
 export default function App() {
@@ -24,7 +24,6 @@ export default function App() {
     return data.product_id == router.query.id;
   });
 
-  
 
   useEffect(() => {
     result.map((img) => setImg(img.image[0]));

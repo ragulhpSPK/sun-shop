@@ -55,7 +55,6 @@ function Banner() {
     setLoading(true);
     try {
       const result = [await getAllproducts(), await getAllBanner()];
-
       setAllProducts(get(result, "[0].data.data", []));
       setBanner(get(result, "[1].data.data", []));
 

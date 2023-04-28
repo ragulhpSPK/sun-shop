@@ -12,8 +12,8 @@ import Image from "next/image";
 function Bestdeals() {
   return (
     <div className="pt-5">
-      <div className="  h-[50vh] w-[80vw] m-auto flex">
-        <div className="flex flex-col  h-[49vh] w-[79.5vw] m-auto rounded-md">
+      <div className="  h-[50vh] w-[80vw] m-auto flex ">
+        <div className="flex flex-col  h-[49vh] w-[80vw] m-auto !rounded-xl">
           <div className="flex justify-between px-1 bg-[var(--second-color)]  h-[20vh]">
             <div className="flex flex-col justify-around">
               <Image
@@ -23,7 +23,7 @@ function Bestdeals() {
                 src="/assets/deals.png"
                 className="w-28 h-14"
               />
-              <p className="text-white text-2xl">Best Deals today</p>
+              <p className="text-white text-2xl pl-2">Best Deals today</p>
             </div>
             <div>
               <h1 className="text-5xl text-white pt-10">Limited Time Sales</h1>
@@ -37,7 +37,7 @@ function Bestdeals() {
                 className="w-16 h-14"
               />
               <Link href="/Allbestdeals">
-                <p className="text-white">See More &#8594;</p>
+                <p className="text-white pr-2">See More &#8594;</p>
               </Link>
             </div>
           </div>

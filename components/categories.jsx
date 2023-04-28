@@ -26,8 +26,6 @@ function Categories() {
     }
   };
 
- 
-
   useEffect(() => {
     fetchData();
   }, []);
