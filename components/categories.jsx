@@ -14,7 +14,7 @@ import { get } from "lodash";
 
 function Categories() {
   const router = useRouter();
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -59,7 +59,7 @@ function Categories() {
           autoplay={{ delay: 2000 }}
           className={`mySwiper flex w-[80vw]`}
         >
-          {category &&
+          {
             category.map((data) => {
              
               return (

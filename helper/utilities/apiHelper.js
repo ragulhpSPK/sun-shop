@@ -70,3 +70,23 @@ export const updateBanner = (formData) => {
 export const deleteBanner = (formData) => {
   return axios.delete(`/api/banner/${formData}`);
 };
+
+//Banner ended....
+
+//Cart Starting...
+export const createCart = (formData) => {
+  return axios.post("/api/cart", formData);
+};
+
+export const getAllCart = () => {
+  return axios.get("api/cart");
+};
+
+export const updateCart = (formData) => {
+  console.log(formData);
+  return axios.put("/api/cart", formData);
+};
+
+export const deleteCart = (formData) => {
+  return axios.delete(`/api/cart/${formData}`);
+};

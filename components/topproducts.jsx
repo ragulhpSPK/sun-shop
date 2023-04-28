@@ -6,7 +6,7 @@ function Topproducts() {
   return (
     <div className="w-[80vw] m-auto pt-10">
       <div className="text-xl">
-        <h1 className="bg-[var(--third-color)] py-3 px-2 text-white">
+        <h1 className="bg-[var(--second-color)] py-3 px-2 text-white">
           Top Products
         </h1>
       </div>

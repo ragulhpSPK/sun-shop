@@ -4,10 +4,13 @@ import { useState } from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { Image } from "antd";
 
+
+
 function Order() {
   const [out, setOut] = useState(false);
   const [way, setWay] = useState(false);
   const [received, setReceived] = useState(false);
+ 
 
   return (
     <div className="h-screen">

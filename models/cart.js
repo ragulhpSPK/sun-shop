@@ -1,25 +1,26 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const cartSchema =
-  ({
+const cartSchema = new mongoose.Schema(
+  {
     image: {
-      type: string,
+      type: String,
       required: false,
     },
 
     name: {
-      type: string,
+      type: String,
       required: true,
     },
     total: {
-      type: number,
+      type: Number,
       required: true,
     },
     quantity: {
-      type: number,
+      type: Number,
       required: true,
     },
   },
-  { timestamps: true });
+  { timestamps: true }
+);
 
-export default mongoose.model.cart || mongoose.model("cart", cartSchema);
+module.exports = mongoose?.models?.cart || mongoose.model("cart", cartSchema);

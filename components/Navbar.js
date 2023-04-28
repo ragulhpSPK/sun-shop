@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { Divider } from "@mui/material";
@@ -12,15 +12,16 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { addSearch } from "@/redux/searchSlice";
 import Image from "next/image";
+import { getAllCart } from "../helper/utilities/apiHelper";
+import { get } from "lodash";
 
 function Navbar() {
   const { Search } = Input;
   const Quantity = useSelector((state) => state.cart.quantity);
   const [search, setSearch] = useState([]);
-
+  const [product, setProduct] = useState([]);
   const [data, setData] = useState([]);
   const router = useRouter();
-
   const dispatch = useDispatch();
 
   const handleKeyDown = (event) => {
@@ -32,6 +33,20 @@ function Navbar() {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      const result = await getAllCart();
+      let temp = result;
+      setProduct(get(temp, "data.message"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  });
+
   useEffect(() => {
     setData(
       Category.filter((data) => {
@@ -39,6 +54,7 @@ function Navbar() {
       })
     );
   }, [search]);
+
   return (
     <div>
       <div className="h-24 bg-[white] bg-fixed shadow-md shadow-slate-100 ">
@@ -94,11 +110,11 @@ function Navbar() {
                 width={300}
                 height={300}
               />
-              {Quantity === 0 ? (
+              {product.length === 0 ? (
                 ""
               ) : (
                 <p className="absolute  xsm:float-right   bg-[var(--second-color)] top-[-5px] right-0 xsm:h-[20px] xsm:w-[20px] xsm:text-[12px]  lg:h-5  lg:w-5 text-center lg:text-sm text-white rounded-full">
-                  {Quantity}
+                  {product.length}
                 </p>
               )}
             </div>

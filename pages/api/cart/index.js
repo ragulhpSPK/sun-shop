@@ -1,27 +1,26 @@
 import dbconnect from "@/connection/conn";
-import Banner from "../../../models/banner";
+import Cart from "../../../models/cart";
 
-export default async function bannerController(req, res) {
+export default async function cartController(req, res) {
   dbconnect();
+
   switch (req.method) {
     case "GET":
       {
         try {
-          const banner = await Banner.find();
-          return res.status(200).send({ data: banner });
+          const cart = await Cart.find();
+          return res.status(200).send({ message: cart });
         } catch (err) {
           return res.status(500).send({ message: "failed" });
         }
       }
       break;
-
     case "POST":
-      console.log("POST", req.body);
       {
         try {
-          const banner = await new Banner({ ...req.body.data });
-          const result = banner.save();
-          return res.status(200).send({ data: result });
+          const cart = await new Cart({ ...req.body.data });
+          const result = await cart.save();
+          return res.status(200).send({ message: result });
         } catch (err) {
           return res.status(500).send({ message: "failed" });
         }
@@ -30,14 +29,14 @@ export default async function bannerController(req, res) {
 
     case "PUT":
       {
-        console.log(req.body.id);
+        console.log("sdfbdf", req.body);
         try {
-          const banner = await Banner.findByIdAndUpdate(
+          const cart = await Cart.findByIdAndUpdate(
             { _id: req.body.id },
             req.body
           );
-          console.log("banner", banner);
-          return res.status(200).send({ data: banner });
+          console.log("skhs", cart);
+          return res.status(200).send({ data: cart });
         } catch (err) {
           return res.status(500).send({ message: "failed" });
         }

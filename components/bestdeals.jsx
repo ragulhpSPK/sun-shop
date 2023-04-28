@@ -14,7 +14,7 @@ function Bestdeals() {
     <div className="pt-5">
       <div className="  h-[50vh] w-[80vw] m-auto flex">
         <div className="flex flex-col  h-[49vh] w-[79.5vw] m-auto rounded-md">
-          <div className="flex justify-between px-1 bg-[var(--third-color)]  h-[20vh]">
+          <div className="flex justify-between px-1 bg-[var(--second-color)]  h-[20vh]">
             <div className="flex flex-col justify-around">
               <Image
                 width={100}

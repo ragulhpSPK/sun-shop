@@ -32,7 +32,7 @@ import {
   updateBanner,
   deleteBanner,
 } from "@/helper/utilities/apiHelper";
-import { get } from "lodash";
+import { get, update } from "lodash";
 import Sidenavbar from "../shared/Sidenavbar";
 import AdminNavbar from "../shared/AdminNavbar";
 import { Co2Sharp } from "@mui/icons-material";
@@ -44,7 +44,7 @@ function Banner() {
   const [banner, setBanner] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imagename, setImageName] = useState();
-  const [productId, setProductId] = useState([]);
+  const [productId, setProductId] = useState("");
   const [updateid, setUpdateId] = useState("");
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState([]);
@@ -55,25 +55,22 @@ function Banner() {
     setLoading(true);
     try {
       const result = [await getAllproducts(), await getAllBanner()];
+
       setAllProducts(get(result, "[0].data.data", []));
       setBanner(get(result, "[1].data.data", []));
+
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const handleFinish = async (value) => {
-    console.log("value",value)
+    console.log("value", value);
     if (updateid === "") {
       setLoading(true);
       try {
-       
-         const formData = {
+        const formData = {
           data: {
             image: imagename,
             name: value.name,
@@ -97,7 +94,6 @@ function Banner() {
         notification.error({ message: "something went wrong" });
       }
     } else {
-     
       try {
         setLoading(true);
 
@@ -108,26 +104,18 @@ function Banner() {
             productid: productId,
             productname: allProducts.filter((data) => {
               return data._id == productId;
-              // if (data._id == productId) console.log(data.title);
             })[0].title,
             status: value.status,
           },
           id: updateid,
         };
 
-        console.log(
-          allProducts.filter((data) => {
-            return data._id == productId;
-            // if (data._id == productId) console.log(data.title);
-          })[0].title
-        );
-
         await updateBanner(formData);
         setLoading(false);
         setImageName("");
         fetchData();
         setUpdateId("");
-        form.resetFields()
+        form.resetFields();
         notification.success({ message: "Banner updated successfully" });
       } catch (err) {
         console.log(err);
@@ -135,6 +123,12 @@ function Banner() {
       }
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  
 
   const props = {
     name: "file",
@@ -157,11 +151,15 @@ function Banner() {
     setOpen(!open);
     form.setFieldsValue(data);
     setImageName(data.image);
+    setProductId(
+      allProducts.map((data) => {
+        return data._id;
+      })
+    );
   };
 
   const handleDelete = (updateid) => {
-
-    console.log(updateid)
+    console.log(updateid);
     try {
       deleteBanner(updateid);
 
@@ -223,39 +221,39 @@ function Banner() {
                     <CloseIcon
                       className=" absolute right-0 top-0 pr-2 font-bold text-3xl text-[--third-color]"
                       onClick={() => {
-                        setUpdateId(data._id);
-                        handleDelete(updateid);
+                        // setUpdateId(data._id);
+                        handleDelete(data._id);
                       }}
                     />
 
                     <div className="flex flex-col gap-2  items-center justify-center w-[100%]">
-                        <div className="text-center h-[10vh] pt-[10px] ">
-                      <Image
-                        src={data.image}
-                        alt="not found"
-                        className=" !w-[12vw] !h-[12vh]  mt-4"
-                      />
-                    </div>
+                      <div className="text-center h-[10vh] pt-[10px] ">
+                        <Image
+                          src={data.image}
+                          alt="not found"
+                          className=" !w-[12vw] !h-[12vh]  mt-4"
+                        />
+                      </div>
 
-                    <div className="pt-12">
-                      <h1 className="text-center font-bold text-[16px]">{data.name}</h1>
+                      <div className="pt-12">
+                        <h1 className="text-center font-bold text-[16px]">
+                          {data.name}
+                        </h1>
+                      </div>
+                      <div className="flex gap-[15px] ">
+                        <p className="text-[16px] font-bold tracking-wider">
+                          {data.productname}
+                        </p>
+                      </div>
+                      <div className=" self-center ">
+                        <Button
+                          type="link"
+                          className="bg-[--third-color] hover:bg-[#780c78] w-[6vw] !h-[4vh] !hover:text-[#000] hover:scale-95 duration-1000"
+                        >
+                          View More
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex gap-[15px] ">
-                      <p className="text-[16px] font-bold tracking-wider">
-                        {data.productname}
-                      </p>
-                     
-                    </div>
-                    <div className=" self-center ">
-                      <Button
-                        type="link"
-                        className="bg-[--third-color] hover:bg-[#780c78] w-[6vw] !h-[4vh] !hover:text-[#000] hover:scale-95 duration-1000"
-                      >
-                        View More
-                      </Button>
-                    </div>
-                    </div>
-                  
                   </Card>
                 </Skeleton>
               );

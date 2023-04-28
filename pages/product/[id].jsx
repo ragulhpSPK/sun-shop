@@ -8,6 +8,8 @@ import { AddCart } from "@/helper/Addcart";
 import Link from "next/link";
 import style from "../../styles/Home.module.css";
 import Image from "next/image";
+import { createCart } from "../../helper/utilities/apiHelper";
+import { message, notification } from "antd";
 
 export default function App() {
   const [addcart, setAddCart] = useState();
@@ -22,12 +24,33 @@ export default function App() {
     return data.product_id == router.query.id;
   });
 
+  
+
   useEffect(() => {
     result.map((img) => setImg(img.image[0]));
   });
 
-  const handleClick = () => {
-    dispatch(addproduct({ result }));
+  const handleClick = async () => {
+    console.log(result[0].price)     
+
+    try {
+      const formData = {
+        data: {
+          image:img,
+          name:result[0].producttitle,
+          total:result[0].price,
+          quantity:1,
+        }
+      }
+    // router.push({ pathname: "/order", query: formData });
+   
+      await createCart(formData);
+      notification.success({message:"cart added successfully"})
+    } catch (err) {
+      notification.error({message:"something went wrong"})
+    }
+
+    
   };
 
   return (
