@@ -2,23 +2,27 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
+    orderid: {
+      type: String,
+      required: true,
+    },
     customer: {
-      type: string,
+      type: String,
       required: true,
     },
     address: {
-      type: string,
+      type: String,
       required: true,
     },
     total: {
-      type: number,
+      type: Number,
       required: true,
     },
     status: {
-      type: boolean,
+      type: Boolean,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model.product || mongoose.model("order", orderSchema);
+module.exports = mongoose.models.order || mongoose.model("order", orderSchema);

@@ -118,7 +118,6 @@ function Navbar() {
               )}
             </div>
           </Link>
-
           <div className="xsm:hidden lg:block pr-[110px]">
             <p className="lg:text-md text-[var(--first-color)] text-xl lg:font-bold ">
               For Contact:

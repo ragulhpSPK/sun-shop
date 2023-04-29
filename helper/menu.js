@@ -46,4 +46,11 @@ export const Items = [
     "menu4",
     <ViewCarouselOutlinedIcon className="!text-xl" />
   ),
+  getItem(
+    <Link href="/dashboard/order/order">
+      <h1 className="!text-xl">order</h1>
+    </Link>,
+    "menu5",
+    <ViewCarouselOutlinedIcon className="!text-xl" />
+  ),
 ];

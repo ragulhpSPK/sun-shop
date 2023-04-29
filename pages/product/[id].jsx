@@ -49,7 +49,7 @@ export default function App() {
       notification.error({message:"something went wrong"})
     }
 
-    
+  
   };
 
   return (
@@ -69,7 +69,7 @@ export default function App() {
             />
           </div>
           <div className={styles.left_1}>
-            {result.map((img) => {
+            {result&&AddCart.map((img) => {
               return img.image.map((image, i) => {
                 return (
                   <div
@@ -94,7 +94,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      {result.map((data, index) => {
+      {result&&AddCart.map((data, index) => {
         return (
           <div className="pt-32 w-[60vw] pl-28" key={index}>
             <h1 className="text-2xl font-semibold">{data.producttitle}</h1>
@@ -110,13 +110,13 @@ export default function App() {
 
             <div className="pt-10 flex gap-7 justify-between w-fit pl-5">
               <button
-                className="bg-[var(--second-color)] text-[#fff] hover:bg-[--fifth-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
+                className="bg-[var(--second-color)] text-[#fff] hover:bg-[--four-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
                 onClick={handleClick}
               >
                 Add to Cart
               </button>
 
-              <button className="bg-[var(--second-color)] hover:bg-[--fifth-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] text-xl rounded-md h-[5vh] w-[6vw] px-3 py-2">
+              <button className="bg-[var(--second-color)] hover:bg-[--four-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] text-xl rounded-md h-[5vh] w-[6vw] px-3 py-2" onClick={()=>{router.push({pathname:"/cart",query:data})}}>
                 Buy Now
               </button>
             </div>

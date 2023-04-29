@@ -195,3 +195,9 @@ opacity: 0 !important;
 background-color: var(--third-color) !important;
 
 }
+
+/* antd menu */
+
+.rc-menu-menuitem-selected {
+  background-color: #943074 !important;
+}

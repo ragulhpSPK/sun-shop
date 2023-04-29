@@ -90,3 +90,24 @@ export const updateCart = (formData) => {
 export const deleteCart = (formData) => {
   return axios.delete(`/api/cart/${formData}`);
 };
+// Banner
+
+// Order Stating
+
+export const createOrder = (formData) => {
+  return axios.post("/api/order", formData);
+};
+
+export const getAllOrder = (formData) => {
+  return axios.get("api/order");
+};
+
+export const updateOrder = (formData) => {
+  return axios.put("api/order/", formData);
+};
+
+export const deleteOrder = (formData) => {
+  return axios.delete(`api/order/${formData}`);
+};
+
+// Order Ended

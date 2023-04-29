@@ -19,7 +19,6 @@ function Categories() {
   const fetchData = async () => {
     try {
       const result = await getAllCatagory();
-      
       setCategory(get(result, "data.data"));
     } catch (err) {
       console.log(err);
@@ -65,7 +64,7 @@ function Categories() {
                   className=" !w-[10vw] !h-[17vh] border py-5 cursor-pointer !flex flex-col items-center justify-center"
                   key={data.id}
                   onClick={() => {
-                    router.push({ pathname: "/subcat", query: data });
+                    router.push({ pathname: "/allCat", query: data });
                   }}
                 >
                   <div className="flex justify-center items-center">

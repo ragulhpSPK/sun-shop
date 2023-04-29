@@ -12,15 +12,7 @@ function Subcat() {
   const [categories, setCategories] = useState();
   const [product, setProduct] = useState([]);
 
-  const getItem = (label, key, icon, children, type) => {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    };
-  };
+  
 
   const clickHandler = (e) => {
     setProduct(
