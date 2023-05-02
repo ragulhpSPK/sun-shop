@@ -11,6 +11,7 @@ import {
   deleteCart,
   updateCart,
   createOrder,
+  getAllOrder,
 } from "../helper/utilities/apiHelper";
 import { get } from "lodash";
 import Navbar from "@/components/Navbar";
@@ -22,13 +23,16 @@ function Cart() {
   const [check, setCheck] = useState(false);
   const [Qty, setQty] = useState(1);
   const [bqty, setBqty] = useState(1);
-  const [price, setPrice] = useState([]);
+
   const [UID, setUID] = useState("");
+
   const router = useRouter();
+  const [price, setPrice] = useState(router.query.price);
   const [product, setProdut] = useState();
   const [deleteId, setDeleteId] = useState();
   const [Buy, setBuy] = useState(false);
   const [inputs, setInputs] = useState({});
+  const [order, setOrder] = useState([]);
   uuidv1();
 
   const handleCheck = () => {
@@ -59,21 +63,27 @@ function Cart() {
 
   const fetchData = async () => {
     try {
-      const result = await getAllCart();
-
-      setProdut(get(result, "data.message"));
+      const result = [await getAllCart(), await getAllOrder()];
+      console.log(result);
+      setProdut(get(result, "[0].data.message"));
+      setOrder(get(result, "[1].data.message"));
     } catch (err) {
       console.log(err);
     }
   };
 
+  console.log("price", price);
+
   useEffect(() => {
     fetchData();
-
     if (Object.keys(router.query).length > 0) {
       setBuy(true);
     }
-  }, [router.query]);
+
+    setPrice(bqty * router.query.price);
+  }, [router.query, bqty]);
+
+  console.log(router.query);
 
   const deleteHandler = async (data) => {
     try {
@@ -111,17 +121,17 @@ function Cart() {
 
     setInputs((values) => ({ ...values, [name]: value }));
   };
-
+  console.log(Buy, "nutjnr");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(prices);
+    Buy === false ? setBuy(true) : Buy === true ? setBuy(false) : "";
     try {
       const formData = {
         data: {
           orderId: UID,
           customer: inputs.name,
-          address: message,
-          total: prices,
+          address: inputs.message,
+          total: !Buy ? prices : price,
           status: "pending",
         },
       };
@@ -131,8 +141,6 @@ function Cart() {
       notification.failure({ message: "something went wrong" });
     }
   };
-
-  console.log("ubutyt", Buy);
 
   return (
     <div>
@@ -288,9 +296,7 @@ function Cart() {
           <div className="h-[80vh]">
             <div className={`${check ? "hidden" : "block"} pt-10 `}>
               <div className="h-[15vh] w-[10vw] bg-black/90 flex flex-col items-center justify-around">
-                <p className="text-xl text-[#fff]">
-                  Total Price:{bqty * router.query.price}
-                </p>
+                <p className="text-xl text-[#fff]">Total Price:{price}</p>
                 <button
                   className="text-xl text-[#fff] bg-[--third-color] px-3 py-2 rounded-md hover:bg-[--second-color]"
                   onClick={() => {
@@ -351,7 +357,7 @@ function Cart() {
                 onClick={() => {
                   handleCheck();
                   setBuy(false);
-                  router.push({ pathname: "/order/2", query: [] });
+                  router.push({ pathname: "/order/UID", query: order });
                 }}
               >
                 CheckOut

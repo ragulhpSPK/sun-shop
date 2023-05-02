@@ -23,14 +23,14 @@ export default function App() {
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
   });
-
+console.log(router.query.id)
 
   useEffect(() => {
     result.map((img) => setImg(img.image[0]));
   });
 
   const handleClick = async () => {
-    console.log(result[0].price)     
+     
 
     try {
       const formData = {

@@ -3,6 +3,9 @@ import styles from "../../styles/Home.module.css";
 import { useState } from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { Image } from "antd";
+import { getAllOrder } from "@/helper/utilities/apiHelper";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 
 
@@ -10,8 +13,9 @@ function Order() {
   const [out, setOut] = useState(false);
   const [way, setWay] = useState(false);
   const [received, setReceived] = useState(false);
- 
-
+  const router = useRouter()
+  
+console.log(router.query)
   return (
     <div className="h-screen">
       <div className="w-[90vw] m-auto pt-10">

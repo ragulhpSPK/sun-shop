@@ -1,34 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminNavbar from "../shared/AdminNavbar";
 import Sidenavbar from "../shared/Sidenavbar";
 import { Table } from "antd";
+import { getAllOrder } from "../../../helper/utilities/apiHelper";
+import { get } from "lodash";
 
-function order() {
+function Order() {
+  const [order, setOrder] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const result = await getAllOrder();
+      setOrder(get(result, "data.data", []));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const columns = [
     {
       title: "OrderId",
-      dataindex: "order",
-      key: "order",
+      dataindex: "orderId",
+      key: "orderId",
+      render: (name) => {
+        return <p>{name.orderId}</p>;
+      },
     },
     {
       title: "Customer Name",
       dataindex: "customer",
       key: "customer",
+      render: (name) => {
+        console.log(name);
+        return <p>{name.customer}</p>;
+      },
     },
     {
       title: "Address",
       dataindex: "address",
       key: "address",
+      render: (name) => {
+        return <p>{name.address}</p>;
+      },
     },
     {
       title: "Total Price",
-      dataindex: "price",
-      key: "price",
+      dataindex: "total",
+      key: "total",
+      render: (name) => {
+        return <p>{name.total}</p>;
+      },
     },
     {
       title: "Order Status",
       dataindex: "status",
       key: "status",
+      render: (name) => {
+        return <p>{name.status}</p>;
+      },
     },
   ];
   return (
@@ -41,12 +75,16 @@ function order() {
           <Sidenavbar />
         </div>
 
-        <div className="w-[90vw]">
-          <Table className="m-auto w-[90vw]" columns={columns} />
+        <div className="w-[80vw]">
+          <Table
+            className="m-auto w-[80vw]"
+            columns={columns}
+            dataSource={order}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-export default order;
+export default Order;

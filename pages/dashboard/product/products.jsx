@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { InboxOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons";
@@ -21,8 +21,6 @@ import {
   Tooltip,
   Drawer,
 } from "antd";
-
-
 import SearchIcon from "@mui/icons-material/Search";
 
 import Sidenavbar from "../shared/Sidenavbar";
@@ -37,8 +35,9 @@ import {
 import { get, isEmpty } from "lodash";
 import dynamic from "next/dynamic";
 import AdminNavbar from "../shared/AdminNavbar";
+import 'suneditor/dist/css/suneditor.min.css';
 
-function Products() {
+function Products({content}) {
   const [edit, setEdit] = useState(false);
   const [dlt, setDlt] = useState(false);
   const [add, setAdd] = useState(false);
@@ -53,19 +52,20 @@ function Products() {
   const [data, setData] = useState([]);
   const [uploadError, setUploadError] = useState(false);
   const [catFilter, setCatFilter] = useState([]);
+const ref=useRef
+
 
   const [loading, setLoading] = useState(false);
 
-  // const QuillNoSSRWrapper = dynamic(import("react-quill"), {
-  //   ssr: false,
-  //   loading: () => <p>Loading ...</p>,
-  // });
-
-  const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
-  );
-
+const SunEditor = dynamic(() => import("suneditor-react"), {
+    ssr: false,
+});
+  
+  
+  const plugins = dynamic(() => import("suneditor/src/plugins"), {
+  ssr: false,
+});
+  
   const { Dragger } = Upload;
 
   const [form] = Form.useForm();
@@ -109,7 +109,7 @@ function Products() {
 
   useEffect(() => {
     fetchData();
-    setValue(values.toString().replace(/<[^>]+>/g, ""));
+    setValue(ref.current.toString().replace(/<[^>]+>/g, ""));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
@@ -121,7 +121,11 @@ function Products() {
     );
   });
 
+
+
   const handleFinish = async (value) => {
+
+     
     if (updateId == "") {
       setLoading(true);
       try {
@@ -210,6 +214,15 @@ function Products() {
       console.log("Dropped files", e.dataTransfer.files);
     },
   };
+
+  console.log(ref.current)
+ 
+ const handleEditorChange = (value) => {
+        ref.current= value;
+  }
+  
+    
+ 
 
   const columns = [
     {
@@ -308,6 +321,11 @@ function Products() {
       })
     );
   };
+
+  const handleSave = (content) => {
+    console.log(content)
+    setValue(content)
+  }
 
   return (
     <div className="flex flex-col">
@@ -413,12 +431,14 @@ function Products() {
                 </Form.Item>
 
                 <Form.Item name="highlight">
-                  <ReactQuill
+                  {/* <ReactQuill
                     theme="snow"
                     value={values}
                     onChange={(e) => setValue(e)}
                     bounds={true}
-                  />
+                  /> */}
+                  <SunEditor   onChange={handleEditorChange} />
+                  <p>{values}</p>
                 </Form.Item>
 
                 <Form.Item>
@@ -505,6 +525,7 @@ function Products() {
                     type="Primary"
                     className="bg-[--third-color] shadow-xl !text-black"
                     htmlType="submit"
+                   
                   >
                     {updateId == "" ? "Save" : "Update"}
                   </Button>

@@ -83,7 +83,6 @@ export const getAllCart = () => {
 };
 
 export const updateCart = (formData) => {
-  console.log(formData);
   return axios.put("/api/cart", formData);
 };
 
@@ -98,16 +97,16 @@ export const createOrder = (formData) => {
   return axios.post("/api/order", formData);
 };
 
-export const getAllOrder = (formData) => {
-  return axios.get("api/order");
+export const getAllOrder = () => {
+  return axios.get("/api/order");
 };
 
 export const updateOrder = (formData) => {
-  return axios.put("api/order/", formData);
+  return axios.put("/api/order/", formData);
 };
 
 export const deleteOrder = (formData) => {
-  return axios.delete(`api/order/${formData}`);
+  return axios.delete(`/api/order/${formData}`);
 };
 
 // Order Ended
