@@ -12,6 +12,7 @@ import Menu, { SubMenu, Item as MenuItem } from "rc-menu";
 import {
   getAllCatagory,
   getAllSubCatagory,
+  getAllproducts,
 } from "../helper/utilities/apiHelper";
 import { get } from "lodash";
 import { useRouter } from "next/router";
@@ -23,19 +24,25 @@ function AllCat() {
   const [more, setMore] = useState(false);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
+  const [products, setProducts] = useState([]);
   const router = useRouter();
 
   const fetchData = async () => {
     try {
-      const result = [await getAllCatagory(), await getAllSubCatagory()];
+      const result = [
+        await getAllCatagory(),
+        await getAllSubCatagory(),
+        await getAllproducts(),
+      ];
       setCategory(get(result, "[0].data.data", []));
       setSubCategory(get(result, "[1].data.data", []));
+      setProducts(get(result, "[2].data.data", []));
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(router.query.name);
+  console.log(products, "setProducts");
 
   useEffect(() => {
     fetchData();

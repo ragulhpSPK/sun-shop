@@ -45,6 +45,7 @@ export const getAllproducts = () => {
 };
 
 export const updateProducts = (formData) => {
+  console.log(formData);
   return axios.put("/api/products", formData);
 };
 

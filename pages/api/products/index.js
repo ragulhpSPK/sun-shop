@@ -14,6 +14,7 @@ export default async function productController(req, res) {
       break;
     case "POST":
       try {
+        console.log(req.body);
         const product = new Product({ ...req.body });
 
         const result = await product.save();
@@ -25,6 +26,7 @@ export default async function productController(req, res) {
       break;
 
     case "PUT":
+      console.log("body", req.body);
       try {
         const product = await Product.findByIdAndUpdate(
           { _id: req.body.id },

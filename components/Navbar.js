@@ -44,7 +44,7 @@ function Navbar() {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   useEffect(() => {
     setData(

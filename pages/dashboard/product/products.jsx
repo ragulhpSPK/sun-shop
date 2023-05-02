@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { InboxOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons";
@@ -16,12 +16,12 @@ import {
   Table,
   notification,
   message,
-  Image,
   Upload,
   Tooltip,
   Drawer,
 } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
+import Image from "next/image";
 
 import Sidenavbar from "../shared/Sidenavbar";
 import {
@@ -35,9 +35,9 @@ import {
 import { get, isEmpty } from "lodash";
 import dynamic from "next/dynamic";
 import AdminNavbar from "../shared/AdminNavbar";
-import 'suneditor/dist/css/suneditor.min.css';
+import "suneditor/dist/css/suneditor.min.css";
 
-function Products({content}) {
+function Products({ content }) {
   const [edit, setEdit] = useState(false);
   const [dlt, setDlt] = useState(false);
   const [add, setAdd] = useState(false);
@@ -52,20 +52,21 @@ function Products({content}) {
   const [data, setData] = useState([]);
   const [uploadError, setUploadError] = useState(false);
   const [catFilter, setCatFilter] = useState([]);
-const ref=useRef
-
+  const [catFil, setCategoryFil] = useState([]);
+  const [highlight, setHighlights] = useState([]);
+  const [subCatFilter, setSubCatFilter] = useState([]);
+  const ref = useRef;
 
   const [loading, setLoading] = useState(false);
 
-const SunEditor = dynamic(() => import("suneditor-react"), {
+  const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
-});
-  
-  
+  });
+
   const plugins = dynamic(() => import("suneditor/src/plugins"), {
-  ssr: false,
-});
-  
+    ssr: false,
+  });
+
   const { Dragger } = Upload;
 
   const [form] = Form.useForm();
@@ -76,6 +77,9 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
     setImageName(value.image);
     setValue(value.highlight);
     form.setFieldsValue(value);
+    // setCategoryFil(catFil[0].name)
+    // console.log
+    // setHighlights(ref.current.toString().replace(/<[^>]+>/g, ""))
   };
 
   const handleCancel = () => {
@@ -109,33 +113,38 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 
   useEffect(() => {
     fetchData();
-    setValue(ref.current.toString().replace(/<[^>]+>/g, ""));
+    //  setValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   let result = products.filter((res) => {
     return (
-      res.title.toLowerCase().includes(data.toString().toLowerCase()) ||
+      // res.title.toString().toLowerCase().includes(data.toString().toLowerCase()) ||
       res.categoryname.toLowerCase().includes(data) ||
       res.subcategoryname.toLowerCase().includes(data)
     );
   });
 
-
-
   const handleFinish = async (value) => {
-
-     
     if (updateId == "") {
       setLoading(true);
+
       try {
         const formdata = {
-          title: value.title,
-          categoryname: value.categoryname,
-          subcategoryname: value.subcategoryname,
-          price: value.price,
-          image: imagename,
-          highlight: values,
+          data: {
+            title: value.title,
+            categoryname: category.filter((data) => {
+              return data._id === catFil;
+            })[0].name,
+            subcategoryname: subCategory.filter((data) => {
+              return data._id === subCatFilter;
+            })[0].subcategoryname,
+            price: value.price,
+            categoryId: value.categoryId,
+            SubCategoryId: value.SubCategoryId,
+            image: imagename,
+            highlight: ref.current.toString().replace(/<[^>]+>/g, ""),
+          },
         };
 
         await createProducts(formdata);
@@ -144,7 +153,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
         fetchData();
         setLoading(false);
         setOpen(false);
-        setImageName("")
+        setImageName("");
       } catch (err) {
         setOpen(false);
 
@@ -153,7 +162,16 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
     } else {
       try {
         const formData = {
-          data: { ...value, image: imagename },
+          data: {
+            ...value,
+            image: imagename,
+            categoryname: category.filter((data) => {
+              return data._id === catFil;
+            })[0].name,
+          },
+          subcategoryname: subCategory.filter((data) => {
+            return data._id === subCatFilter;
+          })[0].subcategoryname,
           id: updateId,
         };
         await updateProducts(formData);
@@ -172,58 +190,94 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 
   const deleteHandler = async (value) => {
     setLoading(true);
-    
+
     try {
       const result = await deleteProducts(value._id);
-      console.log(result)
+
       if (get(result, "data.message", "") === "Product mapped with Banner") {
         Modal.warning({
           title: "this product is mapped with Banner",
-          content:"If you sure delete this product.First delete this product in Banner"
-        })
+          content:
+            "If you sure delete this product.First delete this product in Banner",
+        });
+      } else {
+        notification.success({ message: "products deleted successfully" });
       }
-      else {
-         notification.success({ message: "products deleted successfully" });
-     
-      }
-       fetchData();
+      fetchData();
       setLoading(false);
-     
     } catch (err) {
       notification.error({ message: "Something went wrong" });
     }
   };
 
-  const props = {
-    name: "file",
-    multiple: true,
-    onChange(info) {
-      let raw = [];
-      get(info, "fileList", []).map(async (res) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(res.originFileObj);
-        reader.onload = () => {
-          raw.push(reader.result);
-          setImageName(isEmpty(imagename) ? raw : [...imagename, raw]);
-          setUploadError(false);
-        };
-      });
-    },
-    showUploadList: false,
-    onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
-    },
+  // const props = {
+  //   name: "file",
+  //   multiple: true,
+  //   onChange(info) {
+  //     let raw = imagename;
+  //     get(info, "fileList", []).map(async (res) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(res.originFileObj);
+  //       reader.onload = () => {
+  //         raw.push({ url: reader.result, name: "l" });
+  //         setImageName(raw);
+  //         setUploadError(false);
+  //       };
+  //     });
+  //   },
+  //   showUploadList: false,
+  //   onDrop(e) {
+  //     console.log("Dropped files", e.dataTransfer.files);
+  //   },
+  // };
+
+  const handleEditorChange = (value) => {
+    ref.current = value;
+    // setHighlights(ref.current.toString().replace(/<[^>]+>/g, ""))
   };
 
-  console.log(ref.current)
- 
- const handleEditorChange = (value) => {
-        ref.current= value;
-  }
-  
-    
- 
+  // const handleimageChange = (info) => {
+  //     let raw = imagename;
+  //     get(info, "fileList", []).map(async (res) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(res.originFileObj);
+  //       reader.onload = () => {
+  //         raw.push({url:reader.result,name:"l"});
+  //         setImageName(raw);
+  //         setUploadError(false);
+  //       };
+  //     });
+  //   }
 
+  const handleimageChange = (info) => {
+    get(info, "fileList", []).map(async (res) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(res.originFileObj);
+
+      reader.onload = () => {
+        // const newOne = {
+        // uid: imagename.length === 0 ? 1 : imagename.length + 1,
+        // name: res.name,
+        // url: reader.result
+        // }
+        // setImageName([ ...imagename,  newOne ]);
+        setImageName(reader.result);
+      };
+    });
+  };
+
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
   const columns = [
     {
       title: <h1 className="!text-md">Image</h1>,
@@ -232,6 +286,8 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
       render: (name) => {
         return (
           <Image
+            width={100}
+            height={100}
             src={name[0]}
             className="!w-[50px] !h-[50px] rounded-box"
             alt="not found"
@@ -313,6 +369,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
   ];
 
   const handleChange = (value) => {
+    setCategoryFil(value);
     form.setFieldsValue({ subcategoryname: "" });
     let temp = subCategory;
     setCatFilter(
@@ -321,11 +378,6 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
       })
     );
   };
-
-  const handleSave = (content) => {
-    console.log(content)
-    setValue(content)
-  }
 
   return (
     <div className="flex flex-col">
@@ -360,7 +412,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
                 />
               </div>
             </div>
-            <Drawer width={600} open={open}   destroyOnClose placement="right">
+            <Drawer width={600} open={open} destroyOnClose placement="right">
               <Form
                 className="flex flex-col gap-8 relative"
                 form={form}
@@ -390,7 +442,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
                   <Input size="large" placeholder="Enter product Price" />
                 </Form.Item>
                 <Form.Item
-                  name="categoryname"
+                  name="categoryId"
                   rules={[
                     {
                       required: true,
@@ -400,7 +452,9 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
                   <Select
                     placeholder="Select Category"
                     size="large"
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                   >
                     {category.map((res) => {
                       return (
@@ -412,17 +466,22 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
                   </Select>
                 </Form.Item>
                 <Form.Item
-                  name="subcategoryname"
+                  name="SubCategoryId"
                   rules={[
                     {
                       required: true,
                     },
                   ]}
                 >
-                  <Select placeholder="Select SubCategory" size="large">
+                  <Select
+                    placeholder="Select SubCategory"
+                    size="large"
+                    onChange={(e) => setSubCatFilter(e)}
+                  >
                     {catFilter.map((res) => {
+                      console.log(res);
                       return (
-                        <Option value={res.subcategoryname} key={res.id}>
+                        <Option value={res._id} key={res._id}>
                           {res.subcategoryname}
                         </Option>
                       );
@@ -437,81 +496,52 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
                     onChange={(e) => setValue(e)}
                     bounds={true}
                   /> */}
-                  <SunEditor   onChange={handleEditorChange} />
-                  <p>{values}</p>
+                  <SunEditor onChange={handleEditorChange} />
                 </Form.Item>
-
                 <Form.Item>
-                  <Tooltip>
-                    {!isEmpty(imagename) && (
-                      <div className="flex flex-row-reverse justify-start gap-x-10">
-                        <Tooltip
-                          onClick={() => setImageName([])}
-                          title="change image"
-                          className="!cursor-pointer !text-red-500"
-                        >
-                          <RedoOutlined />
-                        </Tooltip>
-                        <Image.PreviewGroup>
-                          <div className="flex w-[100%]  flex-wrap gap-x-2 gap-y-2">
-                            {imagename &&
-                              imagename.map((res, index) => {
-                                return (
-                                  <div
-                                    className="border group w-[100px] h-[100px] relative"
-                                    key={index}
-                                  >
-                                    <Image
-                                      src={res}
-                                      width={100}
-                                      height={100}
-                                      alt="not found"
-                                    />
-                                    <DeleteIcon
-                                      onClick={() => {
-                                        setImageName(
-                                          imagename.filter((result) => {
-                                            return result !== res;
-                                          })
-                                        );
-                                      }}
-                                      className="!text-md hidden group-hover:block absolute bottom-1 right-1 !text-white !cursor-pointer"
-                                    />
-                                  </div>
-                                );
-                              })}
-                          </div>
-                        </Image.PreviewGroup>
-                      </div>
-                    )}
-                    {imagename.length > 4 ? (
-                      ""
-                    ) : (
-                      <Dragger {...props} multiple={true}>
-                        <p className="ant-upload-drag-icon">
-                          <InboxOutlined
-                            className={`${uploadError && "!text-red-500"}`}
-                          />
-                        </p>
-                        {uploadError ? (
-                          <p className="ant-upload-hint !text-lg !text-red-500">
-                            please upload 5 images only
-                          </p>
-                        ) : (
-                          <>
-                            <p className="ant-upload-text">
-                              Click or drag category image to this area to
-                              upload
-                            </p>
-                            <p className="ant-upload-hint">
-                              Support for a multiple upload.
-                            </p>
-                          </>
-                        )}
-                      </Dragger>
-                    )}
-                  </Tooltip>
+                  <Upload.Dragger
+                    action={"https://localhost:3000/"}
+                    multiple
+                    listType="picture"
+                    accept=".png,.jpeg"
+                    beforeUpload={(file) => {
+                      return true;
+                    }}
+                    //  showUploadList={false}
+                    progress={{
+                      strokeWidth: 3,
+                      strokeColor: {
+                        "0%": "#f0f",
+                        "100%": "#ff0",
+                      },
+                    }}
+                    // iconRender={() => {
+                    //   return <Spin></Spin>;
+                    // }}
+                    onChange={handleimageChange}
+                  >
+                    Drag files here
+                    <br />
+                    <Button>Click Upload</Button>
+                  </Upload.Dragger>
                 </Form.Item>
+                {/* <div>
+                  {!isEmpty(imagename) && imagename.map((res,index) => {
+                    return <Image key={index} alt="product_images" src={res.url} width={100} height={100} />
+                  })  }
+                </div> */}
+
+                {/* <Form.Item>
+                    <Upload
+       
+        listType="picture-circle"
+      fileList={imagename}
+        
+        onChange={handleimageChange}
+      >
+        {imagename.length >= 8 ? null : uploadButton}
+      </Upload>
+                </Form.Item> */}
 
                 <div className="flex gap-5 justify-end ">
                   <Button
@@ -525,7 +555,6 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
                     type="Primary"
                     className="bg-[--third-color] shadow-xl !text-black"
                     htmlType="submit"
-                   
                   >
                     {updateId == "" ? "Save" : "Update"}
                   </Button>
@@ -534,7 +563,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
             </Drawer>
           </div>
         </div>
-        <Modal open={imagename.length > 5} footer={false}>
+        {/* <Modal open={imagename.length > 5} footer={false}>
           <Image.PreviewGroup>
             <div className="flex w-[100%]  flex-wrap gap-x-2 gap-y-2">
               {imagename &&
@@ -565,7 +594,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
                 })}
             </div>
           </Image.PreviewGroup>
-        </Modal>
+        </Modal> */}
       </div>
     </div>
   );
