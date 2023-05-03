@@ -16,11 +16,10 @@ export default async function productController(req, res) {
       try {
         console.log(req.body);
         const product = new Product({ ...req.body });
-
         const result = await product.save();
-
         return res.status(200).send({ data: result });
       } catch (err) {
+        console.log(err);
         return res.status(400).send({ message: "failed" });
       }
       break;

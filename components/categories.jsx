@@ -64,7 +64,7 @@ function Categories() {
                   className=" !w-[10vw] !h-[17vh] border py-5 cursor-pointer !flex flex-col items-center justify-center"
                   key={data.id}
                   onClick={() => {
-                    router.push({ pathname: "/allCat", query: data });
+                    router.push({ pathname: "/allCat", query: {cat_id:data._id} });
                   }}
                 >
                   <div className="flex justify-center items-center">

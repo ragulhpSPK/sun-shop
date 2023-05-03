@@ -8,26 +8,50 @@ import { AddCart } from "@/helper/Addcart";
 import Link from "next/link";
 import style from "../../styles/Home.module.css";
 import Image from "next/image";
-import { createCart,getAllCart } from "../../helper/utilities/apiHelper";
+import { createCart,getAllproducts } from "../../helper/utilities/apiHelper";
 import { message, notification } from "antd";
+import {get} from "lodash"
 
 export default function App() {
   const [addcart, setAddCart] = useState();
   const [current, setCurrentImage] = useState();
   const router = useRouter();
-  // const [cart,setCart]=useState([]);
-  const dispatch = useDispatch();
-
   const [img, setImg] = useState([]);
+  const [product, setProduct] = useState([])
+  const [filterData,setFilterData] = useState([]);
+
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
   });
-console.log(router.query.id)
+ 
+  
+  const fetchData = async() => {
+    try {
+      const result = await getAllproducts()
+    
+      setProduct(get(result,"data.data",[]))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+ 
+
+  
 
   useEffect(() => {
-    result.map((img) => setImg(img.image[0]));
-  });
+    fetchData()
+  
+  }, []);
+  
+  useEffect(() => {
+    setFilterData(product.filter(data => {
+  return data._id===router.query.id
+    }))
+    
+      filterData.map((img) => setImg(img.image[0]));
+  },[product])
 
   const handleClick = async () => {
      
@@ -35,9 +59,9 @@ console.log(router.query.id)
     try {
       const formData = {
         data: {
-          image:img,
-          name:result[0].producttitle,
-          total:result[0].price,
+          image:filterData[0].image,
+          name:filterData[0].title,
+          total:filterData[0].price,
           quantity:1,
         }
       }
@@ -62,14 +86,14 @@ console.log(router.query.id)
           <div className={`${styles.left_2} pl-24`}>
             <Image
               width={500}
-              height={100}
+              height={50}
               alt="logo"
               src={current || img}
-              className="h-[60vh]"
+              className="h-[50vh]"
             />
           </div>
           <div className={styles.left_1}>
-            {result&&AddCart.map((img) => {
+            {result&&filterData.map((img) => {
               return img.image.map((image, i) => {
                 return (
                   <div
@@ -94,19 +118,22 @@ console.log(router.query.id)
           </div>
         </div>
       </div>
-      {result&&AddCart.map((data, index) => {
+      {result&&filterData.map((data, index) => {
         return (
           <div className="pt-32 w-[60vw] pl-28" key={index}>
-            <h1 className="text-2xl font-semibold">{data.producttitle}</h1>
+            <h1 className="text-2xl font-semibold">{data.title}</h1>
             <p className="text-xl text-slate-800 pt-1">Rs:{data.price}</p>
             <h2 className="text-2xl pt-5 font-bold">Product Specifications</h2>
-            {data.highlights.map((res, index) => {
+            {data.highlight.split(',').map((res, index) => {
+              console.log(res)
               return (
                 <li className="text-xl pt-2" key={index}>
                   {res}
                 </li>
-              );
-            })}
+             )
+             })}
+               
+          
 
             <div className="pt-10 flex gap-7 justify-between w-fit pl-5">
               <button
@@ -116,7 +143,7 @@ console.log(router.query.id)
                 Add to Cart
               </button>
 
-              <button className="bg-[var(--second-color)] hover:bg-[--four-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] text-xl rounded-md h-[5vh] w-[6vw] px-3 py-2" onClick={()=>{router.push({pathname:"/cart",query:data})}}>
+              <button className="bg-[var(--second-color)] hover:bg-[--four-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] text-xl rounded-md h-[5vh] w-[6vw] px-3 py-2" onClick={()=>{router.push({pathname:"/cart",query:{_id:data._id}})}}>
                 Buy Now
               </button>
             </div>

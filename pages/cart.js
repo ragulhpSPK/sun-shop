@@ -12,6 +12,7 @@ import {
   updateCart,
   createOrder,
   getAllOrder,
+  getAllproducts,
 } from "../helper/utilities/apiHelper";
 import { get } from "lodash";
 import Navbar from "@/components/Navbar";
@@ -33,10 +34,11 @@ function Cart() {
   const [Buy, setBuy] = useState(false);
   const [inputs, setInputs] = useState({});
   const [order, setOrder] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   uuidv1();
 
   const handleCheck = () => {
-    console.log("click");
     setBuy(false);
 
     var today = new Date();
@@ -56,23 +58,26 @@ function Cart() {
         "-" +
         today.getDate(),
     };
-    console.log(v1options.time);
+
     const res = uuidv1(v1options);
     setUID(res);
   };
 
   const fetchData = async () => {
     try {
-      const result = [await getAllCart(), await getAllOrder()];
-      console.log(result);
+      const result = [
+        await getAllCart(),
+        await getAllOrder(),
+        await getAllproducts(),
+      ];
+
       setProdut(get(result, "[0].data.message"));
       setOrder(get(result, "[1].data.message"));
+      setAllProducts(get(result, "[2].data.data"));
     } catch (err) {
       console.log(err);
     }
   };
-
-  console.log("price", price);
 
   useEffect(() => {
     fetchData();
@@ -82,8 +87,6 @@ function Cart() {
 
     setPrice(bqty * router.query.price);
   }, [router.query, bqty]);
-
-  console.log(router.query);
 
   const deleteHandler = async (data) => {
     try {
@@ -121,7 +124,7 @@ function Cart() {
 
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  console.log(Buy, "nutjnr");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     Buy === false ? setBuy(true) : Buy === true ? setBuy(false) : "";
@@ -175,7 +178,7 @@ function Cart() {
                                   width={100}
                                   height={100}
                                   alt="logo"
-                                  src={data.image}
+                                  src={data.image[0]}
                                   className="w-20"
                                 />
                               </td>
@@ -251,63 +254,76 @@ function Cart() {
         </div>
       ) : (
         <div className="flex justify-between w-[85vw]">
-          <table
-            className={`table w-[60vw] border m-auto  mt-10`}
-            key={router.query.id}
-          >
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <Image
-                    src={router.query.image}
-                    alt="not found"
-                    width={70}
-                    height={50}
-                  />
-                </td>
+          {allProducts
+            .filter((data) => {
+              return data._id === router.query._id;
+            })
+            .map((res) => {
+              return (
+                <>
+                  <table
+                    className={`table w-[60vw] border m-auto  mt-10`}
+                    key={res._id}
+                  >
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Image
+                            src={res.image[0]}
+                            alt="not found"
+                            width={70}
+                            height={50}
+                          />
+                        </td>
 
-                <td>{router.query.producttitle}</td>
-                <td>
-                  <div className="flex justify-center items-center">
-                    <InputNumber
-                      min={1}
-                      max={5}
-                      defaultValue={1}
-                      onChange={(e) => {
-                        setBqty(e);
-                        // handleChange(data._id, e);
-                      }}
-                      className="w-14"
-                    />
+                        <td>{res.title}</td>
+                        <td>
+                          <div className="flex justify-center items-center">
+                            <InputNumber
+                              min={1}
+                              max={5}
+                              defaultValue={1}
+                              onChange={(e) => {
+                                setBqty(e);
+                                // handleChange(data._id, e);
+                              }}
+                              className="w-14"
+                            />
+                          </div>
+                        </td>
+
+                        <td>{res.price}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="h-[80vh]">
+                    <div className={`${check ? "hidden" : "block"} pt-10 `}>
+                      <div className="h-[15vh] w-[10vw] bg-black/90 flex flex-col items-center justify-around">
+                        <p className="text-xl text-[#fff]">
+                          Total Price:{bqty * res.price}
+                        </p>
+                        <button
+                          className="text-xl text-[#fff] bg-[--third-color] px-3 py-2 rounded-md hover:bg-[--second-color]"
+                          onClick={() => {
+                            setCheck(true);
+                          }}
+                        >
+                          CheckOut
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </td>
-                <td>{router.query.price}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="h-[80vh]">
-            <div className={`${check ? "hidden" : "block"} pt-10 `}>
-              <div className="h-[15vh] w-[10vw] bg-black/90 flex flex-col items-center justify-around">
-                <p className="text-xl text-[#fff]">Total Price:{price}</p>
-                <button
-                  className="text-xl text-[#fff] bg-[--third-color] px-3 py-2 rounded-md hover:bg-[--second-color]"
-                  onClick={() => {
-                    setCheck(true);
-                  }}
-                >
-                  CheckOut
-                </button>
-              </div>
-            </div>
-          </div>
+                </>
+              );
+            })}
         </div>
       )}
 

@@ -119,7 +119,7 @@ function Products({ content }) {
 
   let result = products.filter((res) => {
     return (
-      // res.title.toString().toLowerCase().includes(data.toString().toLowerCase()) ||
+      res.title.toString().toLowerCase().includes(data.toString().toLowerCase()) ||
       res.categoryname.toLowerCase().includes(data) ||
       res.subcategoryname.toLowerCase().includes(data)
     );
@@ -131,21 +131,21 @@ function Products({ content }) {
 
       try {
         const formdata = {
-          data: {
-            title: value.title,
-            categoryname: category.filter((data) => {
-              return data._id === catFil;
-            })[0].name,
-            subcategoryname: subCategory.filter((data) => {
-              return data._id === subCatFilter;
-            })[0].subcategoryname,
-            price: value.price,
-            categoryId: value.categoryId,
-            SubCategoryId: value.SubCategoryId,
-            image: imagename,
-            highlight: ref.current.toString().replace(/<[^>]+>/g, ""),
-          },
+        
+          title: value.title,
+          categoryname: category.filter((data) => {
+            return data._id === catFil;
+          })[0].name,
+          subcategoryname: subCategory.filter((data) => {
+            return data._id === subCatFilter;
+          })[0].subcategoryname,
+          price: value.price,
+          categoryId: value.categoryId,
+          SubCategoryId: value.SubCategoryId,
+          image: imagename,
+          highlight: ref.current.toString().replace(/<[^>]+>/g, ""),
         };
+       
 
         await createProducts(formdata);
         notification.success({ message: "products added successfully" });

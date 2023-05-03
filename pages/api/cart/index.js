@@ -17,11 +17,13 @@ export default async function cartController(req, res) {
       break;
     case "POST":
       {
+        console.log(req.body);
         try {
           const cart = await new Cart({ ...req.body.data });
           const result = await cart.save();
           return res.status(200).send({ message: result });
         } catch (err) {
+          console.log("errR", err);
           return res.status(500).send({ message: "failed" });
         }
       }
