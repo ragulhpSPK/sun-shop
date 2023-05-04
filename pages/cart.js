@@ -35,7 +35,9 @@ function Cart() {
   const [inputs, setInputs] = useState({});
   const [order, setOrder] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const [id, setId] = useState([]);
+  const [buyId, setBuyId] = useState("");
   uuidv1();
 
   const handleCheck = () => {
@@ -65,15 +67,10 @@ function Cart() {
 
   const fetchData = async () => {
     try {
-      const result = [
-        await getAllCart(),
-        await getAllOrder(),
-        await getAllproducts(),
-      ];
+      const result = [await getAllCart(), await getAllproducts()];
 
       setProdut(get(result, "[0].data.message"));
-      setOrder(get(result, "[1].data.message"));
-      setAllProducts(get(result, "[2].data.data"));
+      setAllProducts(get(result, "[1].data.data"));
     } catch (err) {
       console.log(err);
     }
@@ -87,6 +84,15 @@ function Cart() {
 
     setPrice(bqty * router.query.price);
   }, [router.query, bqty]);
+
+  useEffect(() => {
+    setId(
+      product &&
+        product.map((data) => {
+          return data._id;
+        })
+    );
+  }, [product]);
 
   const deleteHandler = async (data) => {
     try {
@@ -133,6 +139,7 @@ function Cart() {
         data: {
           orderId: UID,
           customer: inputs.name,
+          productname: get(product, "[0].name"),
           address: inputs.message,
           total: !Buy ? prices : price,
           status: "pending",
@@ -368,16 +375,38 @@ function Cart() {
                 cols={7}
                 onChange={handleChangevalue}
               />
-              <button
-                className={styles.button_submit}
-                onClick={() => {
-                  handleCheck();
-                  setBuy(false);
-                  router.push({ pathname: "/order/UID", query: order });
-                }}
-              >
-                CheckOut
-              </button>
+              {!Buy ? (
+                <button
+                  className={styles.button_submit}
+                  onClick={() => {
+                    handleCheck();
+                    setBuy(false);
+
+                    router.push({
+                      pathname: `orders/${id}`,
+                      query: id,
+                    });
+                  }}
+                >
+                  CheckOut
+                </button>
+              ) : (
+                <button
+                  className={styles.button_submit}
+                  onClick={() => {
+                    handleCheck();
+                    setBuy(false);
+
+                    router.push({
+                      pathname: `orders/${id}`,
+                      query: id,
+                    });
+                  }}
+                >
+                  CheckOut
+                </button>
+              )}
+
               <CloseOutlined
                 className="text-black absolute top-0 right-0 pr-2"
                 color=""

@@ -6,6 +6,8 @@ import Bestdeals from "@/components/bestdeals";
 import Topproducts from "@/components/topproducts";
 import ProductFilter from "@/components/productFilter";
 import { useSelector } from "react-redux";
+import Loading from "./loading";
+import { Suspense } from "react";
 
 export default function Home() {
   const result = useSelector((data) => {
@@ -25,7 +27,10 @@ export default function Home() {
           <ProductFilter />
         ) : (
           <>
-            <Swiper />
+            <Suspense fallback={<Loading />}>
+              <Swiper />
+            </Suspense>
+
             <Delivery />
             <Categories />
             <Bestdeals />

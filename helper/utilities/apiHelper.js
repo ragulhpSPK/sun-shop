@@ -80,7 +80,7 @@ export const createCart = (formData) => {
 };
 
 export const getAllCart = () => {
-  return axios.get("api/cart");
+  return axios.get("/api/cart");
 };
 
 export const updateCart = (formData) => {

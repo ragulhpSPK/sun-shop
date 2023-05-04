@@ -43,7 +43,7 @@ function AllCat() {
   const { Meta } = Card;
   const [priceval, setPriceVal] = useState([]);
 
-  const [priceFilter, setPriceFilter] = useState([]);
+  const [priceFilter, setPriceFilter] = useState();
 
   const fetchData = async () => {
     try {
@@ -65,7 +65,44 @@ function AllCat() {
   }, []);
 
   useEffect(() => {
-    if (get(router, "query.cat_id", "") && get(router, "query.subcat_id", "")) {
+    if (
+      get(router, "query.cat_id", "") &&
+      get(router, "query.subcat_id", "") &&
+      get(router, "query.price", "")
+    ) {
+      setFilerProduct(
+        products
+          .filter((product) => {
+            return (
+              product.categoryId === router.query.cat_id &&
+              product.SubCategoryId === router.query.subcat_id
+            );
+          })
+          .sort((a, b) => {
+            return get(router, "query.price", "") === "high"
+              ? b.price - a.price
+              : a.price - b.price;
+          })
+      );
+    } else if (
+      get(router, "query.cat_id", "") &&
+      get(router, "query.price", "")
+    ) {
+      setFilerProduct(
+        products
+          .filter((product) => {
+            return product.categoryId === router.query.cat_id;
+          })
+          .sort((a, b) => {
+            return get(router, "query.price", "") === "high"
+              ? b.price - a.price
+              : a.price - b.price;
+          })
+      );
+    } else if (
+      get(router, "query.cat_id", "") &&
+      get(router, "query.subcat_id", "")
+    ) {
       setFilerProduct(
         products.filter((product) => {
           return (
@@ -74,35 +111,21 @@ function AllCat() {
           );
         })
       );
+      setPriceFilter();
     } else if (get(router, "query.cat_id", "")) {
       setFilerProduct(
         products.filter((product) => {
           return product.categoryId === router.query.cat_id;
         })
       );
+      setPriceFilter();
     }
     setId(router.query.cat_id);
-
-    if (priceFilter === "1") {
-      setPriceDummy(false);
-      priceDummy
-        ? router.push({
-            pathname: "/allCat",
-            query: { cat_id: catIt },
-          })
-        : router.push({ pathname: "/allCat", query: { id: 1 } });
-      filerProduct.sort((a, b) => (a.price > b.price ? 1 : -1));
-      setPriceVal(filerProduct);
-    } else if (priceFilter === "2") {
-      router.push({ pathname: "/allCat", query: { id: 2 } });
-      filerProduct.sort((a, b) => (a.price < b.price ? 1 : -1));
-      setPriceVal(filerProduct);
-    }
   }, [
     get(router, "query.cat_id", ""),
-    products,
     get(router, "query.subcat_id", ""),
-    priceFilter,
+    get(router, "query.price", ""),
+    products,
   ]);
 
   const handleFilter = (catIt) => {
@@ -116,6 +139,7 @@ function AllCat() {
     } catch (e) {
       console.log(e);
     }
+    setPriceDummy(false);
   };
 
   const handleClick = async (id) => {
@@ -154,6 +178,23 @@ function AllCat() {
     }
   };
   // filerProduct.sort((a, b) => (a.price > b.price ? 1 : -1));
+
+  const handlePriceChange = (e) => {
+    try {
+      setPriceFilter(e);
+      setId(router.query.cat_id);
+      router.push({
+        pathname: "/allCat",
+        query: {
+          cat_id: router.query.cat_id,
+          subcat_id: router.query.subcat_id,
+          price: e,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -219,7 +260,6 @@ function AllCat() {
                   value={dummy}
                   placeholder="Filter by Sub Category"
                   onChange={(e) => {
-                    // setPriceFilter("");
                     handleSubCategoryFilterChange(e);
                   }}
                 >
@@ -242,16 +282,13 @@ function AllCat() {
                   className="!w-[20vw]  shadow-inner  rounded-md"
                   size="large"
                   placeholder="Filter by price"
+                  value={priceFilter}
                   onChange={(e) => {
-                    setPriceFilter(e);
+                    handlePriceChange(e);
                   }}
                 >
-                  <Select.Option value={`${priceDummy ? "" : "1"}`}>
-                    Low to High
-                  </Select.Option>
-                  <Select.Option value={`${priceDummy ? "" : "2"}`}>
-                    High to Low
-                  </Select.Option>
+                  <Select.Option value={`low`}>Low to High</Select.Option>
+                  <Select.Option value={`high`}>High to Low</Select.Option>
                 </Select>
               </div>
 

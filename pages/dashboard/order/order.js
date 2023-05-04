@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminNavbar from "../shared/AdminNavbar";
 import Sidenavbar from "../shared/Sidenavbar";
-import { Table } from "antd";
+import { Select, Table } from "antd";
 import { getAllOrder } from "../../../helper/utilities/apiHelper";
 import { get } from "lodash";
 
@@ -61,7 +61,11 @@ function Order() {
       dataindex: "status",
       key: "status",
       render: (name) => {
-        return <p>{name.status}</p>;
+        return (
+          <Select placeholder="Select order status" className="w-[8vw]">
+            <Select.Option>Shipped</Select.Option>
+          </Select>
+        );
       },
     },
   ];

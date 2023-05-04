@@ -38,8 +38,6 @@ export default function App() {
 
  
 
-  
-
   useEffect(() => {
     fetchData()
   
@@ -51,7 +49,9 @@ export default function App() {
     }))
     
       filterData.map((img) => setImg(img.image[0]));
-  },[product])
+  }, [product])
+  
+  console.log(filterData,"edfjxm,")
 
   const handleClick = async () => {
      
@@ -62,10 +62,10 @@ export default function App() {
           image:filterData[0].image,
           name:filterData[0].title,
           total:filterData[0].price,
-          quantity:1,
+          quantity: 1,
+          price:filterData[0].price,
         }
       }
-    // router.push({ pathname: "/order", query: formData });
    
       await createCart(formData);
       notification.success({message:"cart added successfully"})
