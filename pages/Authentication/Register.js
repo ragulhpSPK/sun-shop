@@ -3,9 +3,11 @@ import { Modal, Form, Input, Button, Image, notification } from "antd";
 import Login from "./Login";
 import { useState } from "react";
 // import { createMessage } from "../../helper/utilities/apiHelper";
-import { initFirebase } from "../firebaseConfig";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
+import { auth } from "../firebaseConfig"
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
 
 function Register() {
   const [form] = Form.useForm();
@@ -16,28 +18,28 @@ function Register() {
   const [otpId, setOtpId] = useState(636363);
   const [values, setvalues] = useState("");
 
-  const app = initFirebase();
-  console.log(app);
+  console.log(auth.currentUser)
 
-  const handleFinish = async (value) => {
+  const handleFinish = async () => {
     // try {
     //   await createMessage(value);
     //   notification.success({ message: "data added successfully" });
     // } catch (err) {
     //   notification.error({ message: "Something went wrong" });
     // }
+
     try {
-      const result = await firebase.auth().signInWithPhoneNumber(phoneNumber);
-      setVerificationId(result.verificationId);
+      const recaptchaVerifier = new  RecaptchaVerifier("recaptcha", {}, auth.config)
+      console.log(recaptchaVerifier)
+      const confirmation = await signInWithPhoneNumber(auth.config, values, recaptchaVerifier)
+      console.log(confirmation,"erhu")
     } catch (err) {
-      console.log(err);
-      setErrorMessage(err.message);
+      console.log(err)
     }
+   
   };
 
-  console.log(verificationId);
-
-  console.log(values.length);
+ 
 
   return (
     <div>

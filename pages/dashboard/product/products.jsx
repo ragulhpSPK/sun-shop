@@ -56,6 +56,7 @@ function Products({ content }) {
   const [highlight, setHighlights] = useState([]);
   const [subCatFilter, setSubCatFilter] = useState([]);
   const ref = useRef;
+  const [images, setImages] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -142,7 +143,7 @@ function Products({ content }) {
           price: value.price,
           categoryId: value.categoryId,
           SubCategoryId: value.SubCategoryId,
-          image: imagename,
+          image: images,
           highlight: ref.current.toString().replace(/<[^>]+>/g, ""),
         };
        
@@ -249,35 +250,53 @@ function Products({ content }) {
   //     });
   //   }
 
-  const handleimageChange = (info) => {
-    get(info, "fileList", []).map(async (res) => {
+  // const handleimageChange = (info) => {
+  //   get(info, "fileList", []).map(async (res) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(res.originFileObj);
+
+  //     reader.onload = () => {
+  //       // const newOne = {
+  //       // uid: imagename.length === 0 ? 1 : imagename.length + 1,
+  //       // name: res.name,
+  //       // url: reader.result
+  //       // }
+  //       // setImageName([ ...imagename,  newOne ]);
+  //       setImageName(reader.result);
+  //     };
+  //   });
+  // };
+
+  const handleFileInputChange = (event) => {
+    const files = event.target.files;
+    const allImages = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const reader = new FileReader();
-      reader.readAsDataURL(res.originFileObj);
 
-      reader.onload = () => {
-        // const newOne = {
-        // uid: imagename.length === 0 ? 1 : imagename.length + 1,
-        // name: res.name,
-        // url: reader.result
-        // }
-        // setImageName([ ...imagename,  newOne ]);
-        setImageName(reader.result);
+      reader.onloadend = () => {
+        const dataURL = reader.result;
+        allImages.push(dataURL);
+        setImages(allImages);
       };
-    });
-  };
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+      reader.readAsDataURL(file);
+    }
+    };
+
+  // const uploadButton = (
+  //   <div>
+  //     <PlusOutlined />
+  //     <div
+  //       style={{
+  //         marginTop: 8,
+  //       }}
+  //     >
+  //       Upload
+  //     </div>
+  //   </div>
+  // );
   const columns = [
     {
       title: <h1 className="!text-md">Image</h1>,
@@ -499,7 +518,7 @@ function Products({ content }) {
                   <SunEditor onChange={handleEditorChange} />
                 </Form.Item>
                 <Form.Item>
-                  <Upload.Dragger
+                  {/* <Upload.Dragger
                     action={"https://localhost:3000/"}
                     multiple
                     listType="picture"
@@ -523,7 +542,12 @@ function Products({ content }) {
                     Drag files here
                     <br />
                     <Button>Click Upload</Button>
-                  </Upload.Dragger>
+                  </Upload.Dragger> */}
+
+<input type="file" multiple onChange={handleFileInputChange} />
+      {images.map((image, index) => (
+        <Image key={index} src={image} alt={`image-${index}`} />
+      ))}
                 </Form.Item>
                 {/* <div>
                   {!isEmpty(imagename) && imagename.map((res,index) => {

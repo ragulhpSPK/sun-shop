@@ -61,7 +61,7 @@ function Orders() {
         return data._id === router.query.id.split(",")[1] || router.query.id;
       })
     );
-  }, [products]);
+  }, [products,router.query.id]);
 
 
 

@@ -48,10 +48,14 @@ export default function App() {
   return data._id===router.query.id
     }))
     
-      filterData.map((img) => setImg(img.image[0]));
-  }, [product])
+      
+  }, [product, router.query.id])
   
-  console.log(filterData,"edfjxm,")
+  useEffect(() => {
+    filterData.map((img) => setImg(img.image[0]));
+  },[filterData])
+  
+
 
   const handleClick = async () => {
      
