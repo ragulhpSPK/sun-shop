@@ -131,6 +131,8 @@ function Cart() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  console.log(product, "dpru");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     Buy === false ? setBuy(true) : Buy === true ? setBuy(false) : "";
@@ -139,10 +141,15 @@ function Cart() {
         data: {
           orderId: UID,
           customer: inputs.name,
-          productname: get(product, "[0].name"),
+          productname: product.map((data) => {
+            return data.name + data.name;
+          }),
           address: inputs.message,
           total: !Buy ? prices : price,
           status: "pending",
+          price: product.map((data) => {
+            return data.price + data.price;
+          }),
         },
       };
       await createOrder(formData);
@@ -151,6 +158,16 @@ function Cart() {
       notification.failure({ message: "something went wrong" });
     }
   };
+
+  const BuyId = allProducts
+    .filter((data) => {
+      return data._id === router.query._id;
+    })
+    .map((res) => {
+      return res._id;
+    });
+
+  console.log(BuyId);
 
   return (
     <div>
@@ -398,8 +415,8 @@ function Cart() {
                     setBuy(false);
 
                     router.push({
-                      pathname: `orders/${id}`,
-                      query: id,
+                      pathname: `orders/${BuyId}`,
+                      query: BuyId,
                     });
                   }}
                 >

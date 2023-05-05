@@ -111,3 +111,9 @@ export const deleteOrder = (formData) => {
 };
 
 // Order Ended
+
+// Auth Started
+
+export const createMessage = (formData) => {
+  return axios.post("/api/auth", formData);
+};

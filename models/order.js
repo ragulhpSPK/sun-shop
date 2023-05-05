@@ -12,7 +12,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
     },
     productname: {
-      type: String,
+      type: Array,
+    },
+    price: {
+      type: Array,
     },
     total: {
       type: Number,

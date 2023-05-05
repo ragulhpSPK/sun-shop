@@ -7,13 +7,15 @@ import { useSelector } from "react-redux";
 import { SubCategory } from "../helper/Subcategory";
 import { Category } from "@/helper/categories";
 import { useRouter } from "next/router";
-import { Input } from "antd";
+import { Button, Input, Modal } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { addSearch } from "@/redux/searchSlice";
 import Image from "next/image";
 import { getAllCart } from "../helper/utilities/apiHelper";
 import { get } from "lodash";
+import Register from "../pages/Authentication/Register";
+import Login from "@/pages/Authentication/Login";
 
 function Navbar() {
   const { Search } = Input;
@@ -23,6 +25,8 @@ function Navbar() {
   const [data, setData] = useState([]);
   const router = useRouter();
   const dispatch = useDispatch();
+  const [register, setRegister] = useState(false);
+  const [login, setLogin] = useState(false);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -64,9 +68,23 @@ function Navbar() {
             <InstagramIcon className="mr-1" />
           </div>
           <div className="flex p-1 font-bold text-[var(--first-color)]">
-            <p className="pr-1 text-md text-white">Sign Up</p>
+            <button
+              className="pr-1 text-md font-medium text-white border-none"
+              onClick={() => {
+                setRegister(!register);
+              }}
+            >
+              Sign Up
+            </button>
             <Divider orientation="vertical" color="white" />
-            <p className="pl-1 text-md text-white">Login</p>
+            <button
+              className="pl-1 text-md font-medium text-white border-none"
+              onClick={() => {
+                setLogin(!login);
+              }}
+            >
+              Login
+            </button>
           </div>
         </div>
         <div className="w-screen flex justify-around items-center h-[60%]">
@@ -126,6 +144,24 @@ function Navbar() {
           </div>
         </div>
       </div>
+      <Modal
+        open={register}
+        width={1000}
+        footer={false}
+        onCancel={() => setRegister(!register)}
+      >
+        <Register />;
+      </Modal>
+      <Modal
+        open={login}
+        width={1000}
+        footer={false}
+        onCancel={() => {
+          setLogin(!login);
+        }}
+      >
+        <Login />;
+      </Modal>
     </div>
   );
 }

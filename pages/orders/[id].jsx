@@ -10,7 +10,7 @@ import ShareLocationRoundedIcon from "@mui/icons-material/ShareLocationRounded";
 import ShoppingBagRoundedIcon from "@mui/icons-material/ShoppingBagRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { useRouter } from "next/router";
-import { getAllCart } from "@/helper/utilities/apiHelper";
+import { getAllCart, getAllOrder } from "@/helper/utilities/apiHelper";
 import { useEffect } from "react";
 import { get } from "lodash";
 
@@ -23,39 +23,47 @@ function Orders() {
   const router = useRouter();
   const [products, setProducts] = useState([]);
   const [filteredProduct, setFilteredProduct] = useState([]);
-  const [routeId,setRouteId] = useState([])
-
+  const [routeId, setRouteId] = useState([]);
+  const [orders,setOrders]=useState([])
 
   const fetchData = async () => {
     try {
       const result = await getAllCart();
       setProducts(get(result, "data.message"));
+     
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+
+   
+
 
   useEffect(() => {
-  //  setRouteId(router.query.id.split(',').map(data => {
-  //   return data
-  //  }))
-    
-  //   console.log(routeId)
+    fetchData();
    
+    var total = 0;
+    products.map(data => {
+     total+= data.price
+   })
+    
+    setOrders(total)
+  
+  }, [products]);
+
+  
+
+
+  useEffect(() => {
     setFilteredProduct(
       products.filter((data) => {
-        return data._id === router.query.id.split(',')[1]
+        return data._id === router.query.id.split(",")[1] || router.query.id;
       })
     );
   }, [products]);
 
-  console.log(filteredProduct,"efcrje")
 
- 
 
   return (
     <div
@@ -174,28 +182,31 @@ function Orders() {
           },
         ]}
       />
-      <div
+      <div className="flex flex-col">
+ <div
         className="flex flex-col gap-[15px] h-[50vh] bg-white p-[10px]"
         id={styles.shadow3}
       >
-        <div>
-          <h1 className="text-2xl">Purchased Item</h1>
+        <h1 className="text-2xl">Purchased Item</h1>
+        {/* <div className="grid grid-cols-3">
           {filteredProduct.map((data) => {
-           
             return (
               <>
                 <p className="text-2xl text-slate-500">&#8377;{data.price}</p>
               </>
             );
           })}
-        </div>
+        </div> */}
 
-        <div className="bg-white  w-[20vw] flex items-center justify-center">
+        <div className="bg-white  w-[20vw] grid grid-cols-3 gap-4 items-center justify-center">
           {filteredProduct.map((data) => {
-        
             return (
               <>
-                <Image src={data.image} alt="order"/>
+                <div className="flex flex-col">
+                    <Image src={data.image} alt="order" width={100} height={100} />
+                  <p className="text-2xl text-slate-500">&#8377;{data.price}</p>
+                </div>
+              
               </>
             );
           })}
@@ -205,6 +216,9 @@ function Orders() {
           Cancel Order
         </button>
       </div>
+      <h1 className="text-2xl ">Total Price:{orders}</h1>
+      </div>
+     
     </div>
   );
 }
