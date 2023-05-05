@@ -5,7 +5,7 @@ import { useState } from "react";
 // import { createMessage } from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
-import  auth  from "../firebaseConfig"
+import { auth } from "../firebaseConfig"
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 
