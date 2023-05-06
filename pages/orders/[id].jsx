@@ -24,46 +24,38 @@ function Orders() {
   const [products, setProducts] = useState([]);
   const [filteredProduct, setFilteredProduct] = useState([]);
   const [routeId, setRouteId] = useState([]);
-  const [orders,setOrders]=useState([])
+  const [orders, setOrders] = useState([]);
+  const [getOrders, setGetOrders] = useState([]);
 
   const fetchData = async () => {
     try {
-      const result = await getAllCart();
-      setProducts(get(result, "data.message"));
-     
+      const result = await getAllOrder();
+      setProducts(get(result, "data.data", []));
     } catch (err) {
       console.log(err);
     }
   };
 
-
-   
-
+  console.log(products);
 
   useEffect(() => {
     fetchData();
-   
-    var total = 0;
-    products.map(data => {
-     total+= data.price
-   })
-    
-    setOrders(total)
-  
-  }, [products]);
+  }, []);
 
-  
+  // useEffect(() => {
+  //   setFilteredProduct(
+  //     products.filter((data) => {
+  //       return data._id === router.query.id.split(",")[1] || router.query.id;
+  //     })
+  //   );
 
+  //   var total = 0;
+  //   products.map(data => {
+  //    total+= data.price
+  //  })
 
-  useEffect(() => {
-    setFilteredProduct(
-      products.filter((data) => {
-        return data._id === router.query.id.split(",")[1] || router.query.id;
-      })
-    );
-  }, [products,router.query.id]);
-
-
+  //   setOrders(total)
+  // }, [products,router.query.id]);
 
   return (
     <div
@@ -182,13 +174,18 @@ function Orders() {
           },
         ]}
       />
-      <div className="flex flex-col">
- <div
-        className="flex flex-col gap-[15px] h-[50vh] bg-white p-[10px]"
-        id={styles.shadow3}
-      >
-        <h1 className="text-2xl">Purchased Item</h1>
-        {/* <div className="grid grid-cols-3">
+
+      {products.map((data) => {
+        console.log(data.image);
+        return (
+          <>
+            <div className="flex flex-col" key={data._id}>
+              <div
+                className="flex flex-col gap-[15px] h-[fit] bg-white p-[5vh]"
+                id={styles.shadow3}
+              >
+                <h1 className="text-2xl">Purchased Item</h1>
+                {/* <div className="grid grid-cols-3">
           {filteredProduct.map((data) => {
             return (
               <>
@@ -198,27 +195,48 @@ function Orders() {
           })}
         </div> */}
 
-        <div className="bg-white  w-[20vw] grid grid-cols-3 gap-4 items-center justify-center">
-          {filteredProduct.map((data) => {
-            return (
-              <>
-                <div className="flex flex-col">
-                    <Image src={data.image} alt="order" width={100} height={100} />
-                  <p className="text-2xl text-slate-500">&#8377;{data.price}</p>
-                </div>
-              
-              </>
-            );
-          })}
-        </div>
+                <div className="bg-white flex flex-col w-[20vw] ">
+                  <>
+                    <div className="grid grid-cols-4">
+                      {data.image.map((img) => {
+                        console.log(img[0]);
+                        return (
+                          <>
+                            <Image
+                              src={img[0]}
+                              alt="order"
+                              width={80}
+                              height={80}
+                            />
+                          </>
+                        );
+                      })}
+                    </div>
 
-        <button className="bg-red-600 !text-white p-[8px] h-[5vh] rounded-md">
-          Cancel Order
-        </button>
-      </div>
-      <h1 className="text-2xl ">Total Price:{orders}</h1>
-      </div>
-     
+                    <div className="grid grid-cols-4">
+                      {data.price.map((price) => {
+                        console.log(price);
+                        return (
+                          <>
+                            <p className="text-2xl text-slate-500">
+                              &#8377;{price}
+                            </p>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </>
+                </div>
+
+                <button className="bg-red-600 !text-white p-[8px] h-[5vh] rounded-md">
+                  Cancel Order
+                </button>
+              </div>
+              <h1 className="text-2xl pt-[5px]">Total Price:{data.total}</h1>
+            </div>
+          </>
+        );
+      })}
     </div>
   );
 }

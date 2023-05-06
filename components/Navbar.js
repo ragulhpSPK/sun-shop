@@ -60,7 +60,13 @@ function Navbar() {
 
   return (
     <div>
-      <div className="h-24 bg-[white] bg-fixed shadow-md shadow-slate-100 ">
+      <div
+        className={`h-24  bg-fixed ${
+          router.pathname.split("/").includes("allCat")
+            ? "!shadow-none"
+            : "shadow-md shadow-slate-100 bg-[white]"
+        }`}
+      >
         <div className=" bg-[#943074] text-white flex justify-around ">
           <div className="flex p-1">
             <p className="text-md font-bold text-white">follow us On</p>
@@ -100,7 +106,7 @@ function Navbar() {
           <div className="pt-2 relative lg:w-[36vw] xsm:w-[50vw] text-gray-600">
             <div className="pt-2 relative mx-auto  text-gray-600 h-[6vh] w-[42vw] ">
               <input
-                className="border-2 border-gray-300 bg-white px-5 pr-16 w-[80%] h-[100%] rounded-lg text-sm focus:outline-none"
+                className="rounded-lg shadow  bg-white px-5 pr-16 w-[80%] h-[100%] text-sm focus:outline-none"
                 type="search"
                 name="search"
                 placeholder="Search"
@@ -109,12 +115,12 @@ function Navbar() {
               />
               <button
                 type="submit"
-                className="absolute right-[21%] top-5   text-slate-500"
+                className="absolute right-[21%] top-[2vh]   text-slate-500"
                 onClick={() => {
                   router.push({ pathname: `/subcat`, query: data });
                 }}
               >
-                <SearchIcon className=" text-slate-700 text-[28px]" />
+                <SearchIcon className=" text-slate-700 text-[20px]" />
               </button>
             </div>
           </div>

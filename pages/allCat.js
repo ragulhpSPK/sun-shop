@@ -152,6 +152,9 @@ function AllCat() {
           name: products.filter((data) => {
             return data._id === id;
           })[0].title,
+          price: products.filter((data) => {
+            return data._id === id;
+          })[0].price,
           total: products.filter((data) => {
             return data._id === id;
           })[0].price,
@@ -197,11 +200,11 @@ function AllCat() {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="flex">
-        <div className="w-[16vw] shadow-xl h-[90vh] overflow-scroll pl-20 leading-10">
+        <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
           <Link href="/products">
-            <div className="flex items-center font-bold">
+            <div className="flex items-center font-bold pt-10">
               <span>
                 <ListIcon />
               </span>
@@ -244,8 +247,8 @@ function AllCat() {
             );
           })}
         </div>
-        <div className="flex flex-col w-[80vw]">
-          <div className="ml-10 mt-5 h-[8vh] flex justify-center items-center bg-white  ">
+        <div className="flex flex-col w-[80vw] m-auto ">
+          <div className="ml-10 mt-2 h-[8vh] flex justify-center items-center bg-white  ">
             <div className="flex gap-[5vw] pb-5">
               <div className="pt-[15px]">
                 <Select
@@ -291,121 +294,104 @@ function AllCat() {
                   <Select.Option value={`high`}>High to Low</Select.Option>
                 </Select>
               </div>
-
-              {/* <div className="pt-[15px]">
-                <Menu
-                  mode="horizontal"
-                  style={{
-                    width: 400,
-                    height: 55,
-                  }}
-                  className="shadow-xl !rounded-md flex relative !border !border-slate-300 !bg-white"
-                >
-                  <DownOutlined className="absolute right-4 top-[2vh]" />
-                  <SubMenu
-                    title="Price"
-                    style={{
-                      width: 400,
-                    }}
-                  >
-                    <Menu.Item>Price Low to high</Menu.Item>
-                    <Menu.Item>Price high to low</Menu.Item>
-                  </SubMenu>
-                </Menu>
-              </div> */}
             </div>
           </div>
-          <List
-            grid={{
-              gutter: 16,
-              xs: 1,
-              sm: 2,
-              md: 4,
-              lg: 4,
-              xl: 6,
-              xxl: 3,
-            }}
-            pagination={{
-              pageSize: 3,
-              align: "end",
-              position: "top",
-              size: "small",
-            }}
-            className="p-10"
-            dataSource={priceval.length > 0 ? priceval : filerProduct}
-            renderItem={(data, index) => {
-              return (
-                <List.Item key={index}>
-                  <div className="">
-                    <Card
-                      hoverable
-                      style={{
-                        width: 340,
-                        height: 380,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                      }}
-                      actions={[
-                        <div
-                          key={"key"}
-                          className="bg-[--third-color] rounded-sm ml-[15px] text-[20px] h-[5vh] w-[12vw] text-white flex items-center justify-center !border-none"
-                          onClick={() => {
-                            router.push({
-                              pathname: "/cart",
-                              query: { _id: data._id },
-                            });
-                          }}
-                        >
-                          Buy Now
-                        </div>,
-                        <div
-                          key={"key"}
-                          className="bg-[--third-color] h-[5vh] w-[3vw] mr-[15px] text-white flex items-center justify-center rounded-sm float-right"
-                        >
-                          <ShoppingCartOutlined
-                            style={{
-                              fontSize: "25px",
-                            }}
+          <div className="h-[90vh] overflow-y-scroll">
+            <List
+              grid={{
+                gutter: 16,
+                xs: 1,
+                sm: 2,
+                md: 3,
+                lg: 4,
+                xl: 4,
+                xxl: 5,
+              }}
+              pagination={{
+                pageSize: 20,
+                align: "end",
+                position: "top",
+                size: "small",
+              }}
+              className=" !w-[80vw]"
+              dataSource={priceval.length > 0 ? priceval : filerProduct}
+              renderItem={(data, index) => {
+                return (
+                  <List.Item key={index}>
+                    <div className="">
+                      <Card
+                        hoverable
+                        style={{
+                          width: 295,
+                          height: 340,
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          border: "none",
+                        }}
+                        className="shadow-md"
+                        actions={[
+                          <div
+                            key={"key"}
+                            className="bg-[--third-color] rounded-sm ml-[15px] text-[20px] h-[5vh] w-[10vw] text-white flex items-center justify-center !border-none"
                             onClick={() => {
-                              handleClick(data._id);
-                              // setProductId(data._id);
+                              router.push({
+                                pathname: "/cart",
+                                query: { _id: data._id },
+                              });
                             }}
-                          />
-                        </div>,
-                      ]}
-                    >
-                      <div
-                        onClick={() =>
-                          router.push({
-                            pathname: `/product/${data._id}`,
-                            query: { id: data._id },
-                          })
-                        }
-                        className="flex flex-col items-center "
+                          >
+                            Buy Now
+                          </div>,
+                          <div
+                            key={"key"}
+                            className="bg-[--third-color] h-[5vh] w-[3vw] mr-[15px] text-white flex items-center justify-center rounded-sm float-right"
+                          >
+                            <ShoppingCartOutlined
+                              style={{
+                                fontSize: "25px",
+                              }}
+                              onClick={() => {
+                                handleClick(data._id);
+                                // setProductId(data._id);
+                              }}
+                            />
+                          </div>,
+                        ]}
                       >
-                        <Image
-                          alt="example"
-                          src={data.image}
-                          width={200}
-                          height={200}
-                          preview={false}
-                          // style={{
-                          //   marginLeft: "50px",
-                          // }}
-                        />
-                        <h1 className="text-[16px]">{data.title}</h1>
+                        <div
+                          onClick={() =>
+                            router.push({
+                              pathname: `/product/${data._id}`,
+                              query: { id: data._id },
+                            })
+                          }
+                          className="flex flex-col items-center "
+                        >
+                          <Image
+                            alt="example"
+                            src={data.image[0]}
+                            width={140}
+                            height={140}
+                            preview={false}
+                            // style={{
+                            //   marginLeft: "50px",
+                            // }}
+                          />
+                          <h1 className="text-[16px] h-[7vh]">{data.title}</h1>
 
-                        <h1 className="text-[16px] font-bold">
-                          &#8377;{data.price}
-                        </h1>
-                      </div>
-                    </Card>
-                  </div>
-                </List.Item>
-              );
-            }}
-          ></List>
+                          <h1 className="text-[16px] !mt-[5px] font-bold ">
+                            &#8377;{data.price}
+                          </h1>
+                        </div>
+                      </Card>
+                    </div>
+                  </List.Item>
+                );
+              }}
+            ></List>
+          </div>
+
           {/* <div className="grid grid-cols-4 gap-y-5 w-[84vw] pt-8 pl-4">
             {filerProduct.map((data) => {
               return (

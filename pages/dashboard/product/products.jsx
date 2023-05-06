@@ -19,6 +19,8 @@ import {
   Upload,
   Tooltip,
   Drawer,
+  Checkbox,
+  Radio,
 } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
@@ -120,7 +122,10 @@ function Products({ content }) {
 
   let result = products.filter((res) => {
     return (
-      res.title.toString().toLowerCase().includes(data.toString().toLowerCase()) ||
+      res.title
+        .toString()
+        .toLowerCase()
+        .includes(data.toString().toLowerCase()) ||
       res.categoryname.toLowerCase().includes(data) ||
       res.subcategoryname.toLowerCase().includes(data)
     );
@@ -132,7 +137,6 @@ function Products({ content }) {
 
       try {
         const formdata = {
-        
           title: value.title,
           categoryname: category.filter((data) => {
             return data._id === catFil;
@@ -146,7 +150,6 @@ function Products({ content }) {
           image: images,
           highlight: ref.current.toString().replace(/<[^>]+>/g, ""),
         };
-       
 
         await createProducts(formdata);
         notification.success({ message: "products added successfully" });
@@ -211,61 +214,10 @@ function Products({ content }) {
     }
   };
 
-  // const props = {
-  //   name: "file",
-  //   multiple: true,
-  //   onChange(info) {
-  //     let raw = imagename;
-  //     get(info, "fileList", []).map(async (res) => {
-  //       const reader = new FileReader();
-  //       reader.readAsDataURL(res.originFileObj);
-  //       reader.onload = () => {
-  //         raw.push({ url: reader.result, name: "l" });
-  //         setImageName(raw);
-  //         setUploadError(false);
-  //       };
-  //     });
-  //   },
-  //   showUploadList: false,
-  //   onDrop(e) {
-  //     console.log("Dropped files", e.dataTransfer.files);
-  //   },
-  // };
-
   const handleEditorChange = (value) => {
     ref.current = value;
     // setHighlights(ref.current.toString().replace(/<[^>]+>/g, ""))
   };
-
-  // const handleimageChange = (info) => {
-  //     let raw = imagename;
-  //     get(info, "fileList", []).map(async (res) => {
-  //       const reader = new FileReader();
-  //       reader.readAsDataURL(res.originFileObj);
-  //       reader.onload = () => {
-  //         raw.push({url:reader.result,name:"l"});
-  //         setImageName(raw);
-  //         setUploadError(false);
-  //       };
-  //     });
-  //   }
-
-  // const handleimageChange = (info) => {
-  //   get(info, "fileList", []).map(async (res) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(res.originFileObj);
-
-  //     reader.onload = () => {
-  //       // const newOne = {
-  //       // uid: imagename.length === 0 ? 1 : imagename.length + 1,
-  //       // name: res.name,
-  //       // url: reader.result
-  //       // }
-  //       // setImageName([ ...imagename,  newOne ]);
-  //       setImageName(reader.result);
-  //     };
-  //   });
-  // };
 
   const handleFileInputChange = (event) => {
     const files = event.target.files;
@@ -283,20 +235,8 @@ function Products({ content }) {
 
       reader.readAsDataURL(file);
     }
-    };
+  };
 
-  // const uploadButton = (
-  //   <div>
-  //     <PlusOutlined />
-  //     <div
-  //       style={{
-  //         marginTop: 8,
-  //       }}
-  //     >
-  //       Upload
-  //     </div>
-  //   </div>
-  // );
   const columns = [
     {
       title: <h1 className="!text-md">Image</h1>,
@@ -423,11 +363,13 @@ function Products({ content }) {
             </div>
             <div className="pl-10">
               <div className="overflow-x-auto ">
+               
                 <Table
                   className="w-[80vw] "
                   columns={columns}
                   dataSource={result}
                   loading={loading}
+                  // rowSelection={rowSelection} 
                 />
               </div>
             </div>
@@ -498,7 +440,6 @@ function Products({ content }) {
                     onChange={(e) => setSubCatFilter(e)}
                   >
                     {catFilter.map((res) => {
-                      console.log(res);
                       return (
                         <Option value={res._id} key={res._id}>
                           {res.subcategoryname}
@@ -544,10 +485,20 @@ function Products({ content }) {
                     <Button>Click Upload</Button>
                   </Upload.Dragger> */}
 
-<input type="file" multiple onChange={handleFileInputChange} />
-      {images.map((image, index) => (
-        <Image key={index} src={image} alt={`image-${index}`} />
-      ))}
+                  <input
+                    type="file"
+                    multiple
+                    onChange={handleFileInputChange}
+                  />
+                  {images.map((image, index) => (
+                    <Image
+                      key={index}
+                      src={image}
+                      width={400}
+                      height={400}
+                      alt={`image-${index}`}
+                    />
+                  ))}
                 </Form.Item>
                 {/* <div>
                   {!isEmpty(imagename) && imagename.map((res,index) => {

@@ -4,10 +4,12 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function Footer() {
+  const router=useRouter()
   return (
-    <div className="h-[40vh] w-[100vw] mt-40">
+    <div className={`h-[40vh] w-[100vw] mt-40`}>
       <div className="grid grid-cols-4 gap-x-48 w-[80vw]  m-auto border-b border-gray-400 pb-5">
         <div className="flex flex-col gap-2 text-md font-medium">
           <h1 className="text-2xl font-semibold pb-2">Customer Service</h1>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import styles from "../styles/form.module.css";
 import { useRouter } from "next/router";
-import { Button, InputNumber, Table, notification } from "antd";
+import { Button, InputNumber, Select, Table, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import {
@@ -124,14 +124,13 @@ function Cart() {
       prices += data.quantity * data.total;
     });
 
-  const handleChangevalue = (event) => {
+  const handleChangevalue = (v, event) => {
+    console.log(v);
     const name = event.target.name;
     const value = event.target.value;
 
     setInputs((values) => ({ ...values, [name]: value }));
   };
-
-  console.log(product, "dpru");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,15 +140,37 @@ function Cart() {
         data: {
           orderId: UID,
           customer: inputs.name,
-          productname: product.map((data) => {
-            return data.name + data.name;
-          }),
+          productname: !Buy
+            ? product.map((data) => {
+                return data.name + data.name;
+              })
+            : allProducts.filter((data) => {
+                return data._id === router.query._id;
+              })[0].title,
+          cartId: !Buy
+            ? product.map((data) => {
+                return data._id;
+              })
+            : allProducts.filter((data) => {
+                return data._id === router.query._id;
+              })[0]._id,
+          image: !Buy
+            ? product.map((data) => {
+                return data.image;
+              })
+            : allProducts.filter((data) => {
+                return data._id === router.query._id;
+              })[0].image[0],
           address: inputs.message,
           total: !Buy ? prices : price,
           status: "pending",
-          price: product.map((data) => {
-            return data.price + data.price;
-          }),
+          price: !Buy
+            ? product.map((data) => {
+                return data.price;
+              })
+            : allProducts.filter((data) => {
+                return data._id === router.query._id;
+              })[0].price,
         },
       };
       await createOrder(formData);
@@ -159,6 +180,12 @@ function Cart() {
     }
   };
 
+  // console.log(
+  //   allProducts.filter((data) => {
+  //     return data._id === router.query._id;
+  //   })[0].price
+  // );
+
   const BuyId = allProducts
     .filter((data) => {
       return data._id === router.query._id;
@@ -167,7 +194,7 @@ function Cart() {
       return res._id;
     });
 
-  console.log(BuyId);
+  console.log(Buy);
 
   return (
     <div>
@@ -181,7 +208,7 @@ function Cart() {
                     product.map((data) => {
                       return (
                         <table
-                          className={`table w-[60vw] border m-auto  mt-10
+                          className={`table w-[60vw] border-2 h-[20vh] text-slate-700 border-slate-200 m-auto  mt-10
 						}`}
                           key={data._id}
                         >
@@ -197,7 +224,7 @@ function Cart() {
 
                           <tbody>
                             <tr>
-                              <td className="border-r">
+                              <td className="border-r border-slate-200 !w-[10vw]">
                                 <Image
                                   width={100}
                                   height={100}
@@ -207,8 +234,10 @@ function Cart() {
                                 />
                               </td>
 
-                              <td className="border-r">{data.name}</td>
-                              <td className="border-r">
+                              <td className="border-slate-200 border-r w-[40vw]">
+                                <p className="w-[40vw]">{data.name}</p>
+                              </td>
+                              <td className="border-slate-200 border-r w-[8vw]">
                                 <div className="flex justify-center items-center">
                                   <InputNumber
                                     min={1}
@@ -223,21 +252,21 @@ function Cart() {
                                 </div>
                               </td>
 
-                              <td className="border-r">
+                              <td className="border-slate-200 border-r w-[8vw]">
                                 Rs:{data.quantity * data.total}
                               </td>
 
-                              <td>
-                                <Button
+                              <td className="w-[8vw]">
+                                <button
                                   onClick={() => {
                                     // setDeleteId(data._id);
                                     deleteHandler(data._id);
                                   }}
-                                  className="!text-black hover:scale-90 duration-1000 hover:!text-bold"
+                                  className="!text-black text-sm hover:scale-95 h-[4vh] w-[5vw] rounded-md duration-1000 hover:!text-bold  hover:bg-[--third-color] hover:!text-white hover:shadow-inner hover:text-lg"
                                   type="text"
                                 >
                                   Remove
-                                </Button>
+                                </button>
                               </td>
                             </tr>
                           </tbody>
@@ -258,19 +287,20 @@ function Cart() {
               )}
             </div>
             <div
-              className={`mt-14 w-[15vw] h-[30vh] text-white ${
+              className={`mt-14 w-[18vw] h-[35vh] text-white ${
                 check ? "hidden" : "block"
               } `}
             >
-              <div className=" bg-black/90 h-[100%] text-xl pl-5 mt-6 flex flex-col justify-evenly rounded-md">
+              <div className=" bg-white h-[100%] text-[20px] uppercase border shadow-md text-slate-700 pl-5 mt-6 flex flex-col justify-evenly rounded-md">
+                <h1 className="font-bold text-slate-600">Order Summary</h1>
                 <p>Total Price:{prices}</p>
 
                 <p>Total Products:{product && product.length}</p>
                 <button
-                  className="bg-[var(--third-color)] w-[8vw] h-[5vh] text-[18px] hover:bg-[--fifth-color] duration-1000 scale-110 text-white rounded-sm hover:text-black font-medium"
+                  className="bg-[var(--third-color)] w-[8vw] h-[5vh] text-[18px] tracking-widest hover:bg-[--fifth-color] duration-1000 scale-110 text-white rounded-sm hover:text-black font-medium"
                   onClick={() => setCheck(true)}
                 >
-                  Buy Order
+                  CheckOut
                 </button>
               </div>
             </div>
@@ -392,6 +422,17 @@ function Cart() {
                 cols={7}
                 onChange={handleChangevalue}
               />
+
+              <Select
+                placeholder="Select Payment"
+                size="large"
+                className="!h-[5vh]"
+                onSelect={(v, e) => {
+                  handleChange(v, e);
+                }}
+              >
+                <Select.Option>Cash On Delivery</Select.Option>
+              </Select>
               {!Buy ? (
                 <button
                   className={styles.button_submit}

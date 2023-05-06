@@ -5,40 +5,64 @@ import { useState } from "react";
 // import { createMessage } from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
-import { Auth } from "../../firebase/firebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { authentication } from "../firebase";
 
 function Register() {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [verificationId, setVerificationId] = useState("");
-  const [otp, setOtp] = useState(false);
-  const [otpId, setOtpId] = useState(636363);
-  const [values, setvalues] = useState("");
+  const [otp, setOtp] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [expandForm, setExpandForm] = useState(false);
 
-  const handleFinish = async () => {
-    // try {
-    //   await createMessage(value);
-    //   notification.success({ message: "data added successfully" });
-    // } catch (err) {
-    //   notification.error({ message: "Something went wrong" });
-    // }
+  // const handleFinish = async () => {
+  //   // try {
+  //   //   await createMessage(value);
+  //   //   notification.success({ message: "data added successfully" });
+  //   // } catch (err) {
+  //   //   notification.error({ message: "Something went wrong" });
+  //   // }
+  // };
 
-    try {
-      const recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha",
-        {},
-        Auth.config
-      );
+  const generateRecaptchaVerifier = () => {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      "recaptacha-container",
+      {
+        size: "invisible",
+        callback: (response) => {
+          // reCAPTCHA solved, allow signInWithPhoneNumber.
+        },
+      },
+      authentication
+    );
+  };
 
-      const confirmation = await signInWithPhoneNumber(
-        Auth.config,
-        values,
-        recaptchaVerifier
-      );
-    } catch (err) {
-      console.log(err);
+  const requestOTP = (e) => {
+    e.preventDefault();
+    if (phoneNumber.length >= 12) {
+      setExpandForm(true);
+      generateRecaptchaVerifier();
+      let appVerfier = window.recaptchaVerifier;
+      signInWithPhoneNumber(authentication, phoneNumber, appVerfier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const verifyOtp = () => {
+    if (otp.length === 6) {
+      console.log("trigger");
+      let confirmationResult = window.confirmationResult;
+      confirmationResult.confirm(otp).then((result) => {
+        const user = result.user;
+        console.log(user);
+      });
     }
   };
 
@@ -65,7 +89,7 @@ function Register() {
                   style={{ maxWidth: 500 }}
                   form={form}
                   name="control-hooks"
-                  onFinish={handleFinish}
+                  // onFinish={handleFinish}
                 >
                   <Form.Item
                     name="number"
@@ -79,9 +103,8 @@ function Register() {
                       size="large"
                       placeholder="+91 9839288383"
                       className="!w-[15vw]"
-                      onChange={(e) => {
-                        setvalues(e.target.value);
-                      }}
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </Form.Item>
                   <p className="text-md !w-[25vw] text-base font-medium">
@@ -96,9 +119,7 @@ function Register() {
                       className={` bg-[--third-color] !w-[22vw] h-[5vh] !mt-[15px] text-xl -tracking-tighter !text-white hover:!border-none hover:!scale-105 duration-1000`}
                       htmlType="submit"
                       style={{ color: "white" }}
-                      onClick={() => {
-                        values.length === 0 ? setOtp(false) : setOtp(true);
-                      }}
+                      onClick={requestOTP}
                     >
                       Request Otp
                     </Button>
@@ -125,10 +146,10 @@ function Register() {
       )}
 
       <Modal
-        open={otp}
+        open={expandForm}
         footer={false}
         header={false}
-        onCancel={() => setOtp(!otp)}
+        onCancel={() => setExpandForm(!expandForm)}
         className="!w-[24vw] position top-[25vh] left-[10vw]"
       >
         <div
@@ -143,8 +164,11 @@ function Register() {
             Enter your OTP
           </label>
           <OtpInput
-            value={otpId}
-            onChange={setOtp}
+            value={otp}
+            onChange={(value) => {
+              setOtp(value);
+              verifyOtp();
+            }}
             numInputs={6}
             otpType="number"
             disabled={false}
@@ -152,7 +176,11 @@ function Register() {
             className={styles.opt_container}
             // renderSeparator={<span className="relative ">_ </span>}
             renderInput={(props) => (
-              <input {...props} className="border-2 px-4 py-2 mr-[8px]" />
+              <input
+                {...props}
+                className="border-2 h-10 !w-8 ml-2"
+                // onChange={verifyOtp}
+              />
             )}
           ></OtpInput>
           <button className="bg-[--third-color] w-full flex gap-1 items-center justify-center py-2.5 text-white rounded">
@@ -160,6 +188,7 @@ function Register() {
           </button>
         </div>
       </Modal>
+      <div id="recaptacha-container"></div>
     </div>
   );
 }

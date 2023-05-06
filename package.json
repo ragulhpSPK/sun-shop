@@ -25,7 +25,6 @@
     "daisyui": "^1.25.4",
     "dotenv": "^16.0.3",
     "firebase": "^9.21.0",
-    "firebase-auth": "^0.1.2",
     "jodit-react": "^1.3.39",
     "lint": "^1.1.2",
     "lodash": "^4.17.21",

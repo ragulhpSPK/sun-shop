@@ -14,7 +14,13 @@ const orderSchema = new mongoose.Schema(
     productname: {
       type: Array,
     },
+    cartId: {
+      type: Array,
+    },
     price: {
+      type: Array,
+    },
+    image: {
       type: Array,
     },
     total: {
