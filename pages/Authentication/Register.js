@@ -5,9 +5,8 @@ import { useState } from "react";
 // import { createMessage } from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
-import { auth } from "../firebaseConfig"
+import { Auth } from "../../firebase/firebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-
 
 function Register() {
   const [form] = Form.useForm();
@@ -18,8 +17,6 @@ function Register() {
   const [otpId, setOtpId] = useState(636363);
   const [values, setvalues] = useState("");
 
-  console.log(auth.currentUser)
-
   const handleFinish = async () => {
     // try {
     //   await createMessage(value);
@@ -29,17 +26,21 @@ function Register() {
     // }
 
     try {
-      const recaptchaVerifier = new  RecaptchaVerifier("recaptcha", {}, auth.config)
-      console.log(recaptchaVerifier)
-      const confirmation = await signInWithPhoneNumber(auth.config, values, recaptchaVerifier)
-      console.log(confirmation,"erhu")
-    } catch (err) {
-      console.log(err)
-    }
-   
-  };
+      const recaptchaVerifier = new RecaptchaVerifier(
+        "recaptcha",
+        {},
+        Auth.config
+      );
 
- 
+      const confirmation = await signInWithPhoneNumber(
+        Auth.config,
+        values,
+        recaptchaVerifier
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
