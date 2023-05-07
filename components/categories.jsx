@@ -12,16 +12,19 @@ import { getAllCatagory } from "../helper/utilities/apiHelper";
 import { useEffect } from "react";
 import { get } from "lodash";
 
-function Categories() {
+function Categories({loading,setLoading}) {
   const router = useRouter();
   const [category, setCategory] = useState([]);
 
   const fetchData = async () => {
     try {
+      setLoading(true)
       const result = await getAllCatagory();
       setCategory(get(result, "data.data"));
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false)
     }
   };
 

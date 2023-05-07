@@ -8,23 +8,32 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 import { getAllBanner } from "../helper/utilities/apiHelper";
 import { useEffect } from "react";
-import { get } from "lodash";
+import { get, set } from "lodash";
+import { Spin } from "antd"
+// import Home from "../pages/index"
 
-export default function App() {
+export default function Swipper({loading,setLoading}) {
   const [banner, setBanner] = useState([]);
+  // const [loadings, setLoadings] = useState(false)
 
   const fetchData = async () => {
     try {
+      setLoading(true)
       const result = await getAllBanner();
       setBanner(get(result, "data.data"));
+      
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false)
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  console.log(loading)
 
   let left = banner.filter((data) => {
     return data.status === "Left";
@@ -39,7 +48,9 @@ export default function App() {
   });
 
   return (
-    <div className="w-[80vw] m-auto flex ">
+    
+     
+ <div className="w-[80vw] m-auto flex ">
       <Swiper
         modules={[Navigation, Autoplay, Pagination]}
         className="myswiper w-[70%] m-auto"
@@ -99,6 +110,8 @@ export default function App() {
           );
         })}
       </div>
-    </div>
+      </div>
+    
+   
   );
 }

@@ -6,13 +6,22 @@ import Bestdeals from "@/components/bestdeals";
 import Topproducts from "@/components/topproducts";
 import ProductFilter from "@/components/productFilter";
 import { useSelector } from "react-redux";
-import Loading from "./loading";
-import { Suspense } from "react";
+import {Spin} from "antd"
+import { useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import SyncIcon from '@mui/icons-material/Sync';
+
+
 
 export default function Home() {
+
+  const [loading,setLoading]=useState(false)
   const result = useSelector((data) => {
     return data.search.searches;
   });
+
+  const antIcon = <SyncIcon style={{ fontSize: 40 }} className="animate-spin" />
+
 
   return (
     <>
@@ -23,21 +32,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <Spin spinning={loading} tip="Loading Data..." size="large" indicator={antIcon}>
         {result.length > 0 ? (
           <ProductFilter />
         ) : (
           <>
-            <Suspense fallback={<Loading />}>
-              <Swiper />
-            </Suspense>
-
+           
+                <Swiper loading={loading} setLoading={setLoading} />
+          
             <Delivery />
-            <Categories />
+            <Categories loading={loading} setLoading={setLoading} />
             <Bestdeals />
             <Topproducts />
           </>
         )}
-      </main>
+     
+        </Spin>
+        </main>
     </>
   );
 }

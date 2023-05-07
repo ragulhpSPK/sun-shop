@@ -5,7 +5,7 @@ import { Category } from "@/helper/categories";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { useState } from "react";
 import { useEffect } from "react";
-import { DownOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { DownOutlined, LoadingOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import {
   Card,
   Dropdown,
@@ -28,6 +28,8 @@ import {
 import { get, isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Spin } from 'antd'
+import SyncIcon from '@mui/icons-material/Sync';
 
 function AllCat() {
   const [active, setActive] = useState("");
@@ -42,11 +44,13 @@ function AllCat() {
   const router = useRouter();
   const { Meta } = Card;
   const [priceval, setPriceVal] = useState([]);
+  const [loading,setLoading]=useState([])
 
   const [priceFilter, setPriceFilter] = useState();
 
   const fetchData = async () => {
     try {
+      setLoading(true)
       const result = [
         await getAllCatagory(),
         await getAllSubCatagory(),
@@ -57,6 +61,8 @@ function AllCat() {
       setProducts(get(result, "[2].data.data", []));
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -199,8 +205,13 @@ function AllCat() {
     }
   };
 
+
+
+  const antIcon = <SyncIcon style={{ fontSize: 40 }} className="animate-spin" />
+
   return (
-    <div className="">
+    <Spin spinning={loading} size="large" tip="Loading data..." indicator={antIcon}>
+ <div className="">
       <div className="flex">
         <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
           <Link href="/products">
@@ -297,7 +308,8 @@ function AllCat() {
             </div>
           </div>
           <div className="h-[90vh] overflow-y-scroll">
-            <List
+              <List
+              
               grid={{
                 gutter: 16,
                 xs: 1,
@@ -416,6 +428,8 @@ function AllCat() {
         </div>
       </div>
     </div>
+    </Spin>
+   
   );
 }
 
