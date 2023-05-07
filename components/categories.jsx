@@ -30,7 +30,7 @@ function Categories({loading,setLoading}) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  },[]);
 
   return (
     <div className="w-screen pt-5">

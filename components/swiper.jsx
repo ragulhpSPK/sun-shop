@@ -31,7 +31,7 @@ export default function Swipper({loading,setLoading}) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  },[]);
 
   console.log(loading)
 

@@ -21,6 +21,7 @@ import {
   Drawer,
   Checkbox,
   Radio,
+  Switch,
 } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
@@ -32,12 +33,13 @@ import {
   getAllSubCatagory,
   getAllproducts,
   updateProducts,
-  deleteProducts,
+  deleteProducts,createTopProducts, getAllTopProducts,
 } from "../../../helper/utilities/apiHelper";
 import { get, isEmpty } from "lodash";
 import dynamic from "next/dynamic";
 import AdminNavbar from "../shared/AdminNavbar";
 import "suneditor/dist/css/suneditor.min.css";
+import { ContactSupportOutlined } from "@mui/icons-material";
 
 function Products({ content }) {
   const [edit, setEdit] = useState(false);
@@ -57,8 +59,11 @@ function Products({ content }) {
   const [catFil, setCategoryFil] = useState([]);
   const [highlight, setHighlights] = useState([]);
   const [subCatFilter, setSubCatFilter] = useState([]);
+  const [addtop, setAddTop] = useState();
   const ref = useRef;
   const [images, setImages] = useState([]);
+  const [allTopProducts,setAllTopProducts]=useState([])
+  const [allTopProductsId,setAllTopProductsId]=useState([])
 
   const [loading, setLoading] = useState(false);
 
@@ -102,12 +107,14 @@ function Products({ content }) {
         await getAllCatagory(),
         await getAllSubCatagory(),
         await getAllproducts(),
+        await getAllTopProducts()
       ];
-
+console.log(result)
       setCategory(get(result, "[0].data.data", []));
       setSubCategory(get(result, "[1].data.data", []));
       setCatFilter(get(result, "[1].data.data", []));
       setProducts(get(result, "[2].data.data", []));
+      setAllTopProducts(get(result, "[3].data.message", []))
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -192,6 +199,9 @@ function Products({ content }) {
     }
   };
 
+  
+ 
+
   const deleteHandler = async (value) => {
     setLoading(true);
 
@@ -237,9 +247,71 @@ function Products({ content }) {
     }
   };
 
+
+
+
+  console.log(addtop, "eruheur");
+  const changeAddTop = async(checked) => {
+    if (checked === true) {
+      try {
+        const formData = {
+       
+            image:products.filter(data => {
+              return data._id===addtop
+             })[0].image[0],
+              productId:products.filter(data => {
+                return data._id===addtop
+               })[0]._id,
+             ProductTitle:products.filter(data => {
+              return data._id===addtop
+             })[0].title,
+       
+         
+        }
+        await createTopProducts(formData)
+        notification.success({message:"Top ADDed"})
+      } catch (err) {
+        console.log(err)
+        notification.error({message:"Something went wrong"})
+     }
+   }
+  }
+
+  // console.log(products&&products.filter(data => {
+  //   return data._id===addtop
+  //  })[0].image[0],"ewjnjkn")
+
+
   const columns = [
     {
-      title: <h1 className="!text-md">Image</h1>,
+      title: <h1 className="!text-sm">Add top products</h1>,
+      key: "add",
+      render: (name) => {
+        setAddTop(name._id)
+        console.log(name._id,"name")
+        return (
+          <p>
+            <Switch
+             
+              // onChange={
+              //   () => {
+              //     setAddTop(name._id);
+              //   changeAddTop()
+              // }}
+            
+              // checked={datasid==name._id?true:false}
+              onChange={changeAddTop} 
+              onClick={() => {
+                    setAddTop(name._id);
+                  
+                }}
+            />
+          </p>
+        );
+      },
+    },
+    {
+      title: <h1 className="!text-sm">Image</h1>,
       dataIndex: "image",
       key: "image",
       render: (name) => {
@@ -255,7 +327,7 @@ function Products({ content }) {
       },
     },
     {
-      title: "title",
+      title: <h1 className="text-sm">Title</h1>,
       dataIndex: "title",
       key: "title",
       render: (name) => {
@@ -263,7 +335,7 @@ function Products({ content }) {
       },
     },
     {
-      title: "price",
+      title: <h1 className="text-sm">Price</h1>,
       dataIndex: "price",
       key: "price",
       render: (name) => {
@@ -271,7 +343,7 @@ function Products({ content }) {
       },
     },
     {
-      title: "Category Name",
+      title: <h1 className="text-sm">Category Name</h1>,
       dataIndex: "categoryname",
       key: "categoryname",
       render: (name) => {
@@ -279,7 +351,7 @@ function Products({ content }) {
       },
     },
     {
-      title: "subCategory Name",
+      title: <h1 className="text-sm">SubCategory Name</h1>,
       dataIndex: "subcategoryname",
       key: "subcategoryname",
       render: (name) => {
@@ -288,7 +360,7 @@ function Products({ content }) {
     },
 
     {
-      title: "Highlights",
+      title: <h1 className="text-sm">Highlights</h1>,
       dataIndex: "highlight",
       key: "highlight",
       // render: (name) => {
@@ -298,7 +370,7 @@ function Products({ content }) {
       // },
     },
     {
-      title: "update",
+      title: <h1 className="text-sm">Update</h1>,
       render: (value) => {
         return (
           <div className="flex gap-x-5">
@@ -313,7 +385,7 @@ function Products({ content }) {
       },
     },
     {
-      title: "Delete",
+      title: <h1 className="text-sm">Delete</h1>,
       render: (value) => {
         return (
           <div>
@@ -363,13 +435,12 @@ function Products({ content }) {
             </div>
             <div className="pl-10">
               <div className="overflow-x-auto ">
-               
                 <Table
-                  className="w-[80vw] "
+                  className="w-[85vw] "
                   columns={columns}
                   dataSource={result}
                   loading={loading}
-                  // rowSelection={rowSelection} 
+                  // rowSelection={rowSelection}
                 />
               </div>
             </div>
@@ -450,41 +521,9 @@ function Products({ content }) {
                 </Form.Item>
 
                 <Form.Item name="highlight">
-                  {/* <ReactQuill
-                    theme="snow"
-                    value={values}
-                    onChange={(e) => setValue(e)}
-                    bounds={true}
-                  /> */}
                   <SunEditor onChange={handleEditorChange} />
                 </Form.Item>
                 <Form.Item>
-                  {/* <Upload.Dragger
-                    action={"https://localhost:3000/"}
-                    multiple
-                    listType="picture"
-                    accept=".png,.jpeg"
-                    beforeUpload={(file) => {
-                      return true;
-                    }}
-                    //  showUploadList={false}
-                    progress={{
-                      strokeWidth: 3,
-                      strokeColor: {
-                        "0%": "#f0f",
-                        "100%": "#ff0",
-                      },
-                    }}
-                    // iconRender={() => {
-                    //   return <Spin></Spin>;
-                    // }}
-                    onChange={handleimageChange}
-                  >
-                    Drag files here
-                    <br />
-                    <Button>Click Upload</Button>
-                  </Upload.Dragger> */}
-
                   <input
                     type="file"
                     multiple
@@ -500,23 +539,6 @@ function Products({ content }) {
                     />
                   ))}
                 </Form.Item>
-                {/* <div>
-                  {!isEmpty(imagename) && imagename.map((res,index) => {
-                    return <Image key={index} alt="product_images" src={res.url} width={100} height={100} />
-                  })  }
-                </div> */}
-
-                {/* <Form.Item>
-                    <Upload
-       
-        listType="picture-circle"
-      fileList={imagename}
-        
-        onChange={handleimageChange}
-      >
-        {imagename.length >= 8 ? null : uploadButton}
-      </Upload>
-                </Form.Item> */}
 
                 <div className="flex gap-5 justify-end ">
                   <Button

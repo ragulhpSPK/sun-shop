@@ -117,3 +117,17 @@ export const deleteOrder = (formData) => {
 export const createMessage = (formData) => {
   return axios.post("/api/auth", formData);
 };
+
+
+//Auth Ended
+
+
+//Top Products
+
+export const createTopProducts = (formData) => {
+  return axios.post("/api/TopProducts", formData);
+}
+
+export const getAllTopProducts = () => {
+  return axios.get("/api/TopProducts")
+}
