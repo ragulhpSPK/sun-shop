@@ -26,10 +26,10 @@ export default async function productController(req, res) {
       break;
 
     case "PUT":
-      console.log("body", req.body);
+      console.log("body", req.body.data._id);
       try {
         const product = await Product.findByIdAndUpdate(
-          { _id: req.body.id },
+          { _id: req.body.data._id },
           req.body.data
         );
         return res.status(200).send({ data: product });

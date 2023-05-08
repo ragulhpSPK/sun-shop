@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Modal, Form, Input, Button, Image, notification } from "antd";
 import Login from "./Login";

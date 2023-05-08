@@ -63,14 +63,13 @@ function Products({ content }) {
   const [catFil, setCategoryFil] = useState([]);
   const [highlight, setHighlights] = useState([]);
   const [subCatFilter, setSubCatFilter] = useState([]);
-  const [addtop, setAddTop] = useState();
+  const [deleted, setDeleted] = useState(false);
   const ref = useRef;
   const [images, setImages] = useState([]);
-  const [allTopProducts, setAllTopProducts] = useState([]);
-  const [allTopProductsId, setAllTopProductsId] = useState([]);
+
   const [checked, setChecked] = useState();
-  const [tablechecked, setTablechecked] = useState(false)
-  const [status,setStatus]=useState(false)
+  const [tablechecked, setTablechecked] = useState(false);
+  const [status, setStatus] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -81,20 +80,20 @@ function Products({ content }) {
   const [form] = Form.useForm();
 
   const editProducts = (value) => {
-  console.log(value.highlight);
     setUpdateId(value._id);
     setOpen(!open);
-    setImageName(value.image);
+    setImages(images);
     setValue(value.highlight);
     form.setFieldsValue(value);
-    setHighlights(value.highlight)
-    setImageName(imagename);
+    setHighlights(value.highlight);
+    setImageName(images);
     setChecked(checked);
-    setStatus(value.status)
+    setStatus(value.status);
+   setImages(products.filter(data=>{return data._id===value._id})[0].image)
+ 
   };
 
-  console.log(highlight,"hihg")
-
+  
   const handleCancel = () => {
     setAdd(false);
     setEdit(false);
@@ -103,6 +102,8 @@ function Products({ content }) {
     setImageName([]);
     setValue();
     form.resetFields();
+    setImages([]);
+    setHighlights("")
   };
 
   const fetchData = async () => {
@@ -112,14 +113,13 @@ function Products({ content }) {
         await getAllCatagory(),
         await getAllSubCatagory(),
         await getAllproducts(),
-        
       ];
 
       setCategory(get(result, "[0].data.data", []));
       setSubCategory(get(result, "[1].data.data", []));
       setCatFilter(get(result, "[1].data.data", []));
       setProducts(get(result, "[2].data.data", []));
-      
+
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -144,6 +144,8 @@ function Products({ content }) {
   });
 
   const handleFinish = async (value) => {
+
+    console.log("click",value)
     if (updateId == "") {
       setLoading(true);
 
@@ -170,8 +172,8 @@ function Products({ content }) {
         fetchData();
         setLoading(false);
         setOpen(false);
-        setImageName("");
-        
+        setImages("");
+        setHighlights("")
       } catch (err) {
         setOpen(false);
 
@@ -179,20 +181,22 @@ function Products({ content }) {
       }
     } else {
       try {
+        console.log(updateId)
         const formData = {
           data: {
             ...value,
-            image: imagename,
+            image: images,
             categoryname: category.filter((data) => {
-              return data._id === catFil;
+              return data._id === subCatFilter;
             })[0].name,
-          },
-          subcategoryname: subCategory.filter((data) => {
-            return data._id === subCatFilter;
+             subcategoryname: subCategory.filter((data) => {
+            return data._id === catFil;
           })[0].subcategoryname,
           highlight: highlight,
-          id: updateId,
-          status:status,
+          _id: updateId,
+          status: status,
+          },
+         
         };
         await updateProducts(formData);
         notification.success({ message: "products updated successfully" });
@@ -202,13 +206,14 @@ function Products({ content }) {
         setImageName([]);
         form.resetFields();
       } catch (err) {
+        console.log(err);
         setOpen(false);
         notification.error({ message: "Something went wrong" });
       }
     }
   };
 
-  console.log(status,"status")
+  console.log(status, "status");
 
   const deleteHandler = async (value) => {
     setLoading(true);
@@ -235,8 +240,6 @@ function Products({ content }) {
   const handleEditorChange = (value) => {
     ref.current = value;
   };
-
-
 
   const handleFileInputChange = (event) => {
     const files = event.target.files;
@@ -294,28 +297,24 @@ function Products({ content }) {
   //   // }
   // };
 
-  const toggleSwitch = async(response,id) => {
+  const toggleSwitch = async (response, id) => {
     setLoading(true);
     try {
       const formData = {
         id: id._id,
-        status:response
-      }
+        status: response,
+      };
       await addOrRemoveTopProducts(formData);
       fetchData();
-    setLoading(false);
-      
+      setLoading(false);
     } catch (err) {
-    setLoading(false);
-      
-      console.log(err)
-   }
-  }
- 
-  
+      setLoading(false);
+
+      console.log(err);
+    }
+  };
 
   const columns = [
-    
     {
       title: <h1 className="!text-sm">Image</h1>,
       dataIndex: "image",
@@ -379,17 +378,13 @@ function Products({ content }) {
       title: <h1 className="!text-sm">Add top products</h1>,
       dataIndex: "status",
       key: "status",
-      render: (value,id) => {
-      
+      render: (value, id) => {
         return (
-        
           <Switch
             size="small"
-                onChange={(e)=>toggleSwitch(e,id)}
-               checked={value}
-          
-              />
-         
+            onChange={(e) => toggleSwitch(e, id)}
+            checked={value}
+          />
         );
       },
     },
@@ -423,16 +418,19 @@ function Products({ content }) {
     },
   ];
 
-  const handleChange = (value) => {
-    setCategoryFil(value);
-    form.setFieldsValue({ subcategoryname: "" });
-    let temp = subCategory;
-    setCatFilter(
-      temp.filter((result) => {
-        return result.categoryId === value;
-      })
-    );
-  };
+  // const handleChange = (value) => {
+  //   console.log(value)
+  //   setCategoryFil(value);
+  //   form.setFieldsValue({ subcategoryname: "" });
+  //   let temp = subCategory;
+  //   setCatFilter(
+  //     temp.filter((result) => {
+  //       return result.categoryId === value;
+  //     })
+  //   );
+  // }
+
+
 
   return (
     <div className="flex flex-col">
@@ -473,9 +471,9 @@ function Products({ content }) {
                 className="flex flex-col relative"
                 form={form}
                 onFinish={handleFinish}
-                style={{
-                  maxWidth: 600,
-                }}
+                // style={{
+                //   maxWidth: 600,
+                // }}
               >
                 <Form.Item
                   name="title"
@@ -510,6 +508,7 @@ function Products({ content }) {
                     size="large"
                     onChange={(e) => {
                       handleChange(e);
+                      setCategoryFil(e)
                     }}
                   >
                     {category.map((res) => {
@@ -547,16 +546,35 @@ function Products({ content }) {
                   <label className="text-4xl font-bold">
                     Switch to top Products
                   </label>
-                
-                    <Switch
+
+                  <Switch
                     className="ml-3 bg-slate-400 shadow-lg"
-                    checked={updateId==""?tablechecked:status}
-                      onChange={(check) => setTablechecked(check)}
-                    />
-              
+                    checked={updateId == "" ? tablechecked : status}
+                    onChange={(check) => setTablechecked(check)}
+                  />
                 </Form.Item>
                 <Form.Item name="highlight">
-                  <SunEditor onChange={handleEditorChange} value={highlight} />
+                  <SunEditor
+                    onChange={handleEditorChange}
+                    setOptions={{
+                      buttonList: [
+                        [
+                          "bold",
+                          "underline",
+                          "italic",
+                          "strike",
+                          "list",
+                          "align",
+                          "fontSize",
+                          "formatBlock",
+                          "table",
+                          "image",
+                        ],
+                      ],
+                      formats: ["h1", "h2", "h3", "h4", "h5", "h6"],
+                    }}
+                    defaultValue={highlight}
+                  />
                 </Form.Item>
                 <Form.Item>
                   <input
@@ -564,15 +582,24 @@ function Products({ content }) {
                     multiple
                     onChange={handleFileInputChange}
                   />
-                  {images.map((image, index) => (
-                    <Image
-                      key={index}
-                      src={image}
-                      width={400}
-                      height={400}
-                      alt={`image-${index}`}
-                    />
-                  ))}
+                  <div className="grid grid-cols-3">
+                    {images.map((image, index) => (
+                      <>
+                        <div className="bg-slate-200 mr-5  mt-5">
+                          <Image
+                            key={index}
+                            src={image}
+                            width={100}
+                            height={100}
+                            alt={`image-${index}`}
+                            className="flex items-center justify-center m-auto pt-5"
+                           
+                          />
+                          {/* <DeleteIcon onClick={()=>setDeleted(true)}     key={index}/> */}
+                        </div>
+                      </>
+                    ))}
+                  </div>
                 </Form.Item>
 
                 <div className="flex gap-5 justify-end ">
@@ -595,38 +622,6 @@ function Products({ content }) {
             </Drawer>
           </div>
         </div>
-        {/* <Modal open={imagename.length > 5} footer={false}>
-          <Image.PreviewGroup>
-            <div className="flex w-[100%]  flex-wrap gap-x-2 gap-y-2">
-              {imagename &&
-                imagename.map((res, index) => {
-                  return (
-                    <div
-                      className="border group w-[100px] h-[100px] relative"
-                      key={index}
-                    >
-                      <Image
-                        src={res}
-                        width={100}
-                        height={100}
-                        alt="not found"
-                      />
-                      <DeleteIcon
-                        onClick={() => {
-                          setImageName(
-                            imagename.filter((result) => {
-                              return result !== res;
-                            })
-                          );
-                        }}
-                        className="!text-md hidden group-hover:block absolute bottom-1 right-1 !text-white !cursor-pointer"
-                      />
-                    </div>
-                  );
-                })}
-            </div>
-          </Image.PreviewGroup>
-        </Modal> */}
       </div>
     </div>
   );
