@@ -118,16 +118,22 @@ export const createMessage = (formData) => {
   return axios.post("/api/auth", formData);
 };
 
-
 //Auth Ended
-
 
 //Top Products
 
 export const createTopProducts = (formData) => {
   return axios.post("/api/TopProducts", formData);
-}
+};
 
 export const getAllTopProducts = () => {
-  return axios.get("/api/TopProducts")
-}
+  return axios.get("/api/TopProducts");
+};
+
+export const deleteTopProducts = (formData) => {
+  console.log(formData);
+  return axios.delete(`/api/TopProducts/${formData}`);
+};
+
+export const addOrRemoveTopProducts = (formData) =>
+  axios.put(`/api/TopProducts/`, formData);

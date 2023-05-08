@@ -2,11 +2,12 @@ import React from "react";
 import { Modal, Form, Input, Button, Image, notification } from "antd";
 import Login from "./Login";
 import { useState } from "react";
-// import { createMessage } from "../../helper/utilities/apiHelper";
+import { createMessage } from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { authentication } from "../../components/firebase/firebase";
+import { useEffect } from "react";
 
 function Register() {
   const [form] = Form.useForm();
@@ -18,14 +19,18 @@ function Register() {
   const [expandForm, setExpandForm] = useState(false);
   const [number, setNumber] = useState("");
 
-  // const handleFinish = async () => {
-  //   try {
-  //     await createMessage(number);
-  //     notification.success({ message: "data added successfully" });
-  //   } catch (err) {
-  //     notification.error({ message: "Something went wrong" });
-  //   }
-  // };
+  const handleFinish = async () => {
+    console.log("clicked");
+    if (number.length >= 12) {
+      try {
+        await createMessage(number);
+        notification.success({ message: "data added successfully" });
+      } catch (err) {
+        console.log(err);
+        notification.error({ message: "Something went wrong" });
+      }
+    }
+  };
 
   const generateRecaptchaVerifier = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -68,6 +73,10 @@ function Register() {
     }
   };
 
+  useEffect(() => {
+    verifyOtp();
+  }, [otp]);
+  console.log(otp.length);
   return (
     <div>
       {!open ? (
@@ -86,12 +95,11 @@ function Register() {
                   preview={false}
                 />
               </div>
-              <div className="w-[30vw] h-[40vh] flex rounded-md  flex-col items-center justify-between  pt-[8vh] pl-[2vw] pr-[2vw]">
+              <div className="w-[40vw] h-[40vh] flex rounded-md  flex-col items-center justify-between   pl-[2vw] pr-[2vw]">
                 <Form
                   style={{ maxWidth: 500 }}
                   form={form}
                   name="control-hooks"
-                  // onFinish={handleFinish}
                 >
                   <Form.Item
                     name="number"
@@ -99,7 +107,11 @@ function Register() {
                     rules={[
                       { required: true, message: "Please Enter Your Number" },
                     ]}
-                    style={{ fontSize: "30px", color: "red" }}
+                    style={{
+                      fontSize: "30px",
+                      color: "red",
+                    }}
+                    className="ml-[-225px]"
                   >
                     <Input
                       size="large"
@@ -152,7 +164,7 @@ function Register() {
         footer={false}
         header={false}
         onCancel={() => setExpandForm(!expandForm)}
-        className="!w-[24vw] position top-[25vh] left-[10vw]"
+        className="!w-[24vw] absolute top-[25vh] left-[10vw]"
       >
         <div
           className={`
@@ -169,7 +181,6 @@ function Register() {
             value={otp}
             onChange={(value) => {
               setOtp(value);
-              verifyOtp();
             }}
             numInputs={6}
             otpType="number"
@@ -178,14 +189,13 @@ function Register() {
             className={styles.opt_container}
             // renderSeparator={<span className="relative ">_ </span>}
             renderInput={(props) => (
-              <input
-                {...props}
-                className="border-2 h-10 !w-8 ml-2"
-                // onChange={verifyOtp}
-              />
+              <input {...props} className="border-2 h-10 !w-8 ml-2" />
             )}
           ></OtpInput>
-          <button className="bg-[--third-color] w-full flex gap-1 items-center justify-center py-2.5 text-white rounded">
+          <button
+            className="bg-[--third-color] w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+            onClick={handleFinish}
+          >
             <span>Verify OTP</span>
           </button>
         </div>

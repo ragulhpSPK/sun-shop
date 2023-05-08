@@ -1,24 +1,25 @@
 import dbconnect from "@/connection/conn";
-import TopProductSchema from "../../../models/topProducts"
+import Product from "../../../models/product";
 
 export default async function topProductsController(req, res) {
-    dbconnect()
-    switch (req.method) {
-        case "GET": {
-            try {
-                const result = await TopProductSchema.find()
-                return res.status(200).send({message:result})
-            } catch (err) {
-                return res.status(500).send({message:"failed"})
-            }
-        } case "POST": {
-            try {
-                const top = new TopProductSchema({ ...req.body })
-                const result=await top.save()
-                return res.status(200).send({message:result})
-            } catch(err) {
-                return res.status(500).send({message:"failed"})
-            }
-        }
+  dbconnect();
+  switch (req.method) {
+    case "GET": {
+      try {
+        const result = await TopProductSchema.find();
+        return res.status(200).send({ message: result });
+      } catch (err) {
+        return res.status(500).send({ message: "failed" });
+      }
     }
+    case "PUT": {
+      console.log(req.body);
+      try {
+        await Product.findByIdAndUpdate({ _id: req.body.id }, { ...req.body });
+        return res.status(200).send({ message: "success" });
+      } catch (err) {
+        return res.status(500).send({ message: "failed" });
+      }
+    }
+  }
 }

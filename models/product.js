@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
+    status: {
+      type: Boolean,
+      required: true,
+    },
     title: {
       type: String,
     },

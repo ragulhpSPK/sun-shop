@@ -22,7 +22,7 @@ function Login() {
                   height={200}
                 />
               </div>
-              <div className="w-[30vw] h-[40vh] flex  flex-col rounded-md  justify-between pl-[2vw] pt-[8vh]">
+              <div className="!w-[36vw] h-[40vh] flex  flex-col rounded-md  justify-between pl-[2vw] ">
                 <Form
                   style={{ maxWidth: 500 }}
                   form={form}
@@ -35,6 +35,7 @@ function Login() {
                       { required: true, message: "Please Enter Your Number" },
                     ]}
                     style={{ fontSize: "30px", color: "red" }}
+                    className="ml-[-225px]"
                   >
                     <Input
                       size="large"

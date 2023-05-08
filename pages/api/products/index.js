@@ -17,6 +17,7 @@ export default async function productController(req, res) {
         console.log(req.body);
         const product = new Product({ ...req.body });
         const result = await product.save();
+        console.log(result);
         return res.status(200).send({ data: result });
       } catch (err) {
         console.log(err);

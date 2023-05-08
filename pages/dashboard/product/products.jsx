@@ -33,7 +33,11 @@ import {
   getAllSubCatagory,
   getAllproducts,
   updateProducts,
-  deleteProducts,createTopProducts, getAllTopProducts,
+  deleteProducts,
+  createTopProducts,
+  getAllTopProducts,
+  deleteTopProducts,
+  addOrRemoveTopProducts,
 } from "../../../helper/utilities/apiHelper";
 import { get, isEmpty } from "lodash";
 import dynamic from "next/dynamic";
@@ -62,8 +66,11 @@ function Products({ content }) {
   const [addtop, setAddTop] = useState();
   const ref = useRef;
   const [images, setImages] = useState([]);
-  const [allTopProducts,setAllTopProducts]=useState([])
-  const [allTopProductsId,setAllTopProductsId]=useState([])
+  const [allTopProducts, setAllTopProducts] = useState([]);
+  const [allTopProductsId, setAllTopProductsId] = useState([]);
+  const [checked, setChecked] = useState();
+  const [tablechecked, setTablechecked] = useState(false)
+  const [status,setStatus]=useState(false)
 
   const [loading, setLoading] = useState(false);
 
@@ -71,24 +78,22 @@ function Products({ content }) {
     ssr: false,
   });
 
-  const plugins = dynamic(() => import("suneditor/src/plugins"), {
-    ssr: false,
-  });
-
-  const { Dragger } = Upload;
-
   const [form] = Form.useForm();
 
   const editProducts = (value) => {
+  console.log(value.highlight);
     setUpdateId(value._id);
     setOpen(!open);
     setImageName(value.image);
     setValue(value.highlight);
     form.setFieldsValue(value);
-    // setCategoryFil(catFil[0].name)
-    // console.log
-    // setHighlights(ref.current.toString().replace(/<[^>]+>/g, ""))
+    setHighlights(value.highlight)
+    setImageName(imagename);
+    setChecked(checked);
+    setStatus(value.status)
   };
+
+  console.log(highlight,"hihg")
 
   const handleCancel = () => {
     setAdd(false);
@@ -107,14 +112,14 @@ function Products({ content }) {
         await getAllCatagory(),
         await getAllSubCatagory(),
         await getAllproducts(),
-        await getAllTopProducts()
+        
       ];
-console.log(result)
+
       setCategory(get(result, "[0].data.data", []));
       setSubCategory(get(result, "[1].data.data", []));
       setCatFilter(get(result, "[1].data.data", []));
       setProducts(get(result, "[2].data.data", []));
-      setAllTopProducts(get(result, "[3].data.message", []))
+      
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -125,7 +130,7 @@ console.log(result)
     fetchData();
     //  setValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, []);
 
   let result = products.filter((res) => {
     return (
@@ -156,6 +161,7 @@ console.log(result)
           SubCategoryId: value.SubCategoryId,
           image: images,
           highlight: ref.current.toString().replace(/<[^>]+>/g, ""),
+          status: tablechecked,
         };
 
         await createProducts(formdata);
@@ -165,6 +171,7 @@ console.log(result)
         setLoading(false);
         setOpen(false);
         setImageName("");
+        
       } catch (err) {
         setOpen(false);
 
@@ -183,7 +190,9 @@ console.log(result)
           subcategoryname: subCategory.filter((data) => {
             return data._id === subCatFilter;
           })[0].subcategoryname,
+          highlight: highlight,
           id: updateId,
+          status:status,
         };
         await updateProducts(formData);
         notification.success({ message: "products updated successfully" });
@@ -199,8 +208,7 @@ console.log(result)
     }
   };
 
-  
- 
+  console.log(status,"status")
 
   const deleteHandler = async (value) => {
     setLoading(true);
@@ -226,8 +234,9 @@ console.log(result)
 
   const handleEditorChange = (value) => {
     ref.current = value;
-    // setHighlights(ref.current.toString().replace(/<[^>]+>/g, ""))
   };
+
+
 
   const handleFileInputChange = (event) => {
     const files = event.target.files;
@@ -247,69 +256,66 @@ console.log(result)
     }
   };
 
+  // const changeAddTop = async (checked, proId) => {
 
+  //   if (checked === true) {
 
+  //     try {
+  //       const formData = {
+  //         image: products.filter((data) => {
+  //           return data._id === proId;
+  //         })[0].image[0],
+  //         productId: products.filter((data) => {
+  //           return data._id === proId;
+  //         })[0]._id,
+  //         ProductTitle: products.filter((data) => {
+  //           return data._id === proId;
+  //         })[0].title,
+  //       };
+  //       await createTopProducts(formData);
+  //       notification.success({ message: "Top products added successfully" });
+  //     } catch (err) {
+  //       console.log(err);
+  //       notification.error({ message: "Something went wrong" });
+  //     }
+  //   }
 
-  console.log(addtop, "eruheur");
-  const changeAddTop = async(checked) => {
-    if (checked === true) {
-      try {
-        const formData = {
-       
-            image:products.filter(data => {
-              return data._id===addtop
-             })[0].image[0],
-              productId:products.filter(data => {
-                return data._id===addtop
-               })[0]._id,
-             ProductTitle:products.filter(data => {
-              return data._id===addtop
-             })[0].title,
-       
-         
-        }
-        await createTopProducts(formData)
-        notification.success({message:"Top ADDed"})
-      } catch (err) {
-        console.log(err)
-        notification.error({message:"Something went wrong"})
-     }
+  //   // } else if (checked === false) {
+  //   //   try {
+
+  //   //     console.log(allTopProducts)
+  //   //    await deleteTopProducts( allTopProducts.filter((data) => {
+  //   //       return data.productId === proId;
+  //   //     })[0]._id);
+  //   //     notification.success({ message: "Top products deleted successfully" });
+  //   //   } catch (err) {
+  //   //     notification.error({ message: "Something went wrong" });
+  //   //   }
+  //   // }
+  // };
+
+  const toggleSwitch = async(response,id) => {
+    setLoading(true);
+    try {
+      const formData = {
+        id: id._id,
+        status:response
+      }
+      await addOrRemoveTopProducts(formData);
+      fetchData();
+    setLoading(false);
+      
+    } catch (err) {
+    setLoading(false);
+      
+      console.log(err)
    }
   }
-
-  // console.log(products&&products.filter(data => {
-  //   return data._id===addtop
-  //  })[0].image[0],"ewjnjkn")
-
+ 
+  
 
   const columns = [
-    {
-      title: <h1 className="!text-sm">Add top products</h1>,
-      key: "add",
-      render: (name) => {
-        setAddTop(name._id)
-        console.log(name._id,"name")
-        return (
-          <p>
-            <Switch
-             
-              // onChange={
-              //   () => {
-              //     setAddTop(name._id);
-              //   changeAddTop()
-              // }}
-            
-              // checked={datasid==name._id?true:false}
-              onChange={changeAddTop} 
-              onClick={() => {
-                    setAddTop(name._id);
-                  
-                }}
-            />
-          </p>
-        );
-      },
-    },
+    
     {
       title: <h1 className="!text-sm">Image</h1>,
       dataIndex: "image",
@@ -368,6 +374,24 @@ console.log(result)
       //     // <p className="w-[20vw]">{name.toString().replace(/<[^>]+>/g, "")}</p>
       //   );
       // },
+    },
+    {
+      title: <h1 className="!text-sm">Add top products</h1>,
+      dataIndex: "status",
+      key: "status",
+      render: (value,id) => {
+      
+        return (
+        
+          <Switch
+            size="small"
+                onChange={(e)=>toggleSwitch(e,id)}
+               checked={value}
+          
+              />
+         
+        );
+      },
     },
     {
       title: <h1 className="text-sm">Update</h1>,
@@ -429,7 +453,7 @@ console.log(result)
             />
             <SearchIcon className="absolute top-[8px] right-1 text-3xl" />
           </div>
-          <div className="relative flex flex-col gap-[8px]">
+          <div className="relative flex flex-col gap-[2px]">
             <div className="w-[82vw] !bg-white" onClick={() => setOpen(!open)}>
               <FileAddOutlined className="!text-[#943074] !bg-white !text-2xl float-right mr-[1vw]" />
             </div>
@@ -446,7 +470,7 @@ console.log(result)
             </div>
             <Drawer width={600} open={open} destroyOnClose placement="right">
               <Form
-                className="flex flex-col gap-8 relative"
+                className="flex flex-col relative"
                 form={form}
                 onFinish={handleFinish}
                 style={{
@@ -519,9 +543,20 @@ console.log(result)
                     })}
                   </Select>
                 </Form.Item>
-
+                <Form.Item className="h-[5px] pb-8 relative" name="status">
+                  <label className="text-4xl font-bold">
+                    Switch to top Products
+                  </label>
+                
+                    <Switch
+                    className="ml-3 bg-slate-400 shadow-lg"
+                    checked={updateId==""?tablechecked:status}
+                      onChange={(check) => setTablechecked(check)}
+                    />
+              
+                </Form.Item>
                 <Form.Item name="highlight">
-                  <SunEditor onChange={handleEditorChange} />
+                  <SunEditor onChange={handleEditorChange} value={highlight} />
                 </Form.Item>
                 <Form.Item>
                   <input

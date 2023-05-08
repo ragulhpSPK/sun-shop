@@ -5,7 +5,11 @@ import { Category } from "@/helper/categories";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { useState } from "react";
 import { useEffect } from "react";
-import { DownOutlined, LoadingOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  LoadingOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import {
   Card,
   Dropdown,
@@ -28,8 +32,8 @@ import {
 import { get, isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Spin } from 'antd'
-import SyncIcon from '@mui/icons-material/Sync';
+import { Spin } from "antd";
+import SyncIcon from "@mui/icons-material/Sync";
 
 function AllCat() {
   const [active, setActive] = useState("");
@@ -44,13 +48,13 @@ function AllCat() {
   const router = useRouter();
   const { Meta } = Card;
   const [priceval, setPriceVal] = useState([]);
-  const [loading,setLoading]=useState([])
+  const [loading, setLoading] = useState([]);
 
   const [priceFilter, setPriceFilter] = useState();
 
   const fetchData = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const result = [
         await getAllCatagory(),
         await getAllSubCatagory(),
@@ -62,7 +66,7 @@ function AllCat() {
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -148,22 +152,15 @@ function AllCat() {
     setPriceDummy(false);
   };
 
-  const handleClick = async (id) => {
+  const handleClick = async (id, data) => {
+    console.log(data.image);
     try {
       const formData = {
         data: {
-          image: products.filter((data) => {
-            return data._id === id;
-          })[0].image[0],
-          name: products.filter((data) => {
-            return data._id === id;
-          })[0].title,
-          price: products.filter((data) => {
-            return data._id === id;
-          })[0].price,
-          total: products.filter((data) => {
-            return data._id === id;
-          })[0].price,
+          image: data.image,
+          name: data.title,
+          price: data.price,
+          total: data.price,
           quantity: 1,
         },
       };
@@ -205,206 +202,212 @@ function AllCat() {
     }
   };
 
-
-
-  const antIcon = <SyncIcon style={{ fontSize: 40 }} className="animate-spin" />
+  const antIcon = (
+    <SyncIcon style={{ fontSize: 40 }} className="animate-spin" />
+  );
 
   return (
-    <Spin spinning={loading} size="large" tip="Loading data..." indicator={antIcon}>
- <div className="">
-      <div className="flex">
-        <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
-          <Link href="/products">
-            <div className="flex items-center font-bold pt-10">
-              <span>
-                <ListIcon />
-              </span>
-              All Categories
-            </div>
-          </Link>
-          {category.map((data) => {
-            return (
-              <>
-                <div
-                  className="flex flex-col font-normal text-lg leading-10"
-                  key={data._id}
-                >
-                  <div>
-                    <div
-                      onClick={() => {
-                        handleFilter(data._id);
-                      }}
-                    >
+    <Spin
+      spinning={loading}
+      size="large"
+      tip="Loading data..."
+      indicator={antIcon}
+    >
+      <div className="">
+        <div className="flex">
+          <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
+            <Link href="/products">
+              <div className="flex items-center font-bold pt-10">
+                <span>
+                  <ListIcon />
+                </span>
+                All Categories
+              </div>
+            </Link>
+            {category.map((data) => {
+              return (
+                <>
+                  <div
+                    className="flex flex-col font-normal text-lg leading-10"
+                    key={data._id}
+                  >
+                    <div>
                       <div
-                        className={`${
-                          data._id === id
-                            ? "text-[--second-color] font-bold"
-                            : "text-black"
-                        } cursor-pointer flex space-x-10`}
+                        onClick={() => {
+                          handleFilter(data._id);
+                        }}
                       >
-                        <div className="flex items-center w-[16vw]">
-                          <ArrowRightIcon
-                            className={`${
-                              data._id === id ? "visible" : "invisible"
-                            }`}
-                          />
-                          {data.name}
+                        <div
+                          className={`${
+                            data._id === id
+                              ? "text-[--second-color] font-bold"
+                              : "text-black"
+                          } cursor-pointer flex space-x-10`}
+                        >
+                          <div className="flex items-center w-[16vw]">
+                            <ArrowRightIcon
+                              className={`${
+                                data._id === id ? "visible" : "invisible"
+                              }`}
+                            />
+                            {data.name}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                </>
+              );
+            })}
+          </div>
+          <div className="flex flex-col w-[80vw] m-auto ">
+            <div className="ml-10 mt-2 h-[8vh] flex justify-center items-center bg-white  ">
+              <div className="flex gap-[5vw] pb-5">
+                <div className="pt-[15px]">
+                  <Select
+                    className="!w-[28vw]  shadow-inner rouned-lg"
+                    size="large"
+                    showSearch
+                    filterOption={(input, option) =>
+                      (option?.value ?? "")
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    value={dummy}
+                    placeholder="Filter by Sub Category"
+                    onChange={(e) => {
+                      handleSubCategoryFilterChange(e);
+                    }}
+                  >
+                    {subCategory
+                      ?.filter((res) => {
+                        return res.categoryId === router.query.cat_id;
+                      })
+                      .map((pre, index) => {
+                        return (
+                          <Select.Option key={index} value={pre._id}>
+                            {pre.subcategoryname}
+                          </Select.Option>
+                        );
+                      })}
+                  </Select>
                 </div>
-              </>
-            );
-          })}
-        </div>
-        <div className="flex flex-col w-[80vw] m-auto ">
-          <div className="ml-10 mt-2 h-[8vh] flex justify-center items-center bg-white  ">
-            <div className="flex gap-[5vw] pb-5">
-              <div className="pt-[15px]">
-                <Select
-                  className="!w-[28vw]  shadow-inner rouned-lg"
-                  size="large"
-                  showSearch
-                  filterOption={(input, option) =>
-                    (option?.value ?? "")
-                      .toLowerCase()
-                      .includes(input.toLowerCase())
-                  }
-                  value={dummy}
-                  placeholder="Filter by Sub Category"
-                  onChange={(e) => {
-                    handleSubCategoryFilterChange(e);
-                  }}
-                >
-                  {subCategory
-                    ?.filter((res) => {
-                      return res.categoryId === router.query.cat_id;
-                    })
-                    .map((pre, index) => {
-                      return (
-                        <Select.Option key={index} value={pre._id}>
-                          {pre.subcategoryname}
-                        </Select.Option>
-                      );
-                    })}
-                </Select>
-              </div>
 
-              <div className="pt-[15px]">
-                <Select
-                  className="!w-[20vw]  shadow-inner  rounded-md"
-                  size="large"
-                  placeholder="Filter by price"
-                  value={priceFilter}
-                  onChange={(e) => {
-                    handlePriceChange(e);
-                  }}
-                >
-                  <Select.Option value={`low`}>Low to High</Select.Option>
-                  <Select.Option value={`high`}>High to Low</Select.Option>
-                </Select>
+                <div className="pt-[15px]">
+                  <Select
+                    className="!w-[20vw]  shadow-inner  rounded-md"
+                    size="large"
+                    placeholder="Filter by price"
+                    value={priceFilter}
+                    onChange={(e) => {
+                      handlePriceChange(e);
+                    }}
+                  >
+                    <Select.Option value={`low`}>Low to High</Select.Option>
+                    <Select.Option value={`high`}>High to Low</Select.Option>
+                  </Select>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="h-[90vh] overflow-y-scroll">
+            <div className="h-[90vh] overflow-y-scroll">
               <List
-              
-              grid={{
-                gutter: 16,
-                xs: 1,
-                sm: 2,
-                md: 3,
-                lg: 4,
-                xl: 4,
-                xxl: 5,
-              }}
-              pagination={{
-                pageSize: 20,
-                align: "end",
-                position: "top",
-                size: "small",
-              }}
-              className=" !w-[80vw]"
-              dataSource={priceval.length > 0 ? priceval : filerProduct}
-              renderItem={(data, index) => {
-                return (
-                  <List.Item key={index}>
-                    <div className="">
-                      <Card
-                        hoverable
-                        style={{
-                          width: 295,
-                          height: 340,
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          border: "none",
-                        }}
-                        className="shadow-md"
-                        actions={[
-                          <div
-                            key={"key"}
-                            className="bg-[--third-color] rounded-sm ml-[15px] text-[20px] h-[5vh] w-[10vw] text-white flex items-center justify-center !border-none"
-                            onClick={() => {
-                              router.push({
-                                pathname: "/cart",
-                                query: { _id: data._id },
-                              });
-                            }}
-                          >
-                            Buy Now
-                          </div>,
-                          <div
-                            key={"key"}
-                            className="bg-[--third-color] h-[5vh] w-[3vw] mr-[15px] text-white flex items-center justify-center rounded-sm float-right"
-                          >
-                            <ShoppingCartOutlined
-                              style={{
-                                fontSize: "25px",
-                              }}
+                grid={{
+                  gutter: 16,
+                  xs: 1,
+                  sm: 2,
+                  md: 3,
+                  lg: 4,
+                  xl: 4,
+                  xxl: 5,
+                }}
+                pagination={{
+                  pageSize: 20,
+                  align: "end",
+                  position: "top",
+                  size: "small",
+                }}
+                className=" !w-[80vw]"
+                dataSource={priceval.length > 0 ? priceval : filerProduct}
+                renderItem={(data, index) => {
+                  return (
+                    <List.Item key={index}>
+                      <div className="">
+                        <Card
+                          hoverable
+                          style={{
+                            width: 295,
+                            height: 340,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            border: "none",
+                          }}
+                          className="shadow-md"
+                          actions={[
+                            <div
+                              key={"key"}
+                              className="bg-[--third-color] rounded-sm ml-[15px] text-[20px] h-[5vh] w-[10vw] text-white flex items-center justify-center !border-none"
                               onClick={() => {
-                                handleClick(data._id);
-                                // setProductId(data._id);
+                                router.push({
+                                  pathname: "/cart",
+                                  query: { _id: data._id },
+                                });
                               }}
-                            />
-                          </div>,
-                        ]}
-                      >
-                        <div
-                          onClick={() =>
-                            router.push({
-                              pathname: `/product/${data._id}`,
-                              query: { id: data._id },
-                            })
-                          }
-                          className="flex flex-col items-center "
+                            >
+                              Buy Now
+                            </div>,
+                            <div
+                              key={"key"}
+                              className="bg-[--third-color] h-[5vh] w-[3vw] mr-[15px] text-white flex items-center justify-center rounded-sm float-right"
+                            >
+                              <ShoppingCartOutlined
+                                style={{
+                                  fontSize: "25px",
+                                }}
+                                onClick={() => {
+                                  handleClick(data._id, data);
+                                  // setProductId(data._id);
+                                }}
+                              />
+                            </div>,
+                          ]}
                         >
-                          <Image
-                            alt="example"
-                            src={data.image[0]}
-                            width={140}
-                            height={140}
-                            preview={false}
-                            // style={{
-                            //   marginLeft: "50px",
-                            // }}
-                          />
-                          <h1 className="text-[16px] h-[7vh]">{data.title}</h1>
+                          <div
+                            onClick={() =>
+                              router.push({
+                                pathname: `/product/${data._id}`,
+                                query: { id: data._id },
+                              })
+                            }
+                            className="flex flex-col items-center "
+                          >
+                            <Image
+                              alt="example"
+                              src={data.image[0]}
+                              width={140}
+                              height={140}
+                              preview={false}
+                              // style={{
+                              //   marginLeft: "50px",
+                              // }}
+                            />
+                            <h1 className="text-[16px] h-[7vh]">
+                              {data.title}
+                            </h1>
 
-                          <h1 className="text-[16px] !mt-[5px] font-bold ">
-                            &#8377;{data.price}
-                          </h1>
-                        </div>
-                      </Card>
-                    </div>
-                  </List.Item>
-                );
-              }}
-            ></List>
-          </div>
+                            <h1 className="text-[16px] !mt-[5px] font-bold ">
+                              &#8377;{data.price}
+                            </h1>
+                          </div>
+                        </Card>
+                      </div>
+                    </List.Item>
+                  );
+                }}
+              ></List>
+            </div>
 
-          {/* <div className="grid grid-cols-4 gap-y-5 w-[84vw] pt-8 pl-4">
+            {/* <div className="grid grid-cols-4 gap-y-5 w-[84vw] pt-8 pl-4">
             {filerProduct.map((data) => {
               return (
                 <>
@@ -425,11 +428,10 @@ function AllCat() {
               );
             })}
           </div> */}
+          </div>
         </div>
       </div>
-    </div>
     </Spin>
-   
   );
 }
 
