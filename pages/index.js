@@ -6,22 +6,20 @@ import Bestdeals from "@/components/bestdeals";
 import Topproducts from "@/components/topproducts";
 import ProductFilter from "@/components/productFilter";
 import { useSelector } from "react-redux";
-import {Spin} from "antd"
+import { Spin } from "antd";
 import { useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
-import SyncIcon from '@mui/icons-material/Sync';
-
-
+import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
+import SyncIcon from "@mui/icons-material/Sync";
 
 export default function Home() {
-
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const result = useSelector((data) => {
     return data.search.searches;
   });
 
-  const antIcon = <SyncIcon style={{ fontSize: 40 }} className="animate-spin" />
-
+  const antIcon = (
+    <ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />
+  );
 
   return (
     <>
@@ -32,23 +30,26 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Spin spinning={loading} tip="Loading Data..." size="large" indicator={antIcon}>
-        {result.length > 0 ? (
-          <ProductFilter />
-        ) : (
-          <>
-           
-                <Swiper loading={loading} setLoading={setLoading} />
-          
-            <Delivery />
-            <Categories loading={loading} setLoading={setLoading} />
-            <Bestdeals />
-            <Topproducts />
-          </>
-        )}
-     
+        <Spin
+          spinning={loading}
+          tip="Loading Data..."
+          size="large"
+          indicator={antIcon}
+        >
+          {result.length > 0 ? (
+            <ProductFilter />
+          ) : (
+            <>
+              <Swiper loading={loading} setLoading={setLoading} />
+
+              <Delivery />
+              <Categories loading={loading} setLoading={setLoading} />
+              <Bestdeals />
+              <Topproducts />
+            </>
+          )}
         </Spin>
-        </main>
+      </main>
     </>
   );
 }
