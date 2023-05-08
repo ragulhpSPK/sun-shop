@@ -6,7 +6,7 @@ import { useState } from "react";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { authentication } from "../firebase";
+import { authentication } from "../../components/firebase/firebase";
 
 function Register() {
   const [form] = Form.useForm();
@@ -16,16 +16,16 @@ function Register() {
   const [otp, setOtp] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState();
   const [expandForm, setExpandForm] = useState(false);
-  const [number,setNumber]=useState("")
+  const [number, setNumber] = useState("");
 
-  const handleFinish = async () => {
-    try {
-      await createMessage(number);
-      notification.success({ message: "data added successfully" });
-    } catch (err) {
-      notification.error({ message: "Something went wrong" });
-    }
-  };
+  // const handleFinish = async () => {
+  //   try {
+  //     await createMessage(number);
+  //     notification.success({ message: "data added successfully" });
+  //   } catch (err) {
+  //     notification.error({ message: "Something went wrong" });
+  //   }
+  // };
 
   const generateRecaptchaVerifier = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -57,17 +57,15 @@ function Register() {
   };
 
   const verifyOtp = () => {
-    
-      if (otp.length === 6) {
-        console.log("trigger");
-        let confirmationResult = window.confirmationResult;
-        confirmationResult.confirm(otp).then((result) => {
-          const user = result.user;
-          console.log(user.phoneNumber, "288");
-          setNumber(user.phoneNumber)
-        })
-      }
-    
+    if (otp.length === 6) {
+      console.log("trigger");
+      let confirmationResult = window.confirmationResult;
+      confirmationResult.confirm(otp).then((result) => {
+        const user = result.user;
+        console.log(user.phoneNumber, "288");
+        setNumber(user.phoneNumber);
+      });
+    }
   };
 
   return (

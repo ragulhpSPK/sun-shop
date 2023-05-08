@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
