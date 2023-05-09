@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import AdminNavbar from "../shared/AdminNavbar";
 import Sidenavbar from "../shared/Sidenavbar";
-import { Select, Table } from "antd";
-import { getAllOrder } from "../../../helper/utilities/apiHelper";
+import { Select, Table, notification } from "antd";
+import { getAllOrder, updateOrder } from "../../../helper/utilities/apiHelper";
 import { get } from "lodash";
 
 function Order() {
   const [order, setOrder] = useState([]);
   const [dataSource, setDataSource] = useState([]);
+  const [status, setStatus] = useState("");
 
   const fetchData = async () => {
     try {
@@ -22,13 +23,35 @@ function Order() {
     fetchData();
   }, []);
 
+  const handleChangeStatus = async (e) => {
+    console.log(e);
+    console.log(
+      order.filter((data) => {
+        return data._id === e;
+      })[0]
+    );
+    console.log(status);
+    try {
+      const formData = {
+        data: {
+          status: status,
+        },
+        id: e,
+      };
+      await updateOrder(formData);
+      notification.success({ message: "status updated successfully" });
+    } catch (err) {
+      notification.error({ message: "Something went wrong" });
+    }
+  };
+
   const columns = [
     {
-      title: "OrderId",
-      dataindex: "orderId",
-      key: "orderId",
+      title: "CustomerId",
+      dataindex: "CustomerId",
+      key: "CustomerId",
       render: (name) => {
-        return <p>{name.orderId}</p>;
+        return <p>{name.customerId}</p>;
       },
     },
     {
@@ -36,7 +59,6 @@ function Order() {
       dataindex: "customer",
       key: "customer",
       render: (name) => {
-        console.log(name);
         return <p>{name.customer}</p>;
       },
     },
@@ -62,8 +84,16 @@ function Order() {
       key: "status",
       render: (name) => {
         return (
-          <Select placeholder="Select order status" className="w-[8vw]">
-            <Select.Option>Shipped</Select.Option>
+          <Select
+            placeholder="Select order status"
+            className="w-[8vw]"
+            onChange={handleChangeStatus}
+          >
+            <Select.Option value={name._id}>
+              {name.status === "pending"
+                ? setStatus("shipped") || "shipped"
+                : ""}
+            </Select.Option>
           </Select>
         );
       },

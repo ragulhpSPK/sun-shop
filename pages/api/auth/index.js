@@ -19,7 +19,9 @@ export default async function MessageController(req, res) {
         //   from: +17342943991,
         // });
         // console.log(sendMessage);
-        const message = await new Message(req.body);
+        console.log(req.body);
+        const message = await new Message({ ...req.body });
+        console.log(message, "message");
         message.save();
         res.status(200).send({ data: message });
       } catch (err) {

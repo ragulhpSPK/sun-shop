@@ -251,3 +251,10 @@ button,
   border-radius: 10px;
  
 }
+
+
+/* antd steps line height */
+
+.ant-steps .ant-steps-item-title::after{
+  height: 2px !important;
+}

@@ -124,11 +124,9 @@ function Cart() {
       prices += data.quantity * data.total;
     });
 
-  const handleChangevalue = (v, event) => {
-    console.log(v);
+  const handleChangevalue = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
@@ -138,7 +136,7 @@ function Cart() {
     try {
       const formData = {
         data: {
-          orderId: UID,
+          customerId: UID,
           customer: inputs.name,
           productname: !Buy
             ? product.map((data) => {

@@ -9,6 +9,7 @@ import styles from "../../styles/Home.module.css";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { authentication } from "../../components/firebase/firebase";
 import { useEffect } from "react";
+import { get } from "lodash";
 
 function Register() {
   const [form] = Form.useForm();
@@ -22,15 +23,6 @@ function Register() {
 
   const handleFinish = async () => {
     console.log("clicked");
-    if (number.length >= 12) {
-      try {
-        await createMessage(number);
-        notification.success({ message: "data added successfully" });
-      } catch (err) {
-        console.log(err);
-        notification.error({ message: "Something went wrong" });
-      }
-    }
   };
 
   const generateRecaptchaVerifier = () => {
@@ -62,15 +54,18 @@ function Register() {
     }
   };
 
-  const verifyOtp = () => {
-    if (otp.length === 6) {
-      console.log("trigger");
-      let confirmationResult = window.confirmationResult;
-      confirmationResult.confirm(otp).then((result) => {
-        const user = result.user;
-        console.log(user.phoneNumber, "288");
-        setNumber(user.phoneNumber);
-      });
+  const verifyOtp = async () => {
+    try {
+      if (otp.length === 6) {
+        console.log("trigger");
+        let confirmationResult = window.confirmationResult;
+        const result = await confirmationResult.confirm(otp);
+        await createMessage({ number: get(result, "user.phoneNumber", "") });
+        notification.success({ message: "data added successfully" });
+      }
+    } catch (err) {
+      console.log(err);
+      notification.error({ message: "Something went wrong" });
     }
   };
 
@@ -193,12 +188,12 @@ function Register() {
               <input {...props} className="border-2 h-10 !w-8 ml-2" />
             )}
           ></OtpInput>
-          <button
+          {/* <button
             className="bg-[--third-color] w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
-            onClick={handleFinish}
+            // onClick={handleFinish}
           >
             <span>Verify OTP</span>
-          </button>
+          </button> */}
         </div>
       </Modal>
       <div id="recaptacha-container"></div>

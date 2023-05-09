@@ -25,9 +25,10 @@ export default async function orderController(req, res) {
     }
 
     case "PUT": {
+      console.log("body", req.body);
       try {
         const order = await Order.findByIdAndUpdate(
-          { _id: req.body._id },
+          { _id: req.body.id },
           req.body.data
         );
         return res.status(200).send({ message: order });

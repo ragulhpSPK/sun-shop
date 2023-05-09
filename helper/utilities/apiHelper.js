@@ -115,6 +115,7 @@ export const deleteOrder = (formData) => {
 // Auth Started
 
 export const createMessage = (formData) => {
+  console.log(formData);
   return axios.post("/api/auth", formData);
 };
 
@@ -135,5 +136,6 @@ export const deleteTopProducts = (formData) => {
   return axios.delete(`/api/TopProducts/${formData}`);
 };
 
-export const addOrRemoveTopProducts = (formData) =>
+export const addOrRemoveTopProducts = (formData) => {
   axios.put(`/api/TopProducts/`, formData);
+};
