@@ -40,6 +40,7 @@ function Order() {
       };
       await updateOrder(formData);
       notification.success({ message: "status updated successfully" });
+      fetchData();
     } catch (err) {
       notification.error({ message: "Something went wrong" });
     }
@@ -88,11 +89,18 @@ function Order() {
             placeholder="Select order status"
             className="w-[8vw]"
             onChange={handleChangeStatus}
+            value={name.status}
           >
             <Select.Option value={name._id}>
               {name.status === "pending"
                 ? setStatus("shipped") || "shipped"
-                : ""}
+                : name.status === "shipped"
+                ? setStatus("Out for delivery") || "Out for delivery"
+                : name.status === "Out for delivery"
+                ? setStatus("Nearest to you") || "Nearest to you"
+                : name.status === "Nearest to you"
+                ? setStatus("Order Done") || "Order Done"
+                : "Order Done"}
             </Select.Option>
           </Select>
         );
