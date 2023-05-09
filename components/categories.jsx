@@ -77,7 +77,8 @@ function Categories({loading,setLoading}) {
                       height={100}
                       alt="logo"
                       src={data.image}
-                      className="!w-[3vw] !h-[6vh] m-auto mt-6"
+                      className="w-fit !h-[7vh] m-auto mt-6"
+                      preview={false}
                     />
                   </div>
                   <div className="flex flex-col   items-center">

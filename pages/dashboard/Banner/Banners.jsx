@@ -65,7 +65,7 @@ function Banner() {
   };
 
   const handleFinish = async (value) => {
-    console.log("value", value);
+   
     if (updateid === "") {
       setLoading(true);
       try {
@@ -158,7 +158,7 @@ function Banner() {
   };
 
   const handleDelete = (updateid) => {
-    console.log(updateid);
+   
     try {
       deleteBanner(updateid);
 
@@ -195,7 +195,7 @@ function Banner() {
                   loading={loading ? true : false}
                   key={data._id}
                 >
-                  <Card className="w-[15vw] h-[32vh]  shadow-lg">
+                  <Card className="w-[16vw] h-[34vh]  shadow-lg">
                     <div className="float-left relative pl-[15px] w-[25px]">
                       <Badge.Ribbon
                         text={data.status}
@@ -240,7 +240,7 @@ function Banner() {
                         </h1>
                       </div>
                       <div className="flex gap-[15px] ">
-                        <p className="text-[16px] font-bold tracking-wider">
+                        <p className="text-[12px] font-bold ">
                           {data.productname}
                         </p>
                       </div>

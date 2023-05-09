@@ -16,15 +16,12 @@ import {
 } from "../helper/utilities/apiHelper";
 import { get } from "lodash";
 import Navbar from "@/components/Navbar";
-// import { v4 as uuidv4 } from "uuid";
-// import { parse as uuidParse } from "uuid";
 import { v1 as uuidv1 } from "uuid";
 
 function Cart() {
   const [check, setCheck] = useState(false);
   const [Qty, setQty] = useState(1);
   const [bqty, setBqty] = useState(1);
-
   const [UID, setUID] = useState("");
 
   const router = useRouter();
@@ -93,6 +90,9 @@ function Cart() {
         })
     );
   }, [product]);
+
+  // const cart = useSelector((state) => state.cart.addProduct);
+  // console.log(cart, "cart");
 
   const deleteHandler = async (data) => {
     try {
@@ -191,8 +191,6 @@ function Cart() {
     .map((res) => {
       return res._id;
     });
-
-  console.log(Buy);
 
   return (
     <div>

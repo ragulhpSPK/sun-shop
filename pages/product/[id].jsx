@@ -9,7 +9,7 @@ import Link from "next/link";
 import style from "../../styles/Home.module.css";
 import Image from "next/image";
 import { createCart, getAllproducts } from "../../helper/utilities/apiHelper";
-import { message, notification } from "antd";
+import {  notification } from "antd";
 import { get } from "lodash";
 
 export default function App() {
@@ -19,6 +19,7 @@ export default function App() {
   const [img, setImg] = useState([]);
   const [product, setProduct] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const dispatch=useDispatch()
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -64,6 +65,7 @@ export default function App() {
 
       await createCart(formData);
       notification.success({ message: "cart added successfully" });
+      
     } catch (err) {
       notification.error({ message: "something went wrong" });
     }
@@ -128,7 +130,7 @@ export default function App() {
                 Product Specifications
               </h2>
               {data.highlight.split(",").map((res, index) => {
-                console.log(res);
+               
                 return (
                   <li className="text-xl pt-2" key={index}>
                     {res}
@@ -139,7 +141,7 @@ export default function App() {
               <div className="pt-10 flex gap-7 justify-between w-fit pl-5">
                 <button
                   className="bg-[var(--second-color)] text-[#fff] hover:bg-[--four-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
-                  onClick={handleClick}
+                  onClick={() => { handleClick();dispatch(addproduct({...filterData})) }}
                 >
                   Add to Cart
                 </button>

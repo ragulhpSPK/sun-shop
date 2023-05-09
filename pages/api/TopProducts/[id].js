@@ -10,7 +10,6 @@ export default async function topProductsController(req, res) {
     }
     case "DELETE": {
       try {
-        console.log(req.query.id);
         const res = await TopProductSchema.findByIdAndDelete({
           _id: req.query.id,
         });

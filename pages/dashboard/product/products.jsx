@@ -145,7 +145,7 @@ function Products({ content }) {
 
   const handleFinish = async (value) => {
 
-    console.log("click",value)
+   
     if (updateId == "") {
       setLoading(true);
 
@@ -181,7 +181,7 @@ function Products({ content }) {
       }
     } else {
       try {
-        console.log(updateId)
+      
         const formData = {
           data: {
             ...value,
@@ -213,7 +213,7 @@ function Products({ content }) {
     }
   };
 
-  console.log(status, "status");
+ 
 
   const deleteHandler = async (value) => {
     setLoading(true);

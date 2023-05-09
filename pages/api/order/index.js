@@ -14,7 +14,6 @@ export default async function orderController(req, res) {
     }
 
     case "POST": {
-      console.log("body", req.body);
       try {
         const order = await new Order({ ...req.body.data });
         const result = order.save();
@@ -28,7 +27,7 @@ export default async function orderController(req, res) {
       try {
         const order = await Order.findByIdAndUpdate(
           { _id: req.body.id },
-          req.body.data
+          req.body
         );
         return res.status(200).send({ message: order });
       } catch (errr) {

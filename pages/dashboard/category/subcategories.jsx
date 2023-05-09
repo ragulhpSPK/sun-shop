@@ -102,7 +102,7 @@ const Subcategories = (properties) => {
   };
 
   const handleEdit = (value) => {
-    console.log(value);
+  
     setOpen(true);
     setUpdate(value._id);
     setImageName(value.image);

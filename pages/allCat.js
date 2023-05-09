@@ -153,7 +153,6 @@ function AllCat() {
   };
 
   const handleClick = async (id, data) => {
-    console.log(data.image);
     try {
       const formData = {
         data: {

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import AdminNavbar from "../shared/AdminNavbar";
 import Sidenavbar from "../shared/Sidenavbar";
-import { Select, Table, notification } from "antd";
+import { Form, Select, Table, notification } from "antd";
 import { getAllOrder, updateOrder } from "../../../helper/utilities/apiHelper";
 import { get } from "lodash";
 
 function Order() {
   const [order, setOrder] = useState([]);
   const [dataSource, setDataSource] = useState([]);
-  const [status, setStatus] = useState("");
+
+  const statusSet = [
+    "Confirmed",
+    "Shipped",
+    "Out_For_Delivery",
+    "Delivered",
+    "Cancelled",
+  ];
 
   const fetchData = async () => {
     try {
@@ -23,20 +30,18 @@ function Order() {
     fetchData();
   }, []);
 
-  const handleChangeStatus = async (e) => {
+  const handleChangeStatus = async (e, id) => {
     console.log(e);
-    console.log(
-      order.filter((data) => {
-        return data._id === e;
-      })[0]
-    );
-    console.log(status);
+    // console.log(
+    //   order.filter((data) => {
+    //     return data._id === e;
+    //   })[0]
+    // );
+
     try {
       const formData = {
-        data: {
-          status: status,
-        },
-        id: e,
+        status: e,
+        id: id._id,
       };
       await updateOrder(formData);
       notification.success({ message: "status updated successfully" });
@@ -46,6 +51,7 @@ function Order() {
     }
   };
 
+  s;
   const columns = [
     {
       title: "CustomerId",
@@ -81,32 +87,50 @@ function Order() {
     },
     {
       title: "Order Status",
-      dataindex: "status",
+      dataIndex: "status",
       key: "status",
-      render: (name) => {
+      width: 100,
+      render: (name, id) => {
+        if (name === "Cancelled") {
+          return (
+            <div className="bg-red-500 w-[8vw] text-center p-3 text-white rounded">
+              {name}
+            </div>
+          );
+        } else if (name === "Delivered") {
+          return (
+            <div className="bg-green-500 w-[8vw] text-center p-3 text-white rounded">
+              {name}
+            </div>
+          );
+        }
         return (
           <Select
             placeholder="Select order status"
             className="w-[8vw]"
-            onChange={handleChangeStatus}
-            value={name.status}
+            defaultValue={name}
+            value={name}
+            onChange={(e) => handleChangeStatus(e, id)}
           >
-            <Select.Option value={name._id}>
-              {name.status === "pending"
-                ? setStatus("shipped") || "shipped"
-                : name.status === "shipped"
-                ? setStatus("Out for delivery") || "Out for delivery"
-                : name.status === "Out for delivery"
-                ? setStatus("Nearest to you") || "Nearest to you"
-                : name.status === "Nearest to you"
-                ? setStatus("Order Done") || "Order Done"
-                : "Order Done"}
-            </Select.Option>
+            {statusSet
+              .filter((res, index) => {
+                return res === name
+                  ? ""
+                  : statusSet.indexOf(name) < index && res;
+              })
+              .map((res, index) => {
+                return (
+                  <Select.Option key={index} value={res}>
+                    {res}
+                  </Select.Option>
+                );
+              })}
           </Select>
         );
       },
     },
   ];
+  console.log(statusSet.indexOf("Cancelled"), "jhlkj");
   return (
     <div className="flex flex-col">
       <div>
@@ -117,7 +141,7 @@ function Order() {
           <Sidenavbar />
         </div>
 
-        <div className="w-[80vw]">
+        <div className="w-[80vw] p-5">
           <Table
             className="m-auto w-[80vw]"
             columns={columns}

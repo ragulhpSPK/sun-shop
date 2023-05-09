@@ -37,8 +37,8 @@ function AllProducts() {
               key={data.id}
               id={styles.shadow3}
               onClick={() => {
-                router.push({ pathname: "/subcat", query: data });
-              }}
+                    router.push({ pathname: "/allCat", query: {cat_id:data._id} });
+                  }}
             >
               <figure>
                 <Image

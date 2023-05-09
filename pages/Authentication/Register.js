@@ -21,9 +21,9 @@ function Register() {
   const [expandForm, setExpandForm] = useState(false);
   const [number, setNumber] = useState("");
 
-  const handleFinish = async () => {
-    console.log("clicked");
-  };
+  // const handleFinish = async () => {
+  //   console.log("clicked");
+  // };
 
   const generateRecaptchaVerifier = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -57,7 +57,6 @@ function Register() {
   const verifyOtp = async () => {
     try {
       if (otp.length === 6) {
-        console.log("trigger");
         let confirmationResult = window.confirmationResult;
         const result = await confirmationResult.confirm(otp);
         await createMessage({ number: get(result, "user.phoneNumber", "") });
@@ -72,7 +71,7 @@ function Register() {
   useEffect(() => {
     verifyOtp();
   }, [otp]);
-  console.log(otp.length);
+
   return (
     <div>
       {!open ? (

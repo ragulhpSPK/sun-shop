@@ -31,13 +31,12 @@ export default async function cartController(req, res) {
 
     case "PUT":
       {
-        console.log("sdfbdf", req.body);
         try {
           const cart = await Cart.findByIdAndUpdate(
             { _id: req.body.id },
             req.body
           );
-          console.log("skhs", cart);
+
           return res.status(200).send({ data: cart });
         } catch (err) {
           return res.status(500).send({ message: "failed" });

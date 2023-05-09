@@ -45,7 +45,6 @@ export const getAllproducts = () => {
 };
 
 export const updateProducts = (formData) => {
-  console.log(formData);
   return axios.put("/api/products", formData);
 };
 
@@ -64,7 +63,6 @@ export const getAllBanner = () => {
 };
 
 export const updateBanner = (formData) => {
-  console.log(formData);
   return axios.put("/api/banner", formData);
 };
 
@@ -115,7 +113,6 @@ export const deleteOrder = (formData) => {
 // Auth Started
 
 export const createMessage = (formData) => {
-  console.log(formData);
   return axios.post("/api/auth", formData);
 };
 
@@ -132,7 +129,6 @@ export const getAllTopProducts = () => {
 };
 
 export const deleteTopProducts = (formData) => {
-  console.log(formData);
   return axios.delete(`/api/TopProducts/${formData}`);
 };
 

@@ -30,13 +30,12 @@ export default async function bannerController(req, res) {
 
     case "PUT":
       {
-        console.log(req.body.id);
         try {
           const banner = await Banner.findByIdAndUpdate(
             { _id: req.body.id },
             req.body
           );
-          console.log("banner", banner);
+
           return res.status(200).send({ data: banner });
         } catch (err) {
           return res.status(500).send({ message: "failed" });

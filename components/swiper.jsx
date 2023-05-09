@@ -12,10 +12,12 @@ import { useEffect } from "react";
 import { get, set } from "lodash";
 import { Spin } from "antd"
 // import Home from "../pages/index"
+import { useRouter } from "next/router";
 
 export default function Swipper({loading,setLoading}) {
   const [banner, setBanner] = useState([]);
-  // const [loadings, setLoadings] = useState(false)
+
+  const router=useRouter()
 
   const fetchData = async () => {
     try {
@@ -34,7 +36,7 @@ export default function Swipper({loading,setLoading}) {
     fetchData();
   },[]);
 
-  console.log(loading)
+
 
   let left = banner.filter((data) => {
     return data.status === "Left";
@@ -80,8 +82,13 @@ export default function Swipper({loading,setLoading}) {
         {top.map((data) => {
           return (
             <>
-              <div className="  h-[17.2vh] w-[23.5vw]">
-                <Image
+              <div className="  h-[17.2vh] w-[23.5vw]"  onClick={() =>
+                              router.push({
+                                pathname: `/product/${data.productid}`,
+                                query: { id: data.productid },
+                              })
+                            }>
+                <Image 
                   src={data.image}
                   className="!w-[100%] !h-[100%]"
                   width={300}
@@ -95,9 +102,15 @@ export default function Swipper({loading,setLoading}) {
         })}
 
         {bottom.map((data) => {
+         
           return (
             <>
-              <div className="bg-[#613f75]  h-[17.2vh] w-[23.5vw] ">
+              <div className="bg-[#613f75]  h-[17.2vh] w-[23.5vw] " onClick={() =>
+                              router.push({
+                                pathname: `/product/${data.productid}`,
+                                query: { id: data.productid },
+                              })
+                            }>
                 <Image
                   src={data.image}
                   className="!w-[100%] !h-[100%]"
