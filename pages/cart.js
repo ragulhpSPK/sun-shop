@@ -17,6 +17,7 @@ import {
 import { get } from "lodash";
 import Navbar from "@/components/Navbar";
 import { v1 as uuidv1 } from "uuid";
+import { addproduct } from "@/redux/cartSlice";
 
 function Cart() {
   const [check, setCheck] = useState(false);
@@ -26,13 +27,11 @@ function Cart() {
 
   const router = useRouter();
   const [price, setPrice] = useState(router.query.price);
-  const [product, setProdut] = useState();
-  const [deleteId, setDeleteId] = useState();
+  const [products, setProduts] = useState();
   const [Buy, setBuy] = useState(false);
   const [inputs, setInputs] = useState({});
-  const [order, setOrder] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-
+  const dispatch = useDispatch();
   const [id, setId] = useState([]);
   const [buyId, setBuyId] = useState("");
   uuidv1();
@@ -66,7 +65,7 @@ function Cart() {
     try {
       const result = [await getAllCart(), await getAllproducts()];
 
-      setProdut(get(result, "[0].data.message"));
+      setProduts(get(result, "[0].data.message"));
       setAllProducts(get(result, "[1].data.data"));
     } catch (err) {
       console.log(err);
@@ -84,15 +83,16 @@ function Cart() {
 
   useEffect(() => {
     setId(
-      product &&
-        product.map((data) => {
+      products &&
+        products.map((data) => {
           return data._id;
         })
     );
-  }, [product]);
+  }, [products]);
 
-  // const cart = useSelector((state) => state.cart.addProduct);
-  // console.log(cart, "cart");
+  const cart = useSelector((state) => state.cart);
+
+  console.log(cart.products.length);
 
   const deleteHandler = async (data) => {
     try {
@@ -119,8 +119,8 @@ function Cart() {
   };
 
   var prices = 0;
-  product &&
-    product.map((data) => {
+  products &&
+    products.map((data) => {
       prices += data.quantity * data.total;
     });
 
@@ -139,21 +139,21 @@ function Cart() {
           customerId: UID,
           customer: inputs.name,
           productname: !Buy
-            ? product.map((data) => {
+            ? products.map((data) => {
                 return data.name + data.name;
               })
             : allProducts.filter((data) => {
                 return data._id === router.query._id;
               })[0].title,
           cartId: !Buy
-            ? product.map((data) => {
+            ? products.map((data) => {
                 return data._id;
               })
             : allProducts.filter((data) => {
                 return data._id === router.query._id;
               })[0]._id,
           image: !Buy
-            ? product.map((data) => {
+            ? products.map((data) => {
                 return data.image;
               })
             : allProducts.filter((data) => {
@@ -161,9 +161,9 @@ function Cart() {
               })[0].image[0],
           address: inputs.message,
           total: !Buy ? prices : price,
-          status: "pending",
+          status: "Confirmed",
           price: !Buy
-            ? product.map((data) => {
+            ? products.map((data) => {
                 return data.price;
               })
             : allProducts.filter((data) => {
@@ -198,10 +198,10 @@ function Cart() {
         <div className="flex relative min-h-screen">
           <div className="flex">
             <div className="pt-10">
-              {product && product.length > 0 ? (
+              {products && products.length > 0 ? (
                 <div className="overflow-x-auto w-[70vw]">
-                  {product &&
-                    product.map((data) => {
+                  {products &&
+                    products.map((data) => {
                       return (
                         <table
                           className={`table w-[60vw] border-2 h-[20vh] text-slate-700 border-slate-200 m-auto  mt-10
@@ -257,6 +257,7 @@ function Cart() {
                                   onClick={() => {
                                     // setDeleteId(data._id);
                                     deleteHandler(data._id);
+                                    dispatch(addproduct({ ...data }));
                                   }}
                                   className="!text-black text-sm hover:scale-95 h-[4vh] w-[5vw] rounded-md duration-1000 hover:!text-bold  hover:bg-[--third-color] hover:!text-white hover:shadow-inner hover:text-lg"
                                   type="text"
@@ -291,7 +292,7 @@ function Cart() {
                 <h1 className="font-bold text-slate-600">Order Summary</h1>
                 <p>Total Price:{prices}</p>
 
-                <p>Total Products:{product && product.length}</p>
+                <p>Total Products:{products && products.length}</p>
                 <button
                   className="bg-[var(--third-color)] w-[8vw] h-[5vh] text-[18px] tracking-widest hover:bg-[--fifth-color] duration-1000 scale-110 text-white rounded-sm hover:text-black font-medium"
                   onClick={() => setCheck(true)}
@@ -449,7 +450,7 @@ function Cart() {
                   className={styles.button_submit}
                   onClick={() => {
                     handleCheck();
-                    setBuy(false);
+                    setBuy(true);
 
                     router.push({
                       pathname: `orders/${BuyId}`,

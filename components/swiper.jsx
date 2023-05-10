@@ -10,33 +10,30 @@ import Image from "next/image";
 import { getAllBanner } from "../helper/utilities/apiHelper";
 import { useEffect } from "react";
 import { get, set } from "lodash";
-import { Spin } from "antd"
+import { Spin } from "antd";
 // import Home from "../pages/index"
 import { useRouter } from "next/router";
 
-export default function Swipper({loading,setLoading}) {
+export default function Swipper({ loading, setLoading }) {
   const [banner, setBanner] = useState([]);
 
-  const router=useRouter()
+  const router = useRouter();
 
   const fetchData = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const result = await getAllBanner();
       setBanner(get(result, "data.data"));
-      
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
-  },[]);
-
-
+  }, []);
 
   let left = banner.filter((data) => {
     return data.status === "Left";
@@ -51,9 +48,7 @@ export default function Swipper({loading,setLoading}) {
   });
 
   return (
-    
-     
- <div className="w-[80vw] m-auto flex ">
+    <div className="w-[80vw] m-auto flex ">
       <Swiper
         modules={[Navigation, Autoplay, Pagination]}
         className="myswiper w-[70%] m-auto"
@@ -63,7 +58,15 @@ export default function Swipper({loading,setLoading}) {
       >
         {left.map((data, index) => {
           return (
-            <SwiperSlide key={index}>
+            <SwiperSlide
+              key={index}
+              onClick={() =>
+                router.push({
+                  pathname: `/product/${data.productid}`,
+                  query: { id: data.productid },
+                })
+              }
+            >
               <div className="h-[35vh] bg-right bg-no-repeat bg-[red] w-[60vw]">
                 <Image
                   src={data.image}
@@ -72,7 +75,6 @@ export default function Swipper({loading,setLoading}) {
                   height={800}
                   alt="not found"
                 ></Image>
-               
               </div>
             </SwiperSlide>
           );
@@ -82,13 +84,16 @@ export default function Swipper({loading,setLoading}) {
         {top.map((data) => {
           return (
             <>
-              <div className="  h-[17.2vh] w-[23.5vw]"  onClick={() =>
-                              router.push({
-                                pathname: `/product/${data.productid}`,
-                                query: { id: data.productid },
-                              })
-                            }>
-                <Image 
+              <div
+                className="  h-[17.2vh] w-[23.5vw]"
+                onClick={() =>
+                  router.push({
+                    pathname: `/product/${data.productid}`,
+                    query: { id: data.productid },
+                  })
+                }
+              >
+                <Image
                   src={data.image}
                   className="!w-[100%] !h-[100%]"
                   width={300}
@@ -102,15 +107,17 @@ export default function Swipper({loading,setLoading}) {
         })}
 
         {bottom.map((data) => {
-         
           return (
             <>
-              <div className="bg-[#613f75]  h-[17.2vh] w-[23.5vw] " onClick={() =>
-                              router.push({
-                                pathname: `/product/${data.productid}`,
-                                query: { id: data.productid },
-                              })
-                            }>
+              <div
+                className="bg-[#613f75]  h-[17.2vh] w-[23.5vw] "
+                onClick={() =>
+                  router.push({
+                    pathname: `/product/${data.productid}`,
+                    query: { id: data.productid },
+                  })
+                }
+              >
                 <Image
                   src={data.image}
                   className="!w-[100%] !h-[100%]"
@@ -124,8 +131,6 @@ export default function Swipper({loading,setLoading}) {
           );
         })}
       </div>
-      </div>
-    
-   
+    </div>
   );
 }

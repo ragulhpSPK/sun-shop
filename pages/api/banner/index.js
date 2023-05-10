@@ -33,7 +33,7 @@ export default async function bannerController(req, res) {
         try {
           const banner = await Banner.findByIdAndUpdate(
             { _id: req.body.id },
-            req.body
+            req.body.data
           );
 
           return res.status(200).send({ data: banner });

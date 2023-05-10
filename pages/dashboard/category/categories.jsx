@@ -270,7 +270,7 @@ const Categories = (properties) => {
                   ]}
                   name="name"
                 >
-                  <Input placeholder="Category Name" />
+                  <Input placeholder="Category Name" className="w-[25vw]"/>
                 </Form.Item>
 
                 <Form.Item className="w-[100%]" name="name">
@@ -291,7 +291,7 @@ const Categories = (properties) => {
                         />
                       </div>
                     ) : (
-                      <Dragger {...props}>
+                        <Dragger {...props} style={{width:"25vw"}}>
                         <p className="ant-upload-drag-icon">
                           <InboxOutlined />
                         </p>

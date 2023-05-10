@@ -103,6 +103,7 @@ const Subcategories = (properties) => {
 
   const handleEdit = (value) => {
   
+    
     setOpen(true);
     setUpdate(value._id);
     setImageName(value.image);
@@ -258,6 +259,9 @@ const Subcategories = (properties) => {
                   columns={columns}
                   size="middle"
                   loading={loading}
+                 pagination={{
+                    pageSize: 6,
+                  }}
                 />
               </div>
               <Modal footer={false} open={open} destroyOnClose>
@@ -276,10 +280,11 @@ const Subcategories = (properties) => {
                       <Input
                         size="large"
                         placeholder="Enter SubCategory Name"
+                       className="!w-[25vw]"
                       />
                     </Form.Item>
                     <Form.Item
-                      className="!w-[100%]"
+                   className="!w-[25vw]"
                       name="categoryId"
                       rules={[
                         {
@@ -293,6 +298,7 @@ const Subcategories = (properties) => {
                         onChange={(e) => {
                           selectedSetcategorieName(e);
                         }}
+                        className="!w-[25vw]"
                       >
                         {category && category.map((res) => {
                           return (
@@ -321,7 +327,7 @@ const Subcategories = (properties) => {
                             />
                           </div>
                         ) : (
-                          <Dragger {...props}>
+                          <Dragger {...props} className="!bg-[red] !ml-40" style={{marginLeft:"525px",width:"25vw"}}>
                             <p className="ant-upload-drag-icon">
                               <InboxOutlined />
                             </p>

@@ -58,7 +58,7 @@ export const Items = [
     <Link href="/dashboard/topProducts/Topproducts">
       <h1 className="!text-xl">Top Products</h1>
     </Link>,
-    "menu5",
+    "menu6",
     <ViewCarouselOutlinedIcon className="!text-xl" />
   ),
 ];

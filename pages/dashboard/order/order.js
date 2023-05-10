@@ -51,14 +51,13 @@ function Order() {
     }
   };
 
-  s;
   const columns = [
     {
       title: "CustomerId",
       dataindex: "CustomerId",
       key: "CustomerId",
       render: (name) => {
-        return <p>{name.customerId}</p>;
+        return <p className="text-[16px]">{name.customerId}</p>;
       },
     },
     {
@@ -66,7 +65,7 @@ function Order() {
       dataindex: "customer",
       key: "customer",
       render: (name) => {
-        return <p>{name.customer}</p>;
+        return <p className="text-[16px]">{name.customer}</p>;
       },
     },
     {
@@ -74,7 +73,7 @@ function Order() {
       dataindex: "address",
       key: "address",
       render: (name) => {
-        return <p>{name.address}</p>;
+        return <p className="text-[16px]">{name.address}</p>;
       },
     },
     {
@@ -82,7 +81,7 @@ function Order() {
       dataindex: "total",
       key: "total",
       render: (name) => {
-        return <p>{name.total}</p>;
+        return <p className="text-[16px]">{name.total}</p>;
       },
     },
     {
@@ -130,7 +129,7 @@ function Order() {
       },
     },
   ];
-  console.log(statusSet.indexOf("Cancelled"), "jhlkj");
+
   return (
     <div className="flex flex-col">
       <div>

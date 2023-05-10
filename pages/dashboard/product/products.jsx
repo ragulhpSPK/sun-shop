@@ -80,6 +80,8 @@ function Products({ content }) {
   const [form] = Form.useForm();
 
   const editProducts = (value) => {
+
+    console.log(value)
     setUpdateId(value._id);
     setOpen(!open);
     setImages(images);
@@ -89,8 +91,10 @@ function Products({ content }) {
     setImageName(images);
     setChecked(checked);
     setStatus(value.status);
-   setImages(products.filter(data=>{return data._id===value._id})[0].image)
- 
+    setImages(products.filter(data => { return data._id === value._id })[0].image)
+    setSubCatFilter(value.SubCategoryId)
+    setCategoryFil(value.categoryId)
+   console.log(subCatFilter,catFil)
   };
 
   
@@ -104,6 +108,8 @@ function Products({ content }) {
     form.resetFields();
     setImages([]);
     setHighlights("")
+
+   
   };
 
   const fetchData = async () => {
@@ -181,16 +187,15 @@ function Products({ content }) {
       }
     } else {
       try {
-      
         const formData = {
           data: {
             ...value,
             image: images,
             categoryname: category.filter((data) => {
-              return data._id === subCatFilter;
+              return data._id === catFil;
             })[0].name,
              subcategoryname: subCategory.filter((data) => {
-            return data._id === catFil;
+            return data._id === subCatFilter;
           })[0].subcategoryname,
           highlight: highlight,
           _id: updateId,
@@ -259,43 +264,7 @@ function Products({ content }) {
     }
   };
 
-  // const changeAddTop = async (checked, proId) => {
-
-  //   if (checked === true) {
-
-  //     try {
-  //       const formData = {
-  //         image: products.filter((data) => {
-  //           return data._id === proId;
-  //         })[0].image[0],
-  //         productId: products.filter((data) => {
-  //           return data._id === proId;
-  //         })[0]._id,
-  //         ProductTitle: products.filter((data) => {
-  //           return data._id === proId;
-  //         })[0].title,
-  //       };
-  //       await createTopProducts(formData);
-  //       notification.success({ message: "Top products added successfully" });
-  //     } catch (err) {
-  //       console.log(err);
-  //       notification.error({ message: "Something went wrong" });
-  //     }
-  //   }
-
-  //   // } else if (checked === false) {
-  //   //   try {
-
-  //   //     console.log(allTopProducts)
-  //   //    await deleteTopProducts( allTopProducts.filter((data) => {
-  //   //       return data.productId === proId;
-  //   //     })[0]._id);
-  //   //     notification.success({ message: "Top products deleted successfully" });
-  //   //   } catch (err) {
-  //   //     notification.error({ message: "Something went wrong" });
-  //   //   }
-  //   // }
-  // };
+  
 
   const toggleSwitch = async (response, id) => {
     setLoading(true);
@@ -418,18 +387,21 @@ function Products({ content }) {
     },
   ];
 
-  // const handleChange = (value) => {
-  //   console.log(value)
-  //   setCategoryFil(value);
-  //   form.setFieldsValue({ subcategoryname: "" });
-  //   let temp = subCategory;
-  //   setCatFilter(
-  //     temp.filter((result) => {
-  //       return result.categoryId === value;
-  //     })
-  //   );
-  // }
+  const handleChange = (value) => {
+   console.log(value)
+    setCategoryFil(value);
+    form.setFieldsValue({ subcategoryname: "" });
+    let temp = subCategory;
+    setCatFilter(
+      temp.filter((result) => {
+        return result.categoryId === value;
+      })
+    );
 
+    console.log(catFil)
+  }
+
+  
 
 
   return (
@@ -483,7 +455,7 @@ function Products({ content }) {
                     },
                   ]}
                 >
-                  <Input size="large" placeholder="Enter product Name" />
+                  <Input size="large" placeholder="Enter product Name" className="w-[35vw]"/>
                 </Form.Item>
                 <Form.Item
                   name="price"
@@ -493,7 +465,8 @@ function Products({ content }) {
                     },
                   ]}
                 >
-                  <Input size="large" placeholder="Enter product Price" />
+                  <Input size="large" placeholder="Enter product Price" 
+                  className="w-[35vw]"/>
                 </Form.Item>
                 <Form.Item
                   name="categoryId"
@@ -510,6 +483,7 @@ function Products({ content }) {
                       handleChange(e);
                       setCategoryFil(e)
                     }}
+                    className="!w-[35vw]"
                   >
                     {category.map((res) => {
                       return (
@@ -532,6 +506,7 @@ function Products({ content }) {
                     placeholder="Select SubCategory"
                     size="large"
                     onChange={(e) => setSubCatFilter(e)}
+                    className="!w-[35vw]"
                   >
                     {catFilter.map((res) => {
                       return (

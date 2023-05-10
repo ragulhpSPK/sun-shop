@@ -22,7 +22,6 @@ import {
 } from "antd";
 import { SubCategory } from "@/helper/Subcategory";
 import "rc-menu/assets/index.css";
-import Menu, { SubMenu, Item as MenuItem } from "rc-menu";
 import {
   getAllCatagory,
   getAllSubCatagory,
@@ -34,6 +33,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { Spin } from "antd";
 import SyncIcon from "@mui/icons-material/Sync";
+import { useDispatch } from "react-redux";
+import { addproduct } from "@/redux/cartSlice";
 
 function AllCat() {
   const [active, setActive] = useState("");
@@ -51,6 +52,7 @@ function AllCat() {
   const [loading, setLoading] = useState([]);
 
   const [priceFilter, setPriceFilter] = useState();
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     try {
@@ -169,6 +171,8 @@ function AllCat() {
     } catch (err) {
       notification.error({ message: "something went wrong" });
     }
+
+    dispatch(addproduct({ ...data }));
   };
 
   const handleSubCategoryFilterChange = (id) => {
@@ -365,6 +369,7 @@ function AllCat() {
                                 }}
                                 onClick={() => {
                                   handleClick(data._id, data);
+
                                   // setProductId(data._id);
                                 }}
                               />

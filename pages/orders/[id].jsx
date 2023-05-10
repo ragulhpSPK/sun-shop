@@ -20,10 +20,7 @@ import { get } from "lodash";
 function Orders() {
   const router = useRouter();
   const [products, setProducts] = useState([]);
-  // const [shipped, setShipped] = useState(false);
-  // const [outForDelivery, setOutForDelivery] = useState(false);
-  // const [deliverd, setDelivered] = useState(true);
-  // const [status,setStatus]=useState("");
+ 
 
   const fetchData = async () => {
     try {
@@ -43,7 +40,6 @@ function Orders() {
   });
 
   const handleClick = async (id, data) => {
-  
     if (status === "Delivered") {
       try {
         const formData = {
@@ -71,9 +67,7 @@ function Orders() {
           {
             title: "Confirmed",
             status:
-              status[0] === "Shipped" || "Out_For_Delivery" || "Delivered"
-                ? "finish"
-                : "process",
+              status[0] === "Confirmed"?"process":"finish",
             icon: (
               <DoneIcon
                 style={{ fontSize: "30px" }}
@@ -83,10 +77,8 @@ function Orders() {
           },
           {
             title: "Order Shipped",
-            status:
-              status[0] === "Out_For_Delivery" || "Delivered"
-                ? "finish"
-                : "process",
+             status:
+              status[0] === "Out_For_Delivery"?"finish":status[0]==="Delivered"?"finish":"process",
             icon: (
               <CodeSandboxOutlined
                 style={{ fontSize: "30px" }}
@@ -96,7 +88,8 @@ function Orders() {
           },
           {
             title: "Order out for delivery",
-            status: status[0] === "Delivered" ? "finish" : "process",
+           status:
+              status[0] === "Delivered"?"finish":"process",
             icon: (
               <LocalShippingIcon
                 style={{ fontSize: "30px" }}
@@ -107,7 +100,8 @@ function Orders() {
 
           {
             title: "Order Delivered",
-            status: status[0] === "Delivered" ? "finish" : "process",
+            status:"finish",
+              
             icon: (
               <HomeRoundedIcon
                 style={{ fontSize: "30px" }}
@@ -119,6 +113,7 @@ function Orders() {
       />
 
       {products.map((data) => {
+        console.log(data, "");
         return (
           <>
             <div className="flex flex-col" key={data._id}>
@@ -135,7 +130,7 @@ function Orders() {
                         return (
                           <>
                             <Image
-                              src={img[0]}
+                              src={data.image.length === 1 ? img : img[0]}
                               alt="order"
                               width={100}
                               height={100}
@@ -162,7 +157,10 @@ function Orders() {
                 </div>
 
                 {status[0] === "Delivered" ? (
-                  <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center"><DoneIcon className="bg-[green] rounded-3xl h-[30px] w-[30px] text-white"/><span>Order Reached You SuccessFully!</span></p>
+                  <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center">
+                    <DoneIcon className="bg-[green] rounded-3xl h-[30px] w-[30px] text-white" />
+                    <span>Order Reached You SuccessFully!</span>
+                  </p>
                 ) : (
                   <button
                     className="bg-red-600 !text-white p-[8px] h-[5vh] rounded-md"
@@ -173,9 +171,14 @@ function Orders() {
                     Cancel Order
                   </button>
                 )}
-                    <h1 className="text-3xl pt-[5px] text-slate-600">Total Price:{data.total}</h1>
+                <h1
+                  className={`text-3xl pt-[5px] text-slate-600 ${
+                    data.total === null ? "hidden" : "block"
+                  }`}
+                >
+                  Total Price:{data.total}
+                </h1>
               </div>
-          
             </div>
           </>
         );

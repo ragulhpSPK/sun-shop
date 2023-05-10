@@ -80,7 +80,7 @@ function Banner() {
             })[0].title,
             status: value.status,
           },
-          id: updateid,
+         
         };
         await createBanner(formData);
         setOpen(false);
@@ -94,6 +94,8 @@ function Banner() {
       }
     } else {
       try {
+
+        console.log(updateid,"id")
         setLoading(true);
 
         const formData = {
@@ -234,12 +236,12 @@ function Banner() {
                         />
                       </div>
 
-                      <div className="pt-12">
-                        <h1 className="text-center font-bold text-[16px]">
+                      <div className="pt-10 ">
+                        <h1 className="text-center font-bold text-[16px] ">
                           {data.name}
                         </h1>
                       </div>
-                      <div className="flex gap-[15px] ">
+                      <div className="flex gap-[15px] h-[5vh]">
                         <p className="text-[12px] font-bold ">
                           {data.productname}
                         </p>
@@ -262,13 +264,14 @@ function Banner() {
         <Modal open={open} footer={false} destroyOnClose>
           <Form form={form} onFinish={handleFinish}>
             <Form.Item name="name" rules={[{ required: true }]}>
-              <Input size="large" placeholder="Enter Banner Name" />
+              <Input size="large" placeholder="Enter Banner Name" className="w-[25vw]"/>
             </Form.Item>
             <Form.Item name="productname" rules={[{ required: true }]}>
               <Select
                 size="large"
                 placeholder="Select product name here"
                 onChange={(e) => setProductId(e)}
+                className="!w-[25vw]"
               >
                 {allProducts.map((data) => {
                   return (
@@ -285,6 +288,7 @@ function Banner() {
                 size="large"
                 placeholder="Select your status here.."
                 onChange={(e) => setStatus(e)}
+                 className="!w-[25vw]"
               >
                 <Option value="Left">left</Option>
                 <Option value="Top">Top</Option>
@@ -305,12 +309,12 @@ function Banner() {
                     </Tooltip>
                     <Image
                       src={imagename}
-                      className="!w-[5vw]"
+                      className="!w-[8vw] !h-[8vh]"
                       alt="not found"
                     />
                   </div>
                 ) : (
-                  <Dragger {...props} multiple={true}>
+                  <Dragger {...props} multiple={true} style={{width:"450px",display:"flex",alignItems:"center",justifyContent:"center",marginLeft:"10px"}}>
                     <p className="ant-upload-drag-icon">
                       <InboxOutlined />
                     </p>
