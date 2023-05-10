@@ -7,6 +7,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useState } from "react";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import DoneIcon from "@mui/icons-material/Done";
+
+import CancelIcon from '@mui/icons-material/Cancel';
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { useRouter } from "next/router";
 import {
@@ -17,10 +19,10 @@ import {
 import { useEffect } from "react";
 import { get } from "lodash";
 
+
 function Orders() {
   const router = useRouter();
   const [products, setProducts] = useState([]);
- 
 
   const fetchData = async () => {
     try {
@@ -40,14 +42,15 @@ function Orders() {
   });
 
   const handleClick = async (id, data) => {
-    if (status === "Delivered") {
+  
+    if (status !== "Delivered") {
       try {
         const formData = {
           status: "Cancelled",
           id: id,
         };
         await updateOrder(formData);
-        notification.success({ message: "status updated successfully" });
+        notification.success({ message: "You cancel Your Order" });
       } catch (err) {
         console.log(err);
         notification.error({ message: "something went wrong" });
@@ -61,13 +64,13 @@ function Orders() {
       id={styles.shadow3}
     >
       <Steps
+        className={`${status[0]==="Cancelled"?"invisible":"visible"}`}
         size="large"
         lineWidth={1}
         items={[
           {
             title: "Confirmed",
-            status:
-              status[0] === "Confirmed"?"process":"finish",
+            status: status[0] === "Confirmed" ? "process" : "finish",
             icon: (
               <DoneIcon
                 style={{ fontSize: "30px" }}
@@ -77,8 +80,12 @@ function Orders() {
           },
           {
             title: "Order Shipped",
-             status:
-              status[0] === "Out_For_Delivery"?"finish":status[0]==="Delivered"?"finish":"process",
+            status:
+              status[0] === "Out_For_Delivery"
+                ? "finish"
+                : status[0] === "Delivered"
+                ? "finish"
+                : "process",
             icon: (
               <CodeSandboxOutlined
                 style={{ fontSize: "30px" }}
@@ -88,8 +95,7 @@ function Orders() {
           },
           {
             title: "Order out for delivery",
-           status:
-              status[0] === "Delivered"?"finish":"process",
+            status: status[0] === "Delivered" ? "finish" : "process",
             icon: (
               <LocalShippingIcon
                 style={{ fontSize: "30px" }}
@@ -100,8 +106,8 @@ function Orders() {
 
           {
             title: "Order Delivered",
-            status:"finish",
-              
+            status: "finish",
+
             icon: (
               <HomeRoundedIcon
                 style={{ fontSize: "30px" }}
@@ -159,7 +165,15 @@ function Orders() {
                 {status[0] === "Delivered" ? (
                   <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center">
                     <DoneIcon className="bg-[green] rounded-3xl h-[30px] w-[30px] text-white" />
+
                     <span>Order Reached You SuccessFully!</span>
+                  </p>
+                ) : status[0] === "Cancelled" ? (
+                  <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center">
+                  
+
+                      <span className="tracking-wider text-4xl pl-2">Order Cancelled</span>
+                        <CancelIcon className="bg-[red] rounded-3xl h-[30px] w-[30px] text-white" />
                   </p>
                 ) : (
                   <button

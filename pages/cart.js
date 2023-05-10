@@ -90,10 +90,6 @@ function Cart() {
     );
   }, [products]);
 
-  const cart = useSelector((state) => state.cart);
-
-  console.log(cart.products.length);
-
   const deleteHandler = async (data) => {
     try {
       await deleteCart(data);

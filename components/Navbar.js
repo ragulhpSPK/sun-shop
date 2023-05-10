@@ -47,7 +47,6 @@ function Navbar() {
   };
 
   const cart = useSelector((state) => state.cart);
-  console.log(cart.products.length);
 
   useEffect(() => {
     fetchData();

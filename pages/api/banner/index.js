@@ -16,7 +16,6 @@ export default async function bannerController(req, res) {
       break;
 
     case "POST":
-      console.log("POST", req.body);
       {
         try {
           const banner = await new Banner({ ...req.body.data });

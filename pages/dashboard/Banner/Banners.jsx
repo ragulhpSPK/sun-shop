@@ -95,7 +95,7 @@ function Banner() {
     } else {
       try {
 
-        console.log(updateid,"id")
+   
         setLoading(true);
 
         const formData = {

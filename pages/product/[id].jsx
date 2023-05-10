@@ -8,8 +8,12 @@ import { AddCart } from "@/helper/Addcart";
 import Link from "next/link";
 import style from "../../styles/Home.module.css";
 import Image from "next/image";
-import { createCart, getAllproducts } from "../../helper/utilities/apiHelper";
-import {  notification } from "antd";
+import {
+  createCart,
+  getAllproducts,
+  getAllCart,
+} from "../../helper/utilities/apiHelper";
+import { notification } from "antd";
 import { get } from "lodash";
 
 export default function App() {
@@ -19,7 +23,9 @@ export default function App() {
   const [img, setImg] = useState([]);
   const [product, setProduct] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const dispatch=useDispatch()
+  const [cart, setCart] = useState([]);
+  const [cartID, setCartID] = useState([]);
+  const dispatch = useDispatch();
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -27,17 +33,26 @@ export default function App() {
 
   const fetchData = async () => {
     try {
-      const result = await getAllproducts();
-
-      setProduct(get(result, "data.data", []));
+      const result = [await getAllproducts(), await getAllCart()];
+      console.log(result);
+      setProduct(get(result, "[0].data.data", []));
+      setCart(get(result, "[1].data.message", []));
     } catch (err) {
       console.log(err);
     }
   };
 
+
+ 
+
   useEffect(() => {
     fetchData();
-  }, []);
+    setCartID(
+      cart.filter((data) => {
+        return data.productId === router.query.id;
+      })
+    );
+  }, [cart,router.query.id]);
 
   useEffect(() => {
     setFilterData(
@@ -45,16 +60,23 @@ export default function App() {
         return data._id === router.query.id;
       })
     );
-  }, [product, router.query.id]);
+
+   
+    
+  }, [product, router.query.id,cart]);
+
+  
 
   useEffect(() => {
     filterData.map((img) => setImg(img.image[0]));
   }, [filterData]);
 
-  const handleClick = async () => {
+  const handleClick = async (data) => {
+    
     try {
       const formData = {
         data: {
+          productId: data._id,
           image: filterData[0].image,
           name: filterData[0].title,
           total: filterData[0].price,
@@ -65,7 +87,6 @@ export default function App() {
 
       await createCart(formData);
       notification.success({ message: "cart added successfully" });
-      
     } catch (err) {
       notification.error({ message: "something went wrong" });
     }
@@ -130,7 +151,6 @@ export default function App() {
                 Product Specifications
               </h2>
               {data.highlight.split(",").map((res, index) => {
-               
                 return (
                   <li className="text-xl pt-2" key={index}>
                     {res}
@@ -139,15 +159,30 @@ export default function App() {
               })}
 
               <div className="pt-10 flex gap-7 justify-between w-fit pl-5">
-                <button
-                  className="bg-[var(--second-color)] text-[#fff] hover:bg-[--four-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
-                  onClick={() => { handleClick();dispatch(addproduct({...filterData})) }}
-                >
-                  Add to Cart
-                </button>
+              
+                {cartID[0]&&cartID[0].productId === data._id ? (
+                  <button
+                    className="bg-slate-300 text-[#000] shadow-2xl hover:bg-[--second-color] hover:scale-105 hover:font-medium hover:text-white duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
+                    onClick={() => {
+                      router.push({ pathname: "/cart" });
+                    }}
+                  >
+                    Go to Cart
+                  </button>
+                ) : (
+                  <button
+                    className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
+                    onClick={() => {
+                      handleClick(data);
+                      dispatch(addproduct({ ...filterData }));
+                    }}
+                  >
+                    Add to Cart
+                  </button>
+                )}
 
                 <button
-                  className="bg-[var(--second-color)] hover:bg-[--four-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] text-xl rounded-md h-[5vh] w-[6vw] px-3 py-2"
+                  className="bg-[var(--second-color)] hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] text-xl rounded-md h-[5vh] w-[6vw] px-3 py-2"
                   onClick={() => {
                     router.push({
                       pathname: "/cart",

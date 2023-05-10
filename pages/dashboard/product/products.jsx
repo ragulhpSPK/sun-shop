@@ -80,8 +80,6 @@ function Products({ content }) {
   const [form] = Form.useForm();
 
   const editProducts = (value) => {
-
-    console.log(value)
     setUpdateId(value._id);
     setOpen(!open);
     setImages(images);
@@ -91,13 +89,15 @@ function Products({ content }) {
     setImageName(images);
     setChecked(checked);
     setStatus(value.status);
-    setImages(products.filter(data => { return data._id === value._id })[0].image)
-    setSubCatFilter(value.SubCategoryId)
-    setCategoryFil(value.categoryId)
-   console.log(subCatFilter,catFil)
+    setImages(
+      products.filter((data) => {
+        return data._id === value._id;
+      })[0].image
+    );
+    setSubCatFilter(value.SubCategoryId);
+    setCategoryFil(value.categoryId);
   };
 
-  
   const handleCancel = () => {
     setAdd(false);
     setEdit(false);
@@ -107,9 +107,7 @@ function Products({ content }) {
     setValue();
     form.resetFields();
     setImages([]);
-    setHighlights("")
-
-   
+    setHighlights("");
   };
 
   const fetchData = async () => {
@@ -150,8 +148,6 @@ function Products({ content }) {
   });
 
   const handleFinish = async (value) => {
-
-   
     if (updateId == "") {
       setLoading(true);
 
@@ -179,7 +175,7 @@ function Products({ content }) {
         setLoading(false);
         setOpen(false);
         setImages("");
-        setHighlights("")
+        setHighlights("");
       } catch (err) {
         setOpen(false);
 
@@ -194,14 +190,13 @@ function Products({ content }) {
             categoryname: category.filter((data) => {
               return data._id === catFil;
             })[0].name,
-             subcategoryname: subCategory.filter((data) => {
-            return data._id === subCatFilter;
-          })[0].subcategoryname,
-          highlight: highlight,
-          _id: updateId,
-          status: status,
+            subcategoryname: subCategory.filter((data) => {
+              return data._id === subCatFilter;
+            })[0].subcategoryname,
+            highlight: highlight,
+            _id: updateId,
+            status: status,
           },
-         
         };
         await updateProducts(formData);
         notification.success({ message: "products updated successfully" });
@@ -217,8 +212,6 @@ function Products({ content }) {
       }
     }
   };
-
- 
 
   const deleteHandler = async (value) => {
     setLoading(true);
@@ -249,22 +242,23 @@ function Products({ content }) {
   const handleFileInputChange = (event) => {
     const files = event.target.files;
     const allImages = [];
+    if (files.length <= 5) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
+        reader.onloadend = () => {
+          const dataURL = reader.result;
+          allImages.push(dataURL);
+          setImages(allImages);
+        };
 
-      reader.onloadend = () => {
-        const dataURL = reader.result;
-        allImages.push(dataURL);
-        setImages(allImages);
-      };
-
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      }
+    } else {
+      notification.error({ message: "you can't upload more than 5 images" });
     }
   };
-
-  
 
   const toggleSwitch = async (response, id) => {
     setLoading(true);
@@ -388,7 +382,7 @@ function Products({ content }) {
   ];
 
   const handleChange = (value) => {
-   console.log(value)
+   
     setCategoryFil(value);
     form.setFieldsValue({ subcategoryname: "" });
     let temp = subCategory;
@@ -398,11 +392,17 @@ function Products({ content }) {
       })
     );
 
-    console.log(catFil)
-  }
+    
+  };
 
-  
+  const deleteFile = (image) => {
+    const filterImages = images.filter((data) => {
+      return data !== image;
+    });
+    setImages(filterImages);
+  };
 
+ 
 
   return (
     <div className="flex flex-col">
@@ -455,7 +455,11 @@ function Products({ content }) {
                     },
                   ]}
                 >
-                  <Input size="large" placeholder="Enter product Name" className="w-[35vw]"/>
+                  <Input
+                    size="large"
+                    placeholder="Enter product Name"
+                    className="w-[35vw]"
+                  />
                 </Form.Item>
                 <Form.Item
                   name="price"
@@ -465,8 +469,11 @@ function Products({ content }) {
                     },
                   ]}
                 >
-                  <Input size="large" placeholder="Enter product Price" 
-                  className="w-[35vw]"/>
+                  <Input
+                    size="large"
+                    placeholder="Enter product Price"
+                    className="w-[35vw]"
+                  />
                 </Form.Item>
                 <Form.Item
                   name="categoryId"
@@ -481,7 +488,7 @@ function Products({ content }) {
                     size="large"
                     onChange={(e) => {
                       handleChange(e);
-                      setCategoryFil(e)
+                      setCategoryFil(e);
                     }}
                     className="!w-[35vw]"
                   >
@@ -556,24 +563,36 @@ function Products({ content }) {
                     type="file"
                     multiple
                     onChange={handleFileInputChange}
+                    draggable
                   />
-                  <div className="grid grid-cols-3">
-                    {images.map((image, index) => (
-                      <>
-                        <div className="bg-slate-200 mr-5  mt-5">
-                          <Image
-                            key={index}
-                            src={image}
-                            width={100}
-                            height={100}
-                            alt={`image-${index}`}
-                            className="flex items-center justify-center m-auto pt-5"
-                           
-                          />
-                          {/* <DeleteIcon onClick={()=>setDeleted(true)}     key={index}/> */}
-                        </div>
-                      </>
-                    ))}
+                  <div className="grid grid-cols-3 h-[14vh] relative w-[30vw] mt-5">
+                    {images &&
+                      images.map((image, index) => (
+                       
+                        <>
+                          {console.log(image,"images")}
+                          <div>
+                            <div  className="bg-slate-200  w-[8vw]  h-[10vh] flex items-center justify-center">
+                              <Image
+                                key={index}
+                                src={image}
+                                width={100}
+                                height={100}
+                                alt={`image-${index}`}
+                                className="self-center  pt-5 !h-[10vh]"
+                              />
+                            
+                            </div>
+
+                              <DeleteIcon
+                            
+                                onClick={() => deleteFile(image)}
+                                style={{ color: "var(--third-color)" }}
+                                className="absolute top-0 "
+                              />
+                          </div>
+                        </>
+                      ))}
                   </div>
                 </Form.Item>
 

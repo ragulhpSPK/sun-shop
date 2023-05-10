@@ -27,6 +27,7 @@ import {
   getAllSubCatagory,
   getAllproducts,
   createCart,
+  getAllCart,
 } from "../helper/utilities/apiHelper";
 import { get, isEmpty } from "lodash";
 import { useRouter } from "next/router";
@@ -50,6 +51,9 @@ function AllCat() {
   const { Meta } = Card;
   const [priceval, setPriceVal] = useState([]);
   const [loading, setLoading] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [productId, setProductId] = useState("");
+  const [cartId, setCartId] = useState([]);
 
   const [priceFilter, setPriceFilter] = useState();
   const dispatch = useDispatch();
@@ -61,10 +65,12 @@ function AllCat() {
         await getAllCatagory(),
         await getAllSubCatagory(),
         await getAllproducts(),
+        await getAllCart(),
       ];
       setCategory(get(result, "[0].data.data", []));
       setSubCategory(get(result, "[1].data.data", []));
       setProducts(get(result, "[2].data.data", []));
+      setCart(get(result, "[3].data.message", []));
     } catch (err) {
       console.log(err);
     } finally {
@@ -76,6 +82,16 @@ function AllCat() {
     fetchData();
   }, []);
 
+  // const datat=[1,2,3,4,5].filter(res=>{return [0,0,0,5].find(rest=> return rest===res)})
+
+  // const datas = filerProduct
+  //   .filter((res) => {
+  //     return cart.find((rest) => {
+  //       return rest.productId === res._id;
+  //     });
+  //   })
+
+  // console.log(cart);
   useEffect(() => {
     if (
       get(router, "query.cat_id", "") &&
@@ -158,6 +174,7 @@ function AllCat() {
     try {
       const formData = {
         data: {
+          productId: data._id,
           image: data.image,
           name: data.title,
           price: data.price,
@@ -167,6 +184,7 @@ function AllCat() {
       };
 
       await createCart(formData);
+      fetchData();
       notification.success({ message: "product add to cart successfully" });
     } catch (err) {
       notification.error({ message: "something went wrong" });
@@ -186,7 +204,6 @@ function AllCat() {
       console.log(e);
     }
   };
-  // filerProduct.sort((a, b) => (a.price > b.price ? 1 : -1));
 
   const handlePriceChange = (e) => {
     try {
@@ -363,16 +380,28 @@ function AllCat() {
                               key={"key"}
                               className="bg-[--third-color] h-[5vh] w-[3vw] mr-[15px] text-white flex items-center justify-center rounded-sm float-right"
                             >
-                              <ShoppingCartOutlined
-                                style={{
-                                  fontSize: "25px",
-                                }}
-                                onClick={() => {
-                                  handleClick(data._id, data);
-
-                                  // setProductId(data._id);
-                                }}
-                              />
+                              {cart.find((res) => {
+                                return res.productId === data._id;
+                              }) ? (
+                                <button
+                                  className="text-white text-[14px] rounded-md"
+                                  onClick={() =>
+                                    router.push({ pathname: "/cart" })
+                                  }
+                                >
+                                  Go to Cart
+                                </button>
+                              ) : (
+                                <ShoppingCartOutlined
+                                  style={{
+                                    fontSize: "25px",
+                                  }}
+                                  onClick={() => {
+                                    handleClick(data._id, data);
+                                    setProductId(data._id);
+                                  }}
+                                />
+                              )}
                             </div>,
                           ]}
                         >
