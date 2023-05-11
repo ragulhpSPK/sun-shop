@@ -8,8 +8,37 @@ import { Autoplay } from "swiper";
 import { flashdeals } from "@/helper/flashdeals";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
+import { getAllproducts } from "@/helper/utilities/apiHelper";
+import { useEffect } from "react";
+import { get } from "lodash";
+import { useRouter } from "next/router";
 
 function Bestdeals() {
+
+  const [product, setProducts] = useState([])
+  const [filteredProducts, setFilteredProducts] = useState([])
+  const router=useRouter()
+
+  const fetchData = async() => {
+    try {
+      const result = await getAllproducts();
+      setProducts(get(result,"data.data",[]))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
+  useEffect(() => {
+    setFilteredProducts(product.filter(data=>{return data.flashStatus===true}))
+  },[product])
+
+
+
+
   return (
     <div className="pt-5">
       <div className="  h-[50vh] w-[80vw] m-auto flex ">
@@ -72,16 +101,16 @@ function Bestdeals() {
 
       {/* Flash Deals */}
 
-      <div className="h-[35vh]  mt-14 w-[80vw] m-auto " id={styles.shadow2}>
-        <div className="pt-5 ">
-          <div className="flex w-[76vw] justify-between m-auto px-5">
-            <p className="text-[var(--second-color)] font-bold text-3xl">
+      <div className="h-[30vh]  mt-14 w-[80vw] m-auto " id={styles.shadow2}>
+        <div>
+          <div className="flex w-[80vw]  text-xl h- justify-between m-auto px-5 bg-[var(--second-color)] py-3 text-white">
+            <h1>
               Flash Deals
-            </p>
+            </h1>
             <Link href="flashDeals">
-              <p className="text-[var(--first-color)] font-bold text-xl">
+              <h1 className=" text-xl">
                 See All &#8594;
-              </p>
+              </h1>
             </Link>
           </div>
         </div>
@@ -96,21 +125,25 @@ function Bestdeals() {
             autoplay={{ delay: 3000 }}
             className="mySwiper w-[75vw] "
           >
-            {flashdeals.map((data) => {
+            {filteredProducts.map((data) => {
               return (
                 <SwiperSlide
-                  className="relative w-[10vw] border-2 "
-                  key={data.id}
+                  className="relative w-[10vw] border-r border-b border-l border-slate-200 "
+                  key={data._id}
+                  onClick={ ()=>  router.push({
+                      pathname: `/product/${data._id}`,
+                      query: { id: data._id },
+                    })}
                 >
                   <Image
                     width={100}
                     height={100}
                     alt="logo"
-                    src={data.image}
-                    className="w-36 m-auto"
+                    src={data.image[0]}
+                    className="!h-[14vh] !w-fit m-auto"
                   />
                   <div className="flex flex-col bg-[var(--fifth-color)] text-sm font-semibold text-black w-14 text-center absolute top-0 right-0">
-                    <span>{data.offer}</span>
+                    <span>{data.offer} %</span>
                     OFF
                   </div>
                   <p className="text-lg text-center font-medium">

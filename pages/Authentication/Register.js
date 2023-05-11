@@ -3,27 +3,25 @@ import React from "react";
 import { Modal, Form, Input, Button, Image, notification } from "antd";
 import Login from "./Login";
 import { useState } from "react";
-import { createMessage } from "../../helper/utilities/apiHelper";
+import { createMessage, getAllMessage } from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { authentication } from "../../components/firebase/firebase";
 import { useEffect } from "react";
 import { get } from "lodash";
+import Cookies from "js-cookie";
+import { excrypt } from "@/helper/shared";
+import { useRouter } from "next/router";
 
 function Register() {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [verificationId, setVerificationId] = useState("");
   const [otp, setOtp] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState();
   const [expandForm, setExpandForm] = useState(false);
-  const [number, setNumber] = useState("");
-
-  // const handleFinish = async () => {
-  //   console.log("clicked");
-  // };
+  const [numbers, setNumbers] = useState();
+  const router = useRouter();
 
   const generateRecaptchaVerifier = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -37,6 +35,22 @@ function Register() {
       authentication
     );
   };
+
+  const fetchData = async () => {
+    try {
+      const result = await getAllMessage();
+      console.log(result);
+      setNumbers(get(result, "data.message"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(phoneNumber);
 
   const requestOTP = (e) => {
     e.preventDefault();
@@ -60,9 +74,14 @@ function Register() {
         let confirmationResult = window.confirmationResult;
         const result = await confirmationResult.confirm(otp);
         await createMessage({ number: get(result, "user.phoneNumber", "") });
+        Cookies.set(
+          "profie",
+          JSON.stringify(excrypt(get(result, "user.phoneNumber", "")))
+        );
         notification.success({ message: "data added successfully" });
       }
     } catch (err) {
+      router.push("/");
       console.log(err);
       notification.error({ message: "Something went wrong" });
     }
@@ -159,7 +178,7 @@ function Register() {
         footer={false}
         header={false}
         onCancel={() => setExpandForm(!expandForm)}
-        className="!w-[24vw] absolute top-[25vh] left-[10vw]"
+        className="!w-[24vw] absolute top-[22vh] right-[30vw]"
       >
         <div
           className={`
@@ -181,8 +200,6 @@ function Register() {
             otpType="number"
             disabled={false}
             autoFocus
-            className={styles.opt_container}
-            // renderSeparator={<span className="relative ">_ </span>}
             renderInput={(props) => (
               <input {...props} className="border-2 h-10 !w-8 ml-2" />
             )}

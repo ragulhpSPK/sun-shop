@@ -12,7 +12,7 @@ import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import SyncIcon from "@mui/icons-material/Sync";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const result = useSelector((data) => {
     return data.search.searches;
   });
@@ -40,12 +40,12 @@ export default function Home() {
             <ProductFilter />
           ) : (
             <>
-              <Swiper loading={loading} setLoading={setLoading} />
+              <Swiper setLoading={setLoading} />
 
               <Delivery />
-              <Categories loading={loading} setLoading={setLoading} />
+              <Categories setLoading={setLoading} />
               <Bestdeals />
-              <Topproducts />
+              <Topproducts setLoading={setLoading} />
             </>
           )}
         </Spin>

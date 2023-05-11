@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, ReloadOutlined } from "@ant-design/icons";
 import styles from "../styles/form.module.css";
 import { useRouter } from "next/router";
-import { Button, InputNumber, Select, Table, notification } from "antd";
+import { Button, InputNumber, Select, Spin, Table, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import {
@@ -33,7 +33,8 @@ function Cart() {
   const [allProducts, setAllProducts] = useState([]);
   const dispatch = useDispatch();
   const [id, setId] = useState([]);
-  const [buyId, setBuyId] = useState("");
+
+  const [loading, setLoading] = useState(true);
   uuidv1();
 
   const handleCheck = () => {
@@ -62,11 +63,13 @@ function Cart() {
   };
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const result = [await getAllCart(), await getAllproducts()];
 
       setProduts(get(result, "[0].data.message"));
       setAllProducts(get(result, "[1].data.data"));
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -165,6 +168,8 @@ function Cart() {
             : allProducts.filter((data) => {
                 return data._id === router.query._id;
               })[0].price,
+
+          paymentMethod: inputs.payment,
         },
       };
       await createOrder(formData);
@@ -188,288 +193,308 @@ function Cart() {
       return res._id;
     });
 
+  const antIcon = (
+    <ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />
+  );
+
   return (
-    <div>
-      {!Buy ? (
-        <div className="flex relative min-h-screen">
-          <div className="flex">
-            <div className="pt-10">
-              {products && products.length > 0 ? (
-                <div className="overflow-x-auto w-[70vw]">
-                  {products &&
-                    products.map((data) => {
-                      return (
-                        <table
-                          className={`table w-[60vw] border-2 h-[20vh] text-slate-700 border-slate-200 m-auto  mt-10
+    <Spin
+      spinning={loading}
+      tip="Loading Data..."
+      size="large"
+      indicator={antIcon}
+    >
+      <div>
+        {!Buy ? (
+          <div className="flex relative min-h-screen">
+            <div className="flex">
+              <div className="pt-10">
+                {products && products.length > 0 ? (
+                  <div className="overflow-x-auto w-[70vw]">
+                    {products &&
+                      products.map((data) => {
+                        return (
+                          <table
+                            className={`table w-[60vw] border-2 h-[20vh] text-slate-700 border-slate-200 m-auto  mt-10
 						}`}
-                          key={data._id}
-                        >
-                          <thead>
-                            <tr>
-                              <th>Product</th>
-                              <th>Name</th>
-                              <th>Quantity</th>
-                              <th>Price</th>
-                              <th>Delete</th>
-                            </tr>
-                          </thead>
+                            key={data._id}
+                          >
+                            <thead>
+                              <tr>
+                                <th>Product</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Delete</th>
+                              </tr>
+                            </thead>
 
-                          <tbody>
-                            <tr>
-                              <td className="border-r border-slate-200 !w-[10vw]">
-                                <Image
-                                  width={100}
-                                  height={100}
-                                  alt="logo"
-                                  src={data.image[0]}
-                                  className="w-20"
-                                />
-                              </td>
-
-                              <td className="border-slate-200 border-r w-[40vw]">
-                                <p className="w-[40vw]">{data.name}</p>
-                              </td>
-                              <td className="border-slate-200 border-r w-[8vw]">
-                                <div className="flex justify-center items-center">
-                                  <InputNumber
-                                    min={1}
-                                    max={5}
-                                    defaultValue={data.quantity}
-                                    onChange={(e) => {
-                                      // setQty(e);
-                                      handleChange(data._id, e);
-                                    }}
-                                    className="w-14"
+                            <tbody>
+                              <tr>
+                                <td className="border-r border-slate-200 !w-[10vw]">
+                                  <Image
+                                    width={100}
+                                    height={100}
+                                    alt="logo"
+                                    src={data.image[0]}
+                                    className="w-20"
                                   />
-                                </div>
-                              </td>
+                                </td>
 
-                              <td className="border-slate-200 border-r w-[8vw]">
-                                Rs:{data.quantity * data.total}
-                              </td>
+                                <td className="border-slate-200 border-r w-[40vw]">
+                                  <p className="w-[40vw]">{data.name}</p>
+                                </td>
+                                <td className="border-slate-200 border-r w-[8vw]">
+                                  <div className="flex justify-center items-center">
+                                    <InputNumber
+                                      min={1}
+                                      max={5}
+                                      defaultValue={data.quantity}
+                                      onChange={(e) => {
+                                        // setQty(e);
+                                        handleChange(data._id, e);
+                                      }}
+                                      className="w-14"
+                                    />
+                                  </div>
+                                </td>
 
-                              <td className="w-[8vw]">
-                                <button
-                                  onClick={() => {
-                                    // setDeleteId(data._id);
-                                    deleteHandler(data._id);
-                                    dispatch(addproduct({ ...data }));
-                                  }}
-                                  className="!text-black text-sm hover:scale-95 h-[4vh] w-[5vw] rounded-md duration-1000 hover:!text-bold  hover:bg-[--third-color] hover:!text-white hover:shadow-inner hover:text-lg"
-                                  type="text"
-                                >
-                                  Remove
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      );
-                    })}
-                </div>
-              ) : (
-                <div className="w-[70vw] flex  flex-col-reverse pt-10 relative ">
-                  <Image
-                    width={100}
-                    height={100}
-                    alt="logo"
-                    src="/assets/No_Product_Found.png"
-                    className="text-center m-auto w-[20vw] animate-pulse absolute top-[5vh] left-[30vw]"
-                  ></Image>
-                </div>
-              )}
-            </div>
-            <div
-              className={`mt-14 w-[18vw] h-[35vh] text-white ${
-                check ? "hidden" : "block"
-              } `}
-            >
-              <div className=" bg-white h-[100%] text-[20px] uppercase border shadow-md text-slate-700 pl-5 mt-6 flex flex-col justify-evenly rounded-md">
-                <h1 className="font-bold text-slate-600">Order Summary</h1>
-                <p>Total Price:{prices}</p>
+                                <td className="border-slate-200 border-r w-[8vw]">
+                                  Rs:{data.quantity * data.total}
+                                </td>
 
-                <p>Total Products:{products && products.length}</p>
-                <button
-                  className="bg-[var(--third-color)] w-[8vw] h-[5vh] text-[18px] tracking-widest hover:bg-[--fifth-color] duration-1000 scale-110 text-white rounded-sm hover:text-black font-medium"
-                  onClick={() => setCheck(true)}
+                                <td className="w-[8vw]">
+                                  <button
+                                    onClick={() => {
+                                      // setDeleteId(data._id);
+                                      deleteHandler(data._id);
+                                      dispatch(addproduct({ ...data }));
+                                    }}
+                                    className="!text-black text-sm hover:scale-95 h-[4vh] w-[5vw] rounded-md duration-1000 hover:!text-bold  hover:bg-[--third-color] hover:!text-white hover:shadow-inner hover:text-lg"
+                                    type="text"
+                                  >
+                                    Remove
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        );
+                      })}
+                  </div>
+                ) : (
+                  <div
+                    className={`w-[70vw] flex  flex-col-reverse pt-10 relative ${
+                      loading === false ? "block" : "hidden"
+                    }`}
+                  >
+                    <Image
+                      width={100}
+                      height={100}
+                      alt="logo"
+                      src="/assets/No_Product_Found.png"
+                      className="text-center m-auto w-[20vw] animate-pulse absolute top-[5vh] left-[30vw]"
+                    ></Image>
+                  </div>
+                )}
+              </div>
+              <div
+                className={`mt-14 w-[18vw] h-[35vh] text-white ${
+                  check ? "hidden" : "block"
+                } `}
+              >
+                <div
+                  className={` bg-white h-[100%] text-[20px] uppercase border shadow-md text-slate-700 pl-5 mt-6 flex flex-col justify-evenly rounded-md ${
+                    loading === false ? "block" : "hidden"
+                  }`}
                 >
-                  CheckOut
-                </button>
+                  <h1 className="font-bold text-slate-600">Order Summary</h1>
+                  <p>Total Price:{prices}</p>
+
+                  <p>Total Products:{products && products.length}</p>
+                  <button
+                    className="bg-[var(--third-color)] w-[8vw] h-[5vh] text-[18px] tracking-widest hover:bg-[--fifth-color] duration-1000 scale-110 text-white rounded-sm hover:text-black font-medium"
+                    onClick={() => setCheck(true)}
+                  >
+                    CheckOut
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex justify-between w-[85vw]">
-          {allProducts
-            .filter((data) => {
-              return data._id === router.query._id;
-            })
-            .map((res) => {
-              return (
-                <>
-                  <table
-                    className={`table w-[60vw] border m-auto  mt-10`}
-                    key={res._id}
-                  >
-                    <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <Image
-                            src={res.image[0]}
-                            alt="not found"
-                            width={70}
-                            height={50}
-                          />
-                        </td>
-
-                        <td>{res.title}</td>
-                        <td>
-                          <div className="flex justify-center items-center">
-                            <InputNumber
-                              min={1}
-                              max={5}
-                              defaultValue={1}
-                              onChange={(e) => {
-                                setBqty(e);
-                                // handleChange(data._id, e);
-                              }}
-                              className="w-14"
+        ) : (
+          <div className="flex justify-between w-[85vw]">
+            {allProducts
+              .filter((data) => {
+                return data._id === router.query._id;
+              })
+              .map((res) => {
+                return (
+                  <>
+                    <table
+                      className={`table w-[60vw] border m-auto  mt-10`}
+                      key={res._id}
+                    >
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Name</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <Image
+                              src={res.image[0]}
+                              alt="not found"
+                              width={70}
+                              height={50}
                             />
-                          </div>
-                        </td>
+                          </td>
 
-                        <td>{res.price}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="h-[80vh]">
-                    <div className={`${check ? "hidden" : "block"} pt-10 `}>
-                      <div className="h-[15vh] w-[10vw] bg-black/90 flex flex-col items-center justify-around">
-                        <p className="text-xl text-[#fff]">
-                          Total Price:{bqty * res.price}
-                        </p>
-                        <button
-                          className="text-xl text-[#fff] bg-[--third-color] px-3 py-2 rounded-md hover:bg-[--second-color]"
-                          onClick={() => {
-                            setCheck(true);
-                          }}
-                        >
-                          CheckOut
-                        </button>
+                          <td>{res.title}</td>
+                          <td>
+                            <div className="flex justify-center items-center">
+                              <InputNumber
+                                min={1}
+                                max={5}
+                                defaultValue={1}
+                                onChange={(e) => {
+                                  setBqty(e);
+                                  // handleChange(data._id, e);
+                                }}
+                                className="w-14"
+                              />
+                            </div>
+                          </td>
+
+                          <td>{res.price}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="h-[80vh]">
+                      <div className={`${check ? "hidden" : "block"} pt-10 `}>
+                        <div className="h-[15vh] w-[10vw] bg-black/90 flex flex-col items-center justify-around">
+                          <p className="text-xl text-[#fff]">
+                            Total Price:{bqty * res.price}
+                          </p>
+                          <button
+                            className="text-xl text-[#fff] bg-[--third-color] px-3 py-2 rounded-md hover:bg-[--second-color]"
+                            onClick={() => {
+                              setCheck(true);
+                            }}
+                          >
+                            CheckOut
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              );
-            })}
-        </div>
-      )}
+                  </>
+                );
+              })}
+          </div>
+        )}
 
-      <div className="bg-[#fff]">
-        <div
-          className={`min-h-[50vh] w-[25vw] absolute z-50  right-10 top-28 shadow-2xl pl-10 ${
-            check ? "block" : "hidden"
-          }`}
-        >
-          <section className={styles.section_form}>
-            <form
-              id={styles.consultation_form}
-              className={styles.feed_form}
-              onSubmit={handleSubmit}
-            >
-              <h1 className="text-2xl py-3">Enter Your Delivery Location</h1>
-              <input
-                required=""
-                placeholder="Name"
-                name="name"
-                type="text"
-                onChange={handleChangevalue}
-              />
-              <input
-                name="phone1"
-                required=""
-                placeholder="Phone number 1"
-                onChange={handleChangevalue}
-              />
-              <input
-                name="phone2"
-                required=""
-                placeholder="Phone number 2"
-                onChange={handleChangevalue}
-              />
-              <textarea
-                name="message"
-                required=""
-                placeholder="Address"
-                type="email"
-                rows={10}
-                cols={7}
-                onChange={handleChangevalue}
-              />
-
-              <Select
-                placeholder="Select Payment"
-                size="large"
-                className="!h-[5vh]"
-                onSelect={(v, e) => {
-                  handleChange(v, e);
-                }}
+        <div className="bg-[#fff]">
+          <div
+            className={`min-h-[50vh] w-[25vw] absolute z-50  right-10 top-28 shadow-2xl pl-10 ${
+              check ? "block" : "hidden"
+            }`}
+          >
+            <section className={styles.section_form}>
+              <form
+                id={styles.consultation_form}
+                className={styles.feed_form}
+                onSubmit={handleSubmit}
               >
-                <Select.Option>Cash On Delivery</Select.Option>
-              </Select>
-              {!Buy ? (
-                <button
-                  className={styles.button_submit}
+                <h1 className="text-2xl py-3">Enter Your Delivery Location</h1>
+                <input
+                  required="true"
+                  placeholder="Name"
+                  name="name"
+                  type="text"
+                  onChange={handleChangevalue}
+                />
+                <input
+                  name="phone1"
+                  required="true"
+                  placeholder="Phone number 1"
+                  onChange={handleChangevalue}
+                />
+                <input
+                  name="phone2"
+                  required=""
+                  placeholder="Phone number 2"
+                  onChange={handleChangevalue}
+                />
+                <textarea
+                  name="message"
+                  required="true"
+                  placeholder="Address"
+                  type="email"
+                  rows={10}
+                  cols={7}
+                  onChange={handleChangevalue}
+                />
+                <div className="w-[100%] flex">
+                  <label className="pt-[14px] ">Cash On delivery </label>
+                  <input
+                    type="checkbox"
+                    required="true"
+                    className="!ml-[5px] hover:border-none"
+                    value="Cash On delivery"
+                    name="payment"
+                    onChange={handleChangevalue}
+                  />
+                </div>
+
+                {!Buy ? (
+                  <button
+                    className="!bg-[--third-color] text-white h-[5vh] mb-2 rounded-md text-xl"
+                    onClick={() => {
+                      handleCheck();
+                      setBuy(false);
+
+                      router.push({
+                        pathname: `orders/${id}`,
+                        query: id,
+                      });
+                    }}
+                  >
+                    CheckOut
+                  </button>
+                ) : (
+                  <button
+                    className="!bg-[--third-color]"
+                    onClick={() => {
+                      handleCheck();
+                      setBuy(true);
+
+                      router.push({
+                        pathname: `orders/${BuyId}`,
+                        query: BuyId,
+                      });
+                    }}
+                  >
+                    CheckOut
+                  </button>
+                )}
+
+                <CloseOutlined
+                  className="text-black absolute top-0 right-0 pr-2"
+                  color=""
                   onClick={() => {
-                    handleCheck();
-                    setBuy(false);
-
-                    router.push({
-                      pathname: `orders/${id}`,
-                      query: id,
-                    });
+                    setCheck(false);
                   }}
-                >
-                  CheckOut
-                </button>
-              ) : (
-                <button
-                  className={styles.button_submit}
-                  onClick={() => {
-                    handleCheck();
-                    setBuy(true);
-
-                    router.push({
-                      pathname: `orders/${BuyId}`,
-                      query: BuyId,
-                    });
-                  }}
-                >
-                  CheckOut
-                </button>
-              )}
-
-              <CloseOutlined
-                className="text-black absolute top-0 right-0 pr-2"
-                color=""
-                onClick={() => {
-                  setCheck(false);
-                }}
-              />
-            </form>
-          </section>
+                />
+              </form>
+            </section>
+          </div>
         </div>
       </div>
-    </div>
+    </Spin>
   );
 }
 

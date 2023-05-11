@@ -14,7 +14,7 @@ import { Spin } from "antd";
 // import Home from "../pages/index"
 import { useRouter } from "next/router";
 
-export default function Swipper({ loading, setLoading }) {
+export default function Swipper({ setLoading }) {
   const [banner, setBanner] = useState([]);
 
   const router = useRouter();

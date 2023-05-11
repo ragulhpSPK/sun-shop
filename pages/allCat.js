@@ -233,7 +233,7 @@ function AllCat() {
       tip="Loading data..."
       indicator={antIcon}
     >
-      <div className="">
+      <div className={`${loading === true ? "invisible" : "visible"}`}>
         <div className="flex">
           <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
             <Link href="/products">

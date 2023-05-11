@@ -34,6 +34,18 @@ const productSchema = new mongoose.Schema(
     image: {
       type: Array,
     },
+    flashStatus: {
+      type: Boolean,
+    },
+    offer: {
+      type: Number,
+    },
+    bestStatus: {
+      type: Boolean,
+    },
+    bestOffer: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

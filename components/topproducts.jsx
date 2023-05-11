@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { TopProducts } from "@/helper/topProducts";
 import Image from "next/image";
 import React from "react";
@@ -14,7 +15,7 @@ import { notification } from "antd";
 import { addproduct } from "@/redux/cartSlice";
 import { useDispatch } from "react-redux";
 
-function Topproducts() {
+function Topproducts({setLoading}) {
   const [products, setProducts] = useState([]);
   // const [topProducts,setTopProducts] = useState([])
   const [cart, setCart] = useState([]);
@@ -24,9 +25,11 @@ function Topproducts() {
 
   const fetchData = async () => {
     try {
+      setLoading(true)
       const result = [await getAllproducts(), await getAllCart()];
       setProducts(get(result, "[0].data.data"));
       setCart(get(result, "[1].data.message"));
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }

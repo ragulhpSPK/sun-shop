@@ -29,6 +29,9 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
     },
+    paymentMethod: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

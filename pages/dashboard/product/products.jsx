@@ -34,10 +34,9 @@ import {
   getAllproducts,
   updateProducts,
   deleteProducts,
-  createTopProducts,
-  getAllTopProducts,
-  deleteTopProducts,
+  addOrRemoveFlash,
   addOrRemoveTopProducts,
+  addOrRemoveBest
 } from "../../../helper/utilities/apiHelper";
 import { get, isEmpty } from "lodash";
 import dynamic from "next/dynamic";
@@ -58,7 +57,7 @@ function Products({ content }) {
   const [values, setValue] = useState("");
   const [imagename, setImageName] = useState([]);
   const [data, setData] = useState([]);
-  const [uploadError, setUploadError] = useState(false);
+  const [offer, setOffer] = useState(false);
   const [catFilter, setCatFilter] = useState([]);
   const [catFil, setCategoryFil] = useState([]);
   const [highlight, setHighlights] = useState([]);
@@ -66,10 +65,15 @@ function Products({ content }) {
   const [deleted, setDeleted] = useState(false);
   const ref = useRef;
   const [images, setImages] = useState([]);
-
+  const [offerId, setOfferId] = useState([]);
+  const [offerPercent, setOfferPercet] = useState("");
+  const [offerValue, setOfferValue] = useState("");
   const [checked, setChecked] = useState();
   const [tablechecked, setTablechecked] = useState(false);
   const [status, setStatus] = useState(false);
+  const [best, setBest] = useState(false);
+  const [bestPercent, setbestPercent] = useState([])
+  const [bestId,setBestId] = useState("")
 
   const [loading, setLoading] = useState(false);
 
@@ -277,6 +281,94 @@ function Products({ content }) {
     }
   };
 
+  const toggleFlashDeals = async (res, id) => {
+    setOffer(res);
+    setOfferId(id._id);
+    console.log(id._id);
+    console.log(offer);
+
+    if (offer == false) {
+      try {
+        const formData = {
+          id: id._id,
+          flashStatus: offer,
+          offer: offerPercent,
+        };
+        await addOrRemoveFlash(formData);
+        fetchData();
+       
+      } catch (error) {
+        notification.error({ message: "something went wrong" });
+      }
+    }
+  };
+
+  const toggleFlashValues = async (id) => {
+    if (offer == true) {
+      try {
+        const formData = {
+          id: id._id,
+          flashStatus: offer,
+          offer: offerPercent,
+        };
+        await addOrRemoveFlash(formData);
+        setOffer(false)
+        fetchData();
+        
+        notification.success({ message: "flash products added successfully" });
+      } catch (error) {
+        notification.error({ message: "something went wrong" });
+      }
+    }
+  };
+
+
+
+
+    const toggleBestDeals = async (res, id) => {
+    setBest(res);
+    setBestId(id._id);
+    console.log(id._id);
+    console.log(best,"best");
+
+    // if (best == false) {
+    //   try {
+    //     const formData = {
+    //       id: id._id,
+    //       bestStatus: best,
+    //       bestOffer: bestPercent,
+    //     };
+    //     await addOrRemoveBest(formData);
+    //     fetchData();
+       
+    //   } catch (error) {
+    //     console.log(error)
+    //     notification.error({ message: "something went wrong" });
+    //   }
+    // }
+  };
+
+
+   const toggleBestValues = async (id) => {
+    // if (best == true) {
+    //   try {
+    //     const formData = {
+    //       id: id._id,
+    //       flashStatus: best,
+    //       offer: bestPercent,
+    //     };
+    //     await addOrRemoveBest(formData);
+    //     setBest(false)
+    //     fetchData();
+        
+    //     notification.success({ message: "flash products added successfully" });
+    //   } catch (error) {
+    //     console.log(error);
+    //     notification.error({ message: "something went wrong" });
+    //   }
+    // }
+  };
+
   const columns = [
     {
       title: <h1 className="!text-sm">Image</h1>,
@@ -351,6 +443,90 @@ function Products({ content }) {
         );
       },
     },
+
+    {
+      title: <h1 className="!text-sm">Add Flash Deals</h1>,
+      dataIndex: "flashStatus",
+      key: "flashStatus",
+      render: (value, id) => {
+        return (
+          <div className="flex flex-col items-center justify-center">
+            <Switch
+              size="small"
+              onChange={(e) => toggleFlashDeals(e, id)}
+              checked={value}
+              className="mt-[5px]"
+            />
+            <div
+              className={`${
+                offer === true && offerId === id._id ? "visible" : "invisible"
+              } flex items-center justify-center gap-1`}
+            >
+              <Input
+                placeholder="Offers"
+                key={id._id}
+                onChange={(e) => {
+                  setOfferPercet(e.target.value);
+                }}
+                className="!h-[3vh] !w-[3vw]"
+              />
+
+              <Button
+                className="bg-[--third-color] !h-[3vh] !w-[3vw]"
+                onClick={(e) => {
+                  toggleFlashValues(id);
+                }}
+              >
+                Add
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    },
+
+
+     {
+      title: <h1 className="!text-sm">Add Best Deals</h1>,
+      dataIndex: "bestStatus",
+      key: "bestStatus",
+      render: (value, id) => {
+        return (
+          <div className="flex flex-col items-center justify-center">
+            <Switch
+              size="small"
+              onChange={(e) => toggleBestDeals(e, id)}
+              checked={value}
+              className="mt-[5px]"
+            />
+            <div
+              className={`${
+                best === true && bestId === id._id ? "visible" : "invisible"
+              } flex items-center justify-center gap-1`}
+            >
+              <Input
+                placeholder="Offers"
+                key={id._id}
+                onChange={(e) => {
+                  setbestPercent(e.target.value);
+                }}
+                className="!h-[3vh] !w-[3vw]"
+              />
+
+              <Button
+                className="bg-[--third-color] !h-[3vh] !w-[3vw]"
+                onClick={(e) => {
+                  toggleBestValues(id);
+                }}
+              >
+                Add
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    },
+
     {
       title: <h1 className="text-sm">Update</h1>,
       render: (value) => {
@@ -382,7 +558,6 @@ function Products({ content }) {
   ];
 
   const handleChange = (value) => {
-   
     setCategoryFil(value);
     form.setFieldsValue({ subcategoryname: "" });
     let temp = subCategory;
@@ -391,8 +566,6 @@ function Products({ content }) {
         return result.categoryId === value;
       })
     );
-
-    
   };
 
   const deleteFile = (image) => {
@@ -401,8 +574,6 @@ function Products({ content }) {
     });
     setImages(filterImages);
   };
-
- 
 
   return (
     <div className="flex flex-col">
@@ -535,6 +706,7 @@ function Products({ content }) {
                     onChange={(check) => setTablechecked(check)}
                   />
                 </Form.Item>
+
                 <Form.Item name="highlight">
                   <SunEditor
                     onChange={handleEditorChange}
@@ -565,31 +737,27 @@ function Products({ content }) {
                     onChange={handleFileInputChange}
                     draggable
                   />
-                  <div className="grid grid-cols-3 h-[14vh] relative w-[30vw] mt-5">
+                  <div className="grid grid-cols-5 h-[7vh]  !ml-3 relative !w-[30vw]">
                     {images &&
                       images.map((image, index) => (
-                       
                         <>
-                          {console.log(image,"images")}
                           <div>
-                            <div  className="bg-slate-200  w-[8vw]  h-[10vh] flex items-center justify-center">
+                            <div className="bg-slate-200 !w-[5vw]  h-[8vh] flex items-center justify-center">
                               <Image
                                 key={index}
                                 src={image}
                                 width={100}
                                 height={100}
                                 alt={`image-${index}`}
-                                className="self-center  pt-5 !h-[10vh]"
+                                className="self-center  pt-5 !h-[5vh]"
                               />
-                            
                             </div>
 
-                              <DeleteIcon
-                            
-                                onClick={() => deleteFile(image)}
-                                style={{ color: "var(--third-color)" }}
-                                className="absolute top-0 "
-                              />
+                            <DeleteIcon
+                              onClick={() => deleteFile(image)}
+                              style={{ color: "var(--third-color)" }}
+                              className="absolute top-0 grid grid-cols-4 "
+                            />
                           </div>
                         </>
                       ))}

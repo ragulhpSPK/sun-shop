@@ -13,7 +13,7 @@ import { getAllCatagory } from "../helper/utilities/apiHelper";
 import { useEffect } from "react";
 import { get } from "lodash";
 
-function Categories({loading,setLoading}) {
+function Categories({setLoading}) {
   const router = useRouter();
   const [category, setCategory] = useState([]);
 
@@ -22,10 +22,9 @@ function Categories({loading,setLoading}) {
       setLoading(true)
       const result = await getAllCatagory();
       setCategory(get(result, "data.data"));
+       setLoading(false)
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoading(false)
     }
   };
 

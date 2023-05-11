@@ -13,8 +13,9 @@ import {
   getAllproducts,
   getAllCart,
 } from "../../helper/utilities/apiHelper";
-import { notification } from "antd";
+import { Spin, notification } from "antd";
 import { get } from "lodash";
+import { ReloadOutlined } from "@ant-design/icons";
 
 export default function App() {
   const [addcart, setAddCart] = useState();
@@ -26,6 +27,7 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [cartID, setCartID] = useState([]);
   const dispatch = useDispatch();
+  const [loading,setLoading]=useState(true)
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -33,17 +35,16 @@ export default function App() {
 
   const fetchData = async () => {
     try {
+      setLoading(true)
       const result = [await getAllproducts(), await getAllCart()];
-      console.log(result);
+  
       setProduct(get(result, "[0].data.data", []));
       setCart(get(result, "[1].data.message", []));
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
   };
-
-
- 
 
   useEffect(() => {
     fetchData();
@@ -52,7 +53,7 @@ export default function App() {
         return data.productId === router.query.id;
       })
     );
-  }, [cart,router.query.id]);
+  }, [router.query.id]);
 
   useEffect(() => {
     setFilterData(
@@ -61,9 +62,8 @@ export default function App() {
       })
     );
 
-   
-    
-  }, [product, router.query.id,cart]);
+
+  }, [product, router.query.id]);
 
   
 
@@ -92,9 +92,12 @@ export default function App() {
     }
   };
 
+  const AntIcon=(<ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />)
+
   return (
-    <div
-      className="h-[80vh] w-[80vw] flex justify-center  m-auto mt-10"
+    // <Spin loading={false} tip="loading data..." size="large"  indicator={AntIcon}>
+ <div
+        className={`h-[80vh] w-[80vw] flex justify-center  m-auto mt-10 ${loading===true?"invisible":"visible"}`}
       id={style.shadow3}
     >
       <div className={`${styles.container} w-[30vw] m-auto`}>
@@ -197,5 +200,7 @@ export default function App() {
           );
         })}
     </div>
+    // </Spin>
+   
   );
 }
