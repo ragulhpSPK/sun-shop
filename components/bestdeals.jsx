@@ -154,7 +154,7 @@ function Bestdeals() {
             })}
           </Swiper>
         </div>
-      </div>
+      </div> 
     </div>
   );
 }
