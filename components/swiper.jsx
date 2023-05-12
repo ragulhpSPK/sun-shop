@@ -48,87 +48,43 @@ export default function Swipper({ setLoading }) {
   });
 
   return (
-    <div className="w-[80vw] m-auto flex ">
-      <Swiper
-        modules={[Navigation, Autoplay, Pagination]}
-        className="myswiper w-[70%] m-auto"
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        autoplay={{ delay: 4000 }}
-      >
-        {left.map((data, index) => {
+    
+    <div className="flex xsm:w-[90vw] lg:w-[80vw] m-auto xsm:gap-x-[2px] xsm:pl-[3vw] lg:pl-0 lg:h-[35vh] sm:h-[20vh] xsm:h-[10vh]">
+      <div className="lg:w-[60vw] lg:h-[35vh] xsm:w-[60vw] xsm:!h-[10vh] sm:h-[20vh]">
+        <Swiper
+          modules={[Navigation, Autoplay, Pagination]}
+          className="lg:!w-[60vw] lg:h-[35vh] xsm:!w-[60vw] xsm:h-[10vh] sm:h-[20vh]"
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          autoplay={{ delay: 4000 }}
+        >
+          {left.map((data) => {
+           
+            return (
+              <>
+                <SwiperSlide>
+                  <Image src={data.image} alt="leftbanner" width={100} height={100} className="lg:w-[60vw] lg:!h-[35vh] xsm:w-[60vw] xsm:h-[10vh] sm:h-[20vh]"/>
+                </SwiperSlide>
+              </>
+            );
+          })}
+        </Swiper>
+      </div>
+      <div className="flex flex-col lg:gap-[18px]">
+        {top.map(data => {
           return (
-            <SwiperSlide
-              key={index}
-              onClick={() =>
-                router.push({
-                  pathname: `/product/${data.productid}`,
-                  query: { id: data.productid },
-                })
-              }
-            >
-              <div className="h-[35vh] bg-right bg-no-repeat bg-[red] w-[60vw]">
-                <Image
-                  src={data.image}
-                  className=" !h-[35vh] pr-10 !w-[100vw] "
-                  width={800}
-                  height={800}
-                  alt="not found"
-                ></Image>
-              </div>
-            </SwiperSlide>
-          );
+            <> <div className="w-[20vw] h-[15vh]">
+             <Image src={data.image} alt="topbanner" width={100} height={100} className="lg:w-[20vw] lg:h-[17.5vh] xsm:!w-[40vw] xsm:h-[5vh]  lg:ml-0 sm:h-[10vh]"/>
+            </div></>
+          )
         })}
-      </Swiper>
-      <div className="flex flex-col gap-[4.8px] text-white">
-        {top.map((data) => {
+       
+        {bottom.map(data => {
           return (
-            <>
-              <div
-                className="  h-[17.2vh] w-[23.5vw]"
-                onClick={() =>
-                  router.push({
-                    pathname: `/product/${data.productid}`,
-                    query: { id: data.productid },
-                  })
-                }
-              >
-                <Image
-                  src={data.image}
-                  className="!w-[100%] !h-[100%]"
-                  width={300}
-                  height={300}
-                  alt="not found"
-                />
-                <p className="text-3xl w-28">Upto 20% Offer</p>
-              </div>
-            </>
-          );
-        })}
-
-        {bottom.map((data) => {
-          return (
-            <>
-              <div
-                className="bg-[#613f75]  h-[17.2vh] w-[23.5vw] "
-                onClick={() =>
-                  router.push({
-                    pathname: `/product/${data.productid}`,
-                    query: { id: data.productid },
-                  })
-                }
-              >
-                <Image
-                  src={data.image}
-                  className="!w-[100%] !h-[100%]"
-                  width={300}
-                  height={300}
-                  alt="not found"
-                />
-                <p className="text-3xl w-28">Upto 30% Offer</p>
-              </div>
-            </>
-          );
+            <> <div className="w-[20vw] h-[15vh] ">
+             <Image src={data.image} alt="bottombanner" width={100} height={100} className="lg:w-[20vw] lg:h-[18vh] xsm:!w-[40vw] pt-2 xsm:h-[5vh]  sm:h-[10vh]"/>
+            </div></>
+          )
         })}
       </div>
     </div>

@@ -298,28 +298,33 @@ function Cart() {
                   </div>
                 )}
               </div>
-              <div
-                className={`mt-14 w-[18vw] h-[35vh] text-white ${
-                  check ? "hidden" : "block"
-                } `}
-              >
-                <div
-                  className={` bg-white h-[100%] text-[20px] uppercase border shadow-md text-slate-700 pl-5 mt-6 flex flex-col justify-evenly rounded-md ${
-                    loading === false ? "block" : "hidden"
-                  }`}
-                >
-                  <h1 className="font-bold text-slate-600">Order Summary</h1>
-                  <p>Total Price:{prices}</p>
 
-                  <p>Total Products:{products && products.length}</p>
-                  <button
-                    className="bg-[var(--third-color)] w-[8vw] h-[5vh] text-[18px] tracking-widest hover:bg-[--fifth-color] duration-1000 scale-110 text-white rounded-sm hover:text-black font-medium"
-                    onClick={() => setCheck(true)}
+              {get(products, "length", "") === 0 ? (
+                ""
+              ) : (
+                <div
+                  className={`mt-14 w-[18vw] h-[35vh] text-white ${
+                    check ? "hidden" : "block"
+                  } `}
+                >
+                  <div
+                    className={` bg-white h-[100%] text-[20px] uppercase border shadow-md text-slate-700 pl-5 mt-6 flex flex-col justify-evenly rounded-md ${
+                      loading === false ? "block" : "hidden"
+                    }`}
                   >
-                    CheckOut
-                  </button>
+                    <h1 className="font-bold text-slate-600">Order Summary</h1>
+                    <p>Total Price:{prices}</p>
+
+                    <p>Total Products:{products && products.length}</p>
+                    <button
+                      className="bg-[var(--third-color)] w-[8vw] h-[5vh] text-[18px] tracking-widest hover:bg-[--fifth-color] duration-1000 scale-110 text-white rounded-sm hover:text-black font-medium"
+                      onClick={() => setCheck(true)}
+                    >
+                      CheckOut
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         ) : (

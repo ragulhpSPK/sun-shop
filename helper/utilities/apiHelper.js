@@ -137,6 +137,5 @@ export const addOrRemoveFlash = (formData) => {
 //best deals
 
 export const addOrRemoveBest = (formData) => {
-  console.log(formData);
   axios.put(`/api/bestDeals/`, formData);
 };

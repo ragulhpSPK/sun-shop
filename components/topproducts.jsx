@@ -62,22 +62,23 @@ function Topproducts({setLoading}) {
   });
 
   return (
-    <div className="w-[80vw] m-auto pt-10">
+    <div className="xsm:w-[90vw] lg:w-[80vw] m-auto pt-10">
       <div className="text-xl">
         <h1 className="bg-[var(--second-color)] py-3 px-2 text-white">
           Top Products
         </h1>
       </div>
-      <div className="grid grid-cols-5 gap-x-28 gap-y-2">
+      <div className="grid xsm:grid-cols-2 md:grid-cols-3 md:gap-[2vw] lg:grid-cols-4 xl:grid-cols-5 lg:gap-x-10 xl:gap-[5vw] gap-y-2">
         {topProducts.map((data) => {
           return (
             <div
-              className=" w-[12vw] border shadow-lg h-[28vh] relative mt-5"
+              className=" l
+              lg:w-[18vw] xl:w-[12vw] border shadow-lg lg:h-[28vh] relative mt-5 xsm:w-[43vw] xsm:h-[25vh] md:w-[28vw] md:h-[28vh"
               key={data._id}
             >
               <div>
                 <div
-                  className="h-[18vh] flex items-center justify-center"
+                  className="lg:h-[18vh] xsm:h-[14vh] flex items-center justify-center"
                   onClick={() =>
                     router.push({
                       pathname: `/product/${data._id}`,
@@ -90,25 +91,25 @@ function Topproducts({setLoading}) {
                     height={100}
                     alt="logo"
                     src={data.image[0]}
-                    className="!w-fit !h-[12vh]"
+                    className="lg:!w-fit  lg:!h-[12vh]"
                   />
                 </div>
 
-                <div className="h-[5vh] ">
-                  <h1 className="text-center text-[12px] font-bold">
+                <div className="lg:h-[5vh] ">
+                  <h1 className="text-center xsm:text-[8px] lg:text-[12px] font-bold">
                     {data.title}
                   </h1>
-                  <p className="text-center">Rs:{data.price}</p>
+                  <p className="text-center xsm:text-[12px]">Rs:{data.price}</p>
                 </div>
                 {cart.find((res) => {
                   return res.productId === data._id;
                 }) ? (
-                  <div className="bg-[var(--fifth-color)] w-[50px] h-[40px] absolute right-0 bottom-0 text-sm text-black text-center font-bold" onClick={()=>{router.push({pathname:"/cart"})}}>
+                  <div className="bg-[var(--fifth-color)] xsm:!w-[30px] xl:h-[35px] xl:!w-[45px] xsm:h-[25px] lg:w-[55px] lg:h-[35px] absolute right-0 bottom-0 xsm:text-[8px] lg:text-xs text-black text-center font-bold" onClick={()=>{router.push({pathname:"/cart"})}}>
                     Go to Cart
                   </div>
                 ) : (
                   <div
-                    className="bg-[var(--fifth-color)] w-[50px] h-[40px] absolute right-0 bottom-0"
+                    className="bg-[var(--fifth-color)] xsm:!w-[30px] xsm:h-[25px] lg:w-[55px] lg:h-[35px]  xl:h-[35px] xl:!w-[45px] absolute right-0 bottom-0"
                     onClick={() => {
                       handleClick(data._id, data);
                       dispatch(addproduct({ ...data }));
@@ -119,7 +120,7 @@ function Topproducts({setLoading}) {
                       height={100}
                       alt="logo"
                       src="/assets/cart2.png"
-                      className="w-6 m-auto pt-1"
+                      className="lg:w-5 lg:pt-2 xsm:w-4 m-auto pt-1"
                     />
                   </div>
                 )}

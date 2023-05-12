@@ -10,7 +10,7 @@ function Footer() {
   const router=useRouter()
   return (
     <div className={`h-[40vh] w-[100vw] mt-40`}>
-      <div className="grid grid-cols-4 gap-x-48 w-[80vw]  m-auto border-b border-gray-400 pb-5">
+      <div className="grid xsm:grid-cols-2 lg:grid-cols-4 xsm:gap-x-[20px] xsm:gap-y-[20px] lg:gap-x-48 w-[80vw]  m-auto border-b border-gray-400 pb-5">
         <div className="flex flex-col gap-2 text-md font-medium">
           <h1 className="text-2xl font-semibold pb-2">Customer Service</h1>
           <p className="hover:text-[--third-color] hover:font-semibold">
@@ -91,7 +91,7 @@ function Footer() {
       <div>
         <div className="w-[80vw] m-auto pt-10">
           <div className="text-center">
-            <span className="text-2xl">&#169;</span> Sun Shopee.All Rights
+            <span className="text-2xl">&#169;</span> Sun All Rights
             reserved 2023
           </div>
         </div>

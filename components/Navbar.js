@@ -71,13 +71,17 @@ function Navbar() {
       >
         <div className=" bg-[#943074] text-white flex justify-around ">
           <div className="flex p-1">
-            <p className="text-md font-bold text-white">follow us On</p>
-            <FacebookIcon className="mr-1" />
-            <InstagramIcon className="mr-1" />
+            <p className="xsm:text-[10px] lg:text-xl flex items-center sm:text-md font-bold text-white">
+              follow us On
+            </p>
+            <div>
+              <FacebookIcon className="xsm:ml-1 xsm:text-sm lg:text-xl" />
+              <InstagramIcon className="xsm:ml-1 xsm:text-sm lg:text-xl" />
+            </div>
           </div>
           <div className="flex p-1 font-bold text-[var(--first-color)]">
             <button
-              className="pr-1 text-md font-medium text-white border-none"
+              className="pr-1 xsm:text-[10px] sm:text-md font-medium text-white border-none lg:text-xl"
               onClick={() => {
                 setRegister(!register);
               }}
@@ -86,7 +90,7 @@ function Navbar() {
             </button>
             <Divider orientation="vertical" color="white" />
             <button
-              className="pl-1 text-md font-medium text-white border-none"
+              className="pl-1 xsm:text-[10px] sm:text-md font-medium text-white border-none lg:text-xl"
               onClick={() => {
                 setLogin(!login);
               }}
@@ -96,7 +100,7 @@ function Navbar() {
           </div>
         </div>
         <div className="w-screen flex justify-around items-center h-[60%]">
-          <div className="pl-24">
+          <div className="sm:pl-24">
             <Image
               src="/assets/sunn.png"
               className="xl:w-20 xsm:w-14"
@@ -105,10 +109,10 @@ function Navbar() {
               height={300}
             />
           </div>
-          <div className="pt-2 relative lg:w-[36vw] xsm:w-[50vw] text-gray-600">
-            <div className="pt-2 relative mx-auto  text-gray-600 h-[6vh] w-[42vw] ">
+          <div className="pt-2 relative lg:w-[36vw] xsm:w-[60vw] text-gray-600">
+            <div className="pt-2 relative mx-auto  text-gray-600 h-[6vh] xsm:w-[70vw] sm:w-[42vw] ">
               <input
-                className="rounded-lg shadow  bg-white px-5 pr-16 w-[80%] h-[100%] text-sm focus:outline-none"
+                className="rounded-lg shadow  bg-white px-5 pr-16 w-[80%] xsm:h-[90%] sm:h-[100%] text-sm focus:outline-none"
                 type="search"
                 name="search"
                 placeholder="Search"
@@ -117,7 +121,7 @@ function Navbar() {
               />
               <button
                 type="submit"
-                className="absolute right-[21%] top-[2vh]   text-slate-500"
+                className="absolute right-[21%] xsm:top-[12px] sm:top-[2vh]   text-slate-500"
                 onClick={() => {
                   router.push({ pathname: `/subcat`, query: data });
                 }}
@@ -130,7 +134,7 @@ function Navbar() {
             <div className="xsm:min-w-[20px] lg:w-[37px] relative">
               <Image
                 src="/assets/cart2.png"
-                className="lg:w-7 xsm:w-[30px]"
+                className="lg:w-7 xsm:w-[20px] xsm:pt-[15px]"
                 alt="Cart"
                 width={300}
                 height={300}
@@ -138,7 +142,7 @@ function Navbar() {
               {product.length === 0 ? (
                 ""
               ) : (
-                <p className="absolute  xsm:float-right   bg-[var(--second-color)] top-[-5px] right-0 xsm:h-[20px] xsm:w-[20px] xsm:text-[12px]  lg:h-5  lg:w-5 text-center lg:text-sm text-white rounded-full">
+                <p className="absolute  xsm:float-right   bg-[var(--second-color)] top-[8px] xsm:top-[8px] xsm:right-[-4px] right-0 xsm:h-[16px] xsm:w-[16px] xsm:text-[10px]  lg:h-5  lg:w-5 text-center lg:text-sm text-white rounded-full">
                   {product.length}
                 </p>
               )}

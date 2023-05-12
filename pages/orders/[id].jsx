@@ -119,7 +119,7 @@ function Orders() {
       />
 
       {products.map((data) => {
-        console.log(data, "");
+      
         return (
           <>
             <div className="flex flex-col" key={data._id}>

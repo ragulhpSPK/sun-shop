@@ -39,7 +39,7 @@ function Register() {
   const fetchData = async () => {
     try {
       const result = await getAllMessage();
-      console.log(result);
+
       setNumbers(get(result, "data.message"));
     } catch (err) {
       console.log(err);

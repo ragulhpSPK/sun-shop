@@ -71,7 +71,7 @@ function Products({ content }) {
   const [checked, setChecked] = useState();
   const [tablechecked, setTablechecked] = useState(false);
   const [status, setStatus] = useState(false);
-  const [best, setBest] = useState(false);
+  const [best, setBest] = useState(true);
   const [bestPercent, setbestPercent] = useState([])
   const [bestId,setBestId] = useState("")
 
@@ -284,8 +284,7 @@ function Products({ content }) {
   const toggleFlashDeals = async (res, id) => {
     setOffer(res);
     setOfferId(id._id);
-    console.log(id._id);
-    console.log(offer);
+  
 
     if (offer == false) {
       try {
@@ -328,45 +327,42 @@ function Products({ content }) {
     const toggleBestDeals = async (res, id) => {
     setBest(res);
     setBestId(id._id);
-    console.log(id._id);
-    console.log(best,"best");
+   
 
-    // if (best == false) {
-    //   try {
-    //     const formData = {
-    //       id: id._id,
-    //       bestStatus: best,
-    //       bestOffer: bestPercent,
-    //     };
-    //     await addOrRemoveBest(formData);
-    //     fetchData();
-       
-    //   } catch (error) {
-    //     console.log(error)
-    //     notification.error({ message: "something went wrong" });
-    //   }
-    // }
+    if (best == false) {
+      try {
+        const formData = {
+          id: id._id,
+          bestStatus: best,
+          bestOffer: null,
+        };
+        await addOrRemoveBest(formData);
+        fetchData();     
+      } catch (error) {
+        console.log(error)
+        notification.error({ message: "something went wrong" });
+      }
+    }
   };
 
 
    const toggleBestValues = async (id) => {
-    // if (best == true) {
-    //   try {
-    //     const formData = {
-    //       id: id._id,
-    //       flashStatus: best,
-    //       offer: bestPercent,
-    //     };
-    //     await addOrRemoveBest(formData);
-    //     setBest(false)
-    //     fetchData();
-        
-    //     notification.success({ message: "flash products added successfully" });
-    //   } catch (error) {
-    //     console.log(error);
-    //     notification.error({ message: "something went wrong" });
-    //   }
-    // }
+    if (best == true) {
+      try {
+        const formData = {
+          id: id._id,
+          bestStatus: best,
+          bestOffer: bestPercent,
+        };
+        await addOrRemoveBest(formData);
+        setBest(false)
+        fetchData();   
+        notification.success({ message: "flash products added successfully" });
+      } catch (error) {
+        console.log(error);
+        notification.error({ message: "something went wrong" });
+      }
+    }
   };
 
   const columns = [
