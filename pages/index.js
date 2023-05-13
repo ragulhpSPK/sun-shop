@@ -30,25 +30,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {/* <Spin
+        <Spin
           spinning={loading}
           tip="Loading Data..."
           size="large"
           indicator={antIcon}
-        > */}
-        {result.length > 0 ? (
-          <ProductFilter />
-        ) : (
-          <>
-            <Swiper setLoading={setLoading} />
+        >
+          {result.length > 0 ? (
+            <ProductFilter />
+          ) : (
+            <>
+              <Swiper setLoading={setLoading} />
 
-            <Delivery />
-            <Categories setLoading={setLoading} />
-            <Bestdeals />
-            <Topproducts setLoading={setLoading} />
-          </>
-        )}
-        {/* </Spin> */}
+              <Delivery />
+              <Categories setLoading={setLoading} />
+              <Bestdeals />
+              <Topproducts setLoading={setLoading} />
+            </>
+          )}
+        </Spin>
       </main>
     </>
   );

@@ -49,7 +49,7 @@ export default function Swipper({ setLoading }) {
 
   return (
     
-    <div className="flex xsm:w-[90vw] lg:w-[80vw] m-auto xsm:gap-x-[2px] xsm:pl-[3vw] lg:pl-0 lg:h-[35vh] sm:h-[20vh] xsm:h-[10vh]">
+    <div className="flex xsm:w-[90vw] pt-[10px] lg:w-[80vw] m-auto xsm:gap-x-[2px] xsm:pl-[3vw] lg:pl-0 lg:h-[35vh] sm:h-[20vh] xsm:h-[10vh]">
       <div className="lg:w-[60vw] lg:h-[35vh] xsm:w-[60vw] xsm:!h-[10vh] sm:h-[20vh]">
         <Swiper
           modules={[Navigation, Autoplay, Pagination]}

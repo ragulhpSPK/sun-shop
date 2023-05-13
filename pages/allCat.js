@@ -19,6 +19,7 @@ import {
   Space,
   Typography,
   notification,
+  Drawer,
 } from "antd";
 import { SubCategory } from "@/helper/Subcategory";
 import "rc-menu/assets/index.css";
@@ -36,6 +37,7 @@ import { Spin } from "antd";
 import SyncIcon from "@mui/icons-material/Sync";
 import { useDispatch } from "react-redux";
 import { addproduct } from "@/redux/cartSlice";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 function AllCat() {
   const [active, setActive] = useState("");
@@ -54,7 +56,7 @@ function AllCat() {
   const [cart, setCart] = useState([]);
   const [productId, setProductId] = useState("");
   const [cartId, setCartId] = useState([]);
-
+  const [catDrawer, setCatDrawer] = useState(false);
   const [priceFilter, setPriceFilter] = useState();
   const dispatch = useDispatch();
 
@@ -233,7 +235,7 @@ function AllCat() {
       tip="Loading data..."
       indicator={antIcon}
     >
-      <div className={`${loading === true ? "invisible" : "visible"}`}>
+      <div className={`${loading === true ? "invisible" : "visible"} hidden`}>
         <div className="flex">
           <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
             <Link href="/products">
@@ -439,30 +441,43 @@ function AllCat() {
                 }}
               ></List>
             </div>
-
-            {/* <div className="grid grid-cols-4 gap-y-5 w-[84vw] pt-8 pl-4">
-            {filerProduct.map((data) => {
-              return (
-                <>
-                  <div className="">
-                    <Card
-                      hoverable
-                      style={{
-                        width: 240,
-                      }}
-                      cover={
-                        <Image alt="example" src={data.image} height={250} />
-                      }
-                    >
-                      <Meta title={data.title} description={data.price} />
-                    </Card>
-                  </div>
-                </>
-              );
-            })}
-          </div> */}
           </div>
         </div>
+      </div>
+
+      <div className="flex h-[4vh] w-[90vw] m-auto p-[10px] items-center bg-[--third-color] text-white justify-between">
+        <p
+          className="text-[10px] flex items-end justify-center"
+          onClick={() => {
+            setCatDrawer(!catDrawer);
+          }}
+        >
+          <span>
+            <ListIcon style={{ fontSize: "18px", textAlign: "center" }} />
+          </span>
+          All categories
+        </p>
+
+        <p className="text-[10px] flex items-end justify-center">
+          <span>
+            <FilterAltOutlinedIcon style={{ fontSize: "16px" }} />
+          </span>
+          Filter By price
+        </p>
+
+        <Drawer
+          title="Basic Drawer"
+          placement="right"
+          onClose={() => {
+            setCatDrawer(false);
+          }}
+          open={catDrawer}
+          width={600}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Drawer>
       </div>
     </Spin>
   );

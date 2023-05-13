@@ -43,7 +43,10 @@ function AllProducts() {
       indicator={antIcon}
     >
       <div className="min-h-screen">
-        <div className="h-[100%] grid w-screen xsm:pl-10 lg:pl-40 xsm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-5  pt-10">
+        <div  className="w-[90vw] bg-[--third-color] m-auto py-[1vh] mt-[5vh] rounded-sm">
+          <h1 className="lg:text-2xl xsm:text-xl text-white pl-[20px]">All Categories</h1>
+        </div>
+        <div className="h-[100%] grid w-screen xsm:pl-10 lg:pl-28 xsm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-5  pt-10">
           {category.map((data) => {
             return (
               <div
@@ -63,7 +66,7 @@ function AllProducts() {
                     height={100}
                     alt="logo"
                     src={data.image}
-                    className="h-[150px] !w-[150px] m-auto"
+                    className="h-[150px] !w-fit m-auto"
                   />
                 </figure>
                 <div className="card-body">

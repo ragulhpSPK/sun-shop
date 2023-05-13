@@ -8,7 +8,7 @@ import { useState } from "react";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import DoneIcon from "@mui/icons-material/Done";
 
-import CancelIcon from '@mui/icons-material/Cancel';
+import CancelIcon from "@mui/icons-material/Cancel";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { useRouter } from "next/router";
 import {
@@ -18,7 +18,6 @@ import {
 } from "@/helper/utilities/apiHelper";
 import { useEffect } from "react";
 import { get } from "lodash";
-
 
 function Orders() {
   const router = useRouter();
@@ -42,7 +41,6 @@ function Orders() {
   });
 
   const handleClick = async (id, data) => {
-  
     if (status !== "Delivered") {
       try {
         const formData = {
@@ -58,68 +56,77 @@ function Orders() {
     }
   };
 
+  console.log(products.length);
+
   return (
-    <div
-      className="flex flex-col gap-[5vh] justify-around mt-[5vh] w-[80vw] p-[5vw] m-auto"
-      id={styles.shadow3}
-    >
-      <Steps
-        className={`${status[0]==="Cancelled"?"invisible":"visible"}`}
-        size="large"
-        lineWidth={1}
-        items={[
-          {
-            title: "Confirmed",
-            status: status[0] === "Confirmed" ? "process" : "finish",
-            icon: (
-              <DoneIcon
-                style={{ fontSize: "30px" }}
-                className=" text-[--third-color] "
-              />
-            ),
-          },
-          {
-            title: "Order Shipped",
-            status:
-              status[0] === "Out_For_Delivery"
-                ? "finish"
-                : status[0] === "Delivered"
-                ? "finish"
-                : "process",
-            icon: (
-              <CodeSandboxOutlined
-                style={{ fontSize: "30px" }}
-                className="text-[--third-color]"
-              />
-            ),
-          },
-          {
-            title: "Order out for delivery",
-            status: status[0] === "Delivered" ? "finish" : "process",
-            icon: (
-              <LocalShippingIcon
-                style={{ fontSize: "30px" }}
-                className="text-[--third-color]"
-              />
-            ),
-          },
+    <div   className="flex flex-col gap-[5vh] justify-around mt-[5vh] w-[80vw] p-[5vw] m-auto min-h-[70vh]">
+      {products.length === 0 ? (
+          
+       <p className="text-center text-4xl text-slate-500 pt-[25vh]">No order to show</p>
+      ) : (
+        <div
+        className="h-[20vh] flex items-center justify-center p-[4vw]"
+          id={styles.shadow3}
+        >
+      
+          <Steps
+            className={`${status[0] === "Cancelled" ? "invisible" : "visible"}`}
+            size="large"
+            lineWidth={1}
+            items={[
+              {
+                title: "Confirmed",
+                status: status[0] === "Confirmed" ? "process" : "finish",
+                icon: (
+                  <DoneIcon
+                    style={{ fontSize: "30px" }}
+                    className=" text-[--third-color] "
+                  />
+                ),
+              },
+              {
+                title: "Order Shipped",
+                status:
+                  status[0] === "Out_For_Delivery"
+                    ? "finish"
+                    : status[0] === "Delivered"
+                    ? "finish"
+                    : "process",
+                icon: (
+                  <CodeSandboxOutlined
+                    style={{ fontSize: "30px" }}
+                    className="text-[--third-color]"
+                  />
+                ),
+              },
+              {
+                title: "Order out for delivery",
+                status: status[0] === "Delivered" ? "finish" : "process",
+                icon: (
+                  <LocalShippingIcon
+                    style={{ fontSize: "30px" }}
+                    className="text-[--third-color]"
+                  />
+                ),
+              },
 
-          {
-            title: "Order Delivered",
-            status: "finish",
+              {
+                title: "Order Delivered",
+                status: "finish",
 
-            icon: (
-              <HomeRoundedIcon
-                style={{ fontSize: "30px" }}
-                className="text-[--third-color]"
-              />
-            ),
-          },
-        ]}
-      />
+                icon: (
+                  <HomeRoundedIcon
+                    style={{ fontSize: "30px" }}
+                    className="text-[--third-color]"
+                  />
+                ),
+              },
+            ]}
+          />
+        </div>
+      )}
 
       {products.map((data) => {
-      
         return (
           <>
             <div className="flex flex-col" key={data._id}>
@@ -170,10 +177,10 @@ function Orders() {
                   </p>
                 ) : status[0] === "Cancelled" ? (
                   <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center">
-                  
-
-                      <span className="tracking-wider text-4xl pl-2">Order Cancelled</span>
-                        <CancelIcon className="bg-[red] rounded-3xl h-[30px] w-[30px] text-white" />
+                    <span className="tracking-wider text-4xl pl-2">
+                      Order Cancelled
+                    </span>
+                    <CancelIcon className="bg-[red] rounded-3xl h-[30px] w-[30px] text-white" />
                   </p>
                 ) : (
                   <button

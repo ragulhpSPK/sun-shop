@@ -18,6 +18,7 @@ import { get } from "lodash";
 import Navbar from "@/components/Navbar";
 import { v1 as uuidv1 } from "uuid";
 import { addproduct } from "@/redux/cartSlice";
+import CloseIcon from "@mui/icons-material/Close";
 
 function Cart() {
   const [check, setCheck] = useState(false);
@@ -206,7 +207,7 @@ function Cart() {
     >
       <div>
         {!Buy ? (
-          <div className="flex relative min-h-screen">
+          <div className="flex relative min-h-screen xsm:hidden xxl:block">
             <div className="flex">
               <div className="pt-10">
                 {products && products.length > 0 ? (
@@ -402,9 +403,9 @@ function Cart() {
           </div>
         )}
 
-        <div className="bg-[#fff]">
+        <div className="bg-[#fff] xsm:w-[90vw] xsm:m-auto xsm:pr-[2vw]">
           <div
-            className={`min-h-[50vh] w-[25vw] absolute z-50  right-10 top-28 shadow-2xl pl-10 ${
+            className={`xxl:min-h-[50vh] xxl:w-[25vw] absolute xsm:left-0 sm:left-[30vw] z-50 xsm:pl-[2vw] xsm:pr-[2vw]  xxl:left-[70vw] xxl:top-28 shadow-2xl xxl:pl-10 ${
               check ? "block" : "hidden"
             }`}
           >
@@ -496,6 +497,81 @@ function Cart() {
                 />
               </form>
             </section>
+          </div>
+        </div>
+        {/* </div> */}
+
+        <div
+          className={`xsm:w-[90vw] m-auto bg-slate-50 shadow-xl h-fit xsm:mt-[6vh] xxl:hidden ${
+            check ? "invisible" : "visible"
+          }`}
+        >
+          <div className="flex justify-between xsm:w-[90vw] border-b-2 p-[10px]">
+            <h1 className="xsm:pl-[10px] xsm:pt-[8px] xsm:text-md text-slate-500 ">
+              Summary
+            </h1>
+            <div>
+              <button
+                className="bg-[--third-color] text-white px-[10px] py-[5px] rounded-sm"
+                onClick={() => setCheck(true)}
+              >
+                CheckOut
+              </button>
+            </div>
+          </div>
+          {products &&
+            products.map((data) => {
+              return (
+                <>
+                  <div className="flex flex-col relative">
+                    <div className="flex justify-between items-center p-[10px] border-b-2 py-[16px]">
+                      <Image
+                        src={data.image[0]}
+                        alt="Image"
+                        height={100}
+                        width={100}
+                        className="xsm:h-[4vh] xsm:w-fit lg:h-[6vh]"
+                      />
+                      <p className="text-[12px] lg:text-[16px] font-semibold pl-[8px]">
+                        {data.name}
+                      </p>
+                      <div
+                        className="absolute top-0 right-0"
+                        onClick={() => {
+                          // setDeleteId(data._id);
+                          deleteHandler(data._id);
+                          dispatch(addproduct({ ...data }));
+                        }}
+                      >
+                        <CloseIcon className="text-[16px]" />
+                      </div>
+                      <div className="pt-[10px]">
+                        <p>&#8377;{data.price}</p>
+                        <div className="flex justify-center items-center">
+                          <InputNumber
+                            min={1}
+                            max={5}
+                            defaultValue={data.quantity}
+                            onChange={(e) => {
+                              // setQty(e);
+                              handleChange(data._id, e);
+                            }}
+                            className="xsm:w-[15vw] md:w-[8vw] lg:w-[6vw]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          <div className="flex justify-between p-[10px]">
+            <p>Total Price:</p>
+            <p>{prices}</p>
+          </div>
+          <div className="flex justify-between p-[10px] ">
+            <p>Total Products:</p>
+            <p className="pr-[12px]">{products && products.length}</p>
           </div>
         </div>
       </div>

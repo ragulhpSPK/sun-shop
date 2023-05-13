@@ -1,5 +1,5 @@
 import dbconnect from "@/connection/conn";
-import Message from "@/models/message";
+import User from "@/models/user";
 import { notification } from "antd";
 import { isEmpty } from "lodash";
 import Jwt from "jsonwebtoken";
@@ -30,37 +30,37 @@ export default async function MessageController(req, res) {
         // });
         // console.log(sendMessage);
 
-        const validateUser = await Message.find({ number: req.body.number });
+        const validateUser = await User.find({ number: req.body.number });
+        console.log(validateUser);
+        // if (!isEmpty(validateUser)) {
+        //   console.log(validateUser, "validate user");
+        //   const auth = {
+        //     number: validateUser[0].number,
+        //   };
 
-        if (!isEmpty(validateUser)) {
-          console.log(validateUser, "validate user");
-          const auth = {
-            number: validateUser[0].number,
-          };
+        //   const token = Jwt.sign({ user: auth }, process.env.SECRET_KEY);
 
-          const token = Jwt.sign({ user: auth }, process.env.SECRET_KEY);
+        //   return res.status(200).send({
+        //     message: excrypt(token),
+        //     data: excrypt(validateUser[0]._id),
+        //   });
 
-          return res.status(200).send({
-            message: excrypt(token),
-            data: excrypt(validateUser[0]._id),
-          });
+        //   // notification.send({
+        //   //   message: "Alreay you registered please signin for continue",
+        //   // });
+        // } else {
+        //   const message = await new User({ ...req.body });
+        //   message.save();
 
-          // notification.send({
-          //   message: "Alreay you registered please signin for continue",
-          // });
-        } else {
-          const message = await new Message({ ...req.body });
-          message.save();
-
-          const token = await Jwt.sign(
-            { user: message },
-            process.env.SECRET_KEY
-          );
-          return res.status(200).send({
-            message: excrypt(token),
-            data: excrypt(message),
-          });
-        }
+        //   const token = await Jwt.sign(
+        //     { user: message },
+        //     process.env.SECRET_KEY
+        //   );
+        //   return res.status(200).send({
+        //     message: excrypt(token),
+        //     data: excrypt(message),
+        //   });
+        // }
       } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "failed" });

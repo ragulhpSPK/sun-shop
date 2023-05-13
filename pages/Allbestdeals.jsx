@@ -89,7 +89,7 @@ const [banner,setBanner] = useState([]);
         return (
           <>
             <div>
-              <Image src={res.image} alt="bestDeas" width={100} height={100} className="w-[80vw]"/>
+              <Image src={res.image} alt="bestDeas" width={100} height={100} className="w-[80vw] "/>
              </div>
           </>
          
@@ -97,11 +97,11 @@ const [banner,setBanner] = useState([]);
       })}
 
       <div className="flex items-center justify-center pt-10">
-        <div className="grid grid-cols-5 gap-24 ">
+        <div className="grid xsm:grid-cols-1 xl:grid-cols-4 xxl:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 xsm:gap-10 xl:gap-24 ">
           {bestProducts.map((data) => {
             return (
               <div
-                className="relative w-[13vw] flex flex-col justify-between h-[30vh] border bg-[#fff] border-gray-200 m-auto shadow-lg"
+                className="relative xxl:!w-[13vw] xxl:h-[32vh] xsm:w-[70vw] sm:w-[40vw] sm:h-[36vh] md:!w-[25vw] md:h-[36vh] xl:!w-[20vw] flex flex-col justify-between xl:h-[35vh] border bg-[#fff] border-gray-200 m-auto shadow-lg"
                 key={data.id}
               >
                 <div className="flex flex-col">
@@ -111,7 +111,7 @@ const [banner,setBanner] = useState([]);
                       height={100}
                       alt="logo"
                       src={data.image[0]}
-                      className="h-[16vh] pt-10 m-auto"
+                      className="xl:h-[18vh] xsm:h-[20vh] md:h-[15vh] w-fit pt-10 m-auto"
                     />
                     <p className="bg-[--fifth-color] text-sm font-semibold text-black w-14 h-10 absolute top-0 right-0  flex flex-col  text-center">
                       <span>{data.offer}%</span>
@@ -125,7 +125,7 @@ const [banner,setBanner] = useState([]);
 
                 <div className="flex justify-between">
                   <p className="text-center text-lg font-medium pt-[8px] !m-auto ">
-                    &#8377;{data.price}
+                   &#8377;{data.price}
                   </p>
 
                   <div

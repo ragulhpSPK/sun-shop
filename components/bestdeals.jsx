@@ -94,7 +94,7 @@ function Bestdeals() {
                     height={100}
                     alt="logo"
                     src={data.image[0]}
-                    className="xl:!h-[13vh] lg:!h-[8vh] xsm:!h-[5vh] xsm:w-fit m-auto "
+                    className="xl:!h-[13vh] lg:!h-[8vh] xsm:!h-[6vh] xsm:w-fit m-auto "
                   />
                   <div className="bg-[var(--fifth-color)] xsm:text-[8px] md:text-[10px] xsm:leading-3 lg:text-md font-semibold text-black xsm:w-[20px] xsm:h-[25px] lg:w-14 lg:h-10 md:w-[25px] md:h-[28px] absolute top-0 right-0 skew-[20px] flex flex-col lg:text-sm text-center">
                     <span className="">{data.bestOffer}%</span>
@@ -103,9 +103,17 @@ function Bestdeals() {
                   <p className="text-center xsm:text-[8px] md:text-[10px] xsm:pt-[10px] lg:pt-0  lg:text-[8px] xl:text-[14px] font-bold lg:h-[6vh]">
                     {data.title}
                   </p>
-                  <p className="text-center xsm:text-[12px] md:text-[10px] xsm:pt-[10px] lg:text-lg font-normal">
-                    Rs:{data.price}
-                  </p>
+                  {data.bestOffer !== null || 0 ? (
+                    <p className="text-center flex flex-col xsm:text-[12px] md:text-[10px] xsm:pt-[10px] lg:text-lg font-normal">
+                      <s>&#8377;{data.price}</s>
+                      &#8377;
+                      {Math.round(
+                        data.price - (data.price / 100) * data.bestOffer
+                      )}
+                    </p>
+                  ) : (
+                    <p className="text-center flex flex-col xsm:text-[12px] md:text-[10px] xsm:pt-[10px] lg:text-lg font-normal">{data.price}</p>
+                  )}
                 </div>
               );
             })}
@@ -186,9 +194,15 @@ function Bestdeals() {
                     <span>{data.offer} %</span>
                     OFF
                   </div>
-                  <p className="text-lg text-center font-medium">
-                    Rs:{data.price}
-                  </p>
+                  {data.offer !== null || 0 ? (
+                    <p className="text-lg text-center flex flex-col font-medium">
+                      <s>&#8377;{data.price}</s>
+                      &#8377;
+                      {Math.round(data.price - (data.price / 100) * data.offer)}
+                    </p>
+                  ) : (
+                      <p className="text-lg text-center flex flex-col font-medium">{data.price}</p>
+                  )}
                 </SwiperSlide>
               );
             })}

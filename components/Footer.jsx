@@ -11,8 +11,8 @@ function Footer() {
   return (
     <div className={`h-[40vh] w-[100vw] mt-40`}>
       <div className="grid xsm:grid-cols-2 lg:grid-cols-4 xsm:gap-x-[20px] xsm:gap-y-[20px] lg:gap-x-48 w-[80vw]  m-auto border-b border-gray-400 pb-5">
-        <div className="flex flex-col gap-2 text-md font-medium">
-          <h1 className="text-2xl font-semibold pb-2">Customer Service</h1>
+        <div className="flex flex-col gap-2 xsm:text-[12px] lg:text-md font-medium">
+          <h1 className="lg:text-2xl xsm:text-xl font-semibold pb-2">Customer Service</h1>
           <p className="hover:text-[--third-color] hover:font-semibold">
             Help Center
           </p>
@@ -36,7 +36,7 @@ function Footer() {
           </p>
         </div>
         <div className="flex flex-col gap-2 text-md font-medium">
-          <h1 className="text-2xl font-semibold pb-2">About Sun</h1>
+          <h1 className="lg:text-2xl xsm:text-xl font-semibold pb-2">About Sun</h1>
           <Link href="/footers/About">
             <p className="hover:text-[--third-color] hover:font-semibold">
               About Us
@@ -63,7 +63,7 @@ function Footer() {
           </p>
         </div>
         <div className="flex flex-col gap-2 text-md font-medium">
-          <h1 className="text-2xl font-semibold pb-2">Follow Us </h1>
+          <h1 className="lg:text-2xl xsm:text-xl font-semibold pb-2">Follow Us </h1>
           <div className="group hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
             <FacebookIcon className="group-hover:text-[#1673eb] " />
             <h1 className="text-md">Facebook</h1>
@@ -82,7 +82,7 @@ function Footer() {
           </div>
         </div>
         <div className="flex flex-col gap-2 text-md font-medium">
-          <h1 className="text-2xl font-semibold pb-2">Sun App Download</h1>
+          <h1 className="lg:text-2xl xsm:text-xl  font-semibold pb-2">Sun App Download</h1>
           <p className="hover:text-[--third-color] hover:font-semibold">
             Google play
           </p>
