@@ -123,7 +123,7 @@ function Orders() {
                 ),
               },
               ]}
-             className="xsm:!h-[400px] sm:!h-[30px]"
+            
           />
         </div>
       )}
