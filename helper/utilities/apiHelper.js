@@ -59,7 +59,7 @@ export const createBanner = (formData) => {
 };
 
 export const getAllBanner = () => {
-  return axios.get("http://sun-mobiles-karur.vercel.app/api/banner");
+  return axios.get("https://sun-mobiles-karur.vercel.app/api/banner");
 };
 
 export const updateBanner = (formData) => {
