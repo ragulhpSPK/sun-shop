@@ -462,22 +462,18 @@ function AllCat() {
           <span>
             <FilterAltOutlinedIcon style={{ fontSize: "16px" }} />
           </span>
-          Filter By price
+          Filters
         </p>
 
         <Drawer
           title="Basic Drawer"
-          placement="right"
+          placement="left"
           onClose={() => {
             setCatDrawer(false);
           }}
           open={catDrawer}
-          width={600}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Drawer>
+          width={200}
+        ></Drawer>
       </div>
     </Spin>
   );

@@ -2,6 +2,7 @@ import dbconnect from "@/connection/conn";
 import Banner from "../../../models/banner";
 
 export default async function bannerController(req, res) {
+  return res.status(200).send({ message: "trigered successfully" });
   dbconnect();
   switch (req.method) {
     case "GET":
