@@ -121,6 +121,22 @@ function AllCat() {
           })
       );
     } else if (
+      get(router, "query._id", "") === "123" &&
+      get(router, "query.price", "")
+    ) {
+      console.log("trigger");
+      setFilerProduct(
+        products
+          .map((product) => {
+            return product;
+          })
+          .sort((a, b) => {
+            return get(router, "query.price", "") === "high"
+              ? b.price - a.price
+              : a.price - b.price;
+          })
+      );
+    } else if (
       get(router, "query.cat_id", "") &&
       get(router, "query.subcat_id", "")
     ) {
@@ -147,21 +163,6 @@ function AllCat() {
         })
       );
       setPriceFilter();
-    } else if (
-      get(router, "query._id", "") === "123" &&
-      get(router, "query.price", "")
-    ) {
-      setFilerProduct(
-        products
-          .map((product) => {
-            return product;
-          })
-          .sort((a, b) => {
-            return get(router, "query.price", "") === "high"
-              ? b.price - a.price
-              : a.price - b.price;
-          })
-      );
     }
     setId(router.query.cat_id);
   }, [
@@ -228,8 +229,8 @@ function AllCat() {
         router.push({
           pathname: "/allCat",
           query: {
-            cat_id: router.query._id,
-            subcat_id: router.query.subcat_id,
+            _id: 123,
+
             price: e,
           },
         });
@@ -274,6 +275,7 @@ function AllCat() {
                 <span>
                   <ListIcon />
                 </span>
+                <p>All Categories</p>
               </div>
             </Link>
             {category.map((data) => {
@@ -475,16 +477,16 @@ function AllCat() {
         </div>
       </div>
 
-      <div>
-        <div className="xxl:hidden flex h-[4vh] w-[90vw] m-auto p-[10px] items-center bg-[--third-color] text-white justify-between">
+      <div className="pt-[5vh]">
+        <div className="xxl:hidden flex h-[4vh] w-[90vw] m-auto p-[10px] items-center  text-black justify-between">
           <p
-            className="text-[10px] flex items-end justify-center"
+            className="text-[12px] flex items-end justify-center"
             onClick={() => {
               setCatDrawer(!catDrawer);
             }}
           >
             <span>
-              <ListIcon style={{ fontSize: "18px", textAlign: "center" }} />
+              <ListIcon style={{ fontSize: "20px", textAlign: "center" }} />
             </span>
             {router.query._id === "123"
               ? "All products"
@@ -495,15 +497,19 @@ function AllCat() {
                   "name"
                 )}
           </p>
-
+          {console.log(router.query.price, router.query.subcat_id)}
           <p
-            className="text-[10px] flex items-end justify-center"
+            className={`text-[12px]  flex items-end justify-center ${
+              router.query.price || router.query.subcat_id
+                ? "text-[--third-color] font-bold"
+                : "text-black"
+            }`}
             onClick={() => {
               setFilDrawer(!filDrawer);
             }}
           >
             <span>
-              <FilterAltOutlinedIcon style={{ fontSize: "16px" }} />
+              <FilterAltOutlinedIcon style={{ fontSize: "18px" }} />
             </span>
             Filters
           </p>

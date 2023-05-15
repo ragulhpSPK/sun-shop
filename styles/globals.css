@@ -9,7 +9,7 @@
   font-family: one;
 }
 
-@font-face {
+/* @font-face {
   font-family: one;
   src: url(/public/PlayfairDisplay-Italic-VariableFont_wght.ttf);
 }
@@ -17,7 +17,7 @@
 @font-face {
   font-family: two;
   src: url(/public/PlayfairDisplay-VariableFont_wght.ttf);
-}
+} */
 
 ::-webkit-scrollbar {
   display: none;
