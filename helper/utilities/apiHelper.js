@@ -59,7 +59,7 @@ export const createBanner = (formData) => {
 };
 
 export const getAllBanner = () => {
-  return axios.get("/api/banner");
+  return axios.get("https://sun-shop-pro.vercel.app/api/banner");
 };
 
 export const updateBanner = (formData) => {
