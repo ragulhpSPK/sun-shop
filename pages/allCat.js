@@ -148,7 +148,7 @@ function AllCat() {
       );
       setPriceFilter();
     } else if (
-      get(router, "query.cat_id", "") &&
+      get(router, "query._id", "") === "123" &&
       get(router, "query.price", "")
     ) {
       setFilerProduct(
