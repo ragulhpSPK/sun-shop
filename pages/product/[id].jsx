@@ -147,10 +147,11 @@ export default function App() {
       </div>
       {result &&
         filterData.map((data, index) => {
+          console.log(data,"data")
           return (
             <div className="xl:pt-32 xl:w-[60vw] xl:pl-28 xsm:p-[8px] flex flex-col xsm:items-center xl:items-start" key={index}>
               <h1 className="xl:text-xl font-semibold xsm:text-md">{data.title}</h1>
-              <p className="text-xl text-slate-800 pt-1">Rs:{data.price}</p>
+              <p className="text-xl text-slate-800 pt-1">Rs:{data.offer}</p>
               <h2 className="xl:text-2xl pt-5 font-bold xsm:text-xl">
                 Product Specifications
               </h2>

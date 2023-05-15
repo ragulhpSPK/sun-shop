@@ -82,6 +82,12 @@ function AllCat() {
   };
 
   useEffect(() => {
+    if (router.pathname === "/allCat") {
+      router.push({
+        pathname: "/allCat",
+        query: { _id: 123 },
+      });
+    }
     fetchData();
   }, []);
 
@@ -270,14 +276,20 @@ function AllCat() {
       >
         <div className="flex">
           <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
-            <Link href="/products">
-              <div className="flex items-center font-bold pt-10">
-                <span>
-                  <ListIcon />
-                </span>
-                <p>All Categories</p>
-              </div>
-            </Link>
+            <div
+              className={`flex items-center  font-bold pt-[3vh] ${
+                router.query._id === "123"
+                  ? "!text-[--third-color]"
+                  : "text-black text-bold"
+              } `}
+              onClick={allProductsHandler}
+            >
+              <span>
+                <ListIcon style={{ fontSize: "26px" }} />
+              </span>
+              <p className={`text-[16px] `}>All Categories</p>
+            </div>
+
             {category.map((data) => {
               return (
                 <>
@@ -390,7 +402,7 @@ function AllCat() {
                           hoverable
                           style={{
                             width: 295,
-                            height: 340,
+                            height: 330,
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
@@ -451,14 +463,14 @@ function AllCat() {
                             <Image
                               alt="example"
                               src={data.image[0]}
-                              width={140}
-                              height={140}
+                              width={100}
+                              height={100}
                               preview={false}
                               // style={{
                               //   marginLeft: "50px",
                               // }}
                             />
-                            <h1 className="text-[16px] h-[7vh]">
+                            <h1 className="text-[16px] pt-[2vh]">
                               {data.title}
                             </h1>
 
@@ -477,16 +489,16 @@ function AllCat() {
         </div>
       </div>
 
-      <div className="pt-[5vh]">
-        <div className="xxl:hidden flex h-[4vh] w-[90vw] m-auto p-[10px] items-center  text-black justify-between">
+      <div className="pt-[5vh] xxl:hidden">
+        <div className=" flex h-[4vh] w-[90vw] m-auto p-[10px] items-center  text-black justify-between">
           <p
-            className="text-[12px] flex items-end justify-center"
+            className="text-[14px] flex items-end justify-center"
             onClick={() => {
               setCatDrawer(!catDrawer);
             }}
           >
             <span>
-              <ListIcon style={{ fontSize: "20px", textAlign: "center" }} />
+              <ListIcon style={{ fontSize: "22px", textAlign: "center" }} />
             </span>
             {router.query._id === "123"
               ? "All products"
@@ -497,9 +509,9 @@ function AllCat() {
                   "name"
                 )}
           </p>
-          {console.log(router.query.price, router.query.subcat_id)}
+
           <p
-            className={`text-[12px]  flex items-end justify-center ${
+            className={`text-[14px]  flex items-end justify-center ${
               router.query.price || router.query.subcat_id
                 ? "text-[--third-color] font-bold"
                 : "text-black"
@@ -509,7 +521,7 @@ function AllCat() {
             }}
           >
             <span>
-              <FilterAltOutlinedIcon style={{ fontSize: "18px" }} />
+              <FilterAltOutlinedIcon style={{ fontSize: "20px" }} />
             </span>
             Filters
           </p>
@@ -524,7 +536,7 @@ function AllCat() {
             width={200}
           >
             <div>
-              <div className="flex items-center ">
+              <div className="flex items-center pt-[4vh]">
                 <p
                   onClick={allProductsHandler}
                   className={`${
@@ -546,7 +558,7 @@ function AllCat() {
                 return (
                   <>
                     <div
-                      className="flex flex-col font-normal text-md leading-8"
+                      className="flex flex-col font-normal text-md leading-8 "
                       key={data._id}
                     >
                       <div>
@@ -596,7 +608,7 @@ function AllCat() {
                   Select product Brands
                 </h1>
                 <Select
-                  className="!w-[48vw]  shadow-inner rouned-lg"
+                  className="!w-[150px]  shadow-inner rouned-lg"
                   size="large"
                   showSearch
                   filterOption={(input, option) =>
@@ -626,7 +638,7 @@ function AllCat() {
               <div className="pt-[4vh]">
                 <h1 className="text-md text-slate-500">Filter By Price</h1>
                 <Select
-                  className="!w-[48vw]   shadow-inner  rounded-md"
+                  className="!w-[150px]   shadow-inner  rounded-md"
                   size="large"
                   placeholder="Filter by price"
                   value={priceFilter}
@@ -647,8 +659,8 @@ function AllCat() {
               gutter: 16,
               xs: 1,
               sm: 2,
-              md: 3,
-              lg: 4,
+              md: 2,
+              lg: 3,
               xl: 4,
               xxl: 5,
             }}
@@ -680,11 +692,11 @@ function AllCat() {
                       border: "none",
                       marginTop: "30px",
                     }}
-                    className="!shadow-lg"
+                    className="!shadow-lg "
                     actions={[
                       <div
                         key={"key"}
-                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] w-[25vw] text-white flex items-center justify-center !border-none"
+                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4vh] md:w-[10vw] w-[25vw] text-white flex items-center justify-center !border-none"
                         onClick={() => {
                           router.push({
                             pathname: "/cart",
@@ -696,7 +708,7 @@ function AllCat() {
                       </div>,
                       <div
                         key={"key"}
-                        className="bg-[--third-color] h-[5vh]  w-[15vw]  text-white flex items-center justify-center rounded-sm float-right"
+                        className="bg-[--third-color] h-[5vh] md:w-[7vw] md:h-[4vh] w-[15vw]  text-white flex items-center justify-center rounded-sm float-right"
                       >
                         {cart.find((res) => {
                           return res.productId === data._id;
@@ -736,13 +748,13 @@ function AllCat() {
                         width={70}
                         height={70}
                         preview={false}
-                        className="!h-[8vh] w-fit"
+                        className="!h-[10vh] w-fit"
                       />
-                      <h1 className="text-[14px] h-[10vh] pt-[2vh]">
+                      <h1 className="text-[14px] h-[10vh] xsm:pt-[3vh] md:pt-[6vh] lg:pt-[1vh] xl:pt-[2vh]">
                         {data.title}
                       </h1>
 
-                      <h1 className="text-[16px] !mt-[5px] font-bold ">
+                      <h1 className="text-[16px] !mt-[5px] font-bold md:pt-[2vh] xl:pt-0">
                         &#8377;{data.price}
                       </h1>
                     </div>
