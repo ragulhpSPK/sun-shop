@@ -49,8 +49,8 @@ export default function Swipper({ setLoading }) {
 
   return (
     <div className="w-screen flex justify-center">
- <div className="lg:w-[80vw]  w-screen gap-x-2  justify-center flex flex-col lg:flex-row">
-        <div className="lg:w-[50vw] lg:h-[35vh]">
+ <div className="lg:w-[90vw]  w-screen gap-x-2  justify-center flex flex-col lg:flex-row">
+        <div className="lg:w-[60vw] lg:h-[35vh]">
            <Swiper
         modules={[Navigation, Autoplay, Pagination]}
         className="p-0 lg:h-[35vh]"
@@ -85,7 +85,7 @@ export default function Swipper({ setLoading }) {
         })}
       </Swiper>
      </div>
-      <div className="flex lg:w-[20vw] lg:h-[35vh] justify-center items-center lg:flex-col ">
+      <div className="flex lg:w-[20vw] lg:h-[35vh] justify-center gap-y-2 items-center lg:flex-col ">
         {top.map((data) => {
           return (
             <>
