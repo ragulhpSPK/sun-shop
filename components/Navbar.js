@@ -1,21 +1,26 @@
 import React, { useEffect, useState, useMemo } from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Divider } from "@mui/material";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { SubCategory } from "../helper/Subcategory";
 import { Category } from "@/helper/categories";
 import { useRouter } from "next/router";
-import { Button, Input, Modal } from "antd";
+import { Badge, Button, Input, Modal } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import { useDispatch } from "react-redux";
 import { addSearch } from "@/redux/searchSlice";
 import Image from "next/image";
 import { getAllCart } from "../helper/utilities/apiHelper";
 import { get } from "lodash";
-import Register from "../pages/Authentication/Register";
-import Login from "@/pages/Authentication/Login";
+import Login from "../pages/Authentication/Register";
+// import Login from "@/pages/Authentication/Login";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 
 function Navbar() {
   const { Search } = Input;
@@ -63,111 +68,82 @@ function Navbar() {
   return (
     <div>
       <div
-        className={`h-24  bg-fixed ${
+        className={`h-[10vh] w-screen flex flex-row  items-center justify-around  ${
           router.pathname.split("/").includes("allCat")
             ? "!shadow-none"
-            : "shadow-md shadow-slate-100 bg-[white]"
+            : "shadow shadow-slate-100 bg-[white]"
         }`}
       >
-        <div className=" bg-[#943074] text-white flex justify-around ">
-          <div className="flex p-1">
-            <p className="text-md font-bold text-white">follow us On</p>
-            <FacebookIcon className="mr-1" />
-            <InstagramIcon className="mr-1" />
-          </div>
-          <div className="flex p-1 font-bold text-[var(--first-color)]">
+        <div className="sm:pl-24">
+          <Image
+            src="/assets/sunn.png"
+            className="xl:w-20 xsm:w-14"
+            alt="Logo"
+            width={300}
+            height={300}
+          />
+        </div>
+        <div className=" relative lg:w-[36vw] xsm:w-[60vw] text-gray-600">
+          <div className=" relative mx-auto  text-gray-600 h-[5vh] xsm:w-[70vw] sm:w-[42vw] ">
+            <input
+              className="rounded-lg shadow  bg-white px-5 pr-16 w-[80%] xsm:h-[90%] sm:h-[100%] text-sm focus:outline-none"
+              type="search"
+              name="search"
+              placeholder="Search"
+              onChange={(e) => dispatch(addSearch(e.target.value))}
+              onKeyUp={handleKeyDown}
+            />
             <button
-              className="pr-1 text-md font-medium text-white border-none"
+              type="submit"
+              className="absolute right-[21%] top-[10px]  text-slate-500"
               onClick={() => {
-                setRegister(!register);
+                router.push({ pathname: `/subcat`, query: data });
               }}
             >
-              Sign Up
-            </button>
-            <Divider orientation="vertical" color="white" />
-            <button
-              className="pl-1 text-md font-medium text-white border-none"
-              onClick={() => {
-                setLogin(!login);
-              }}
-            >
-              Login
+              <SearchIcon className=" text-slate-700 text-[20px]" />
             </button>
           </div>
         </div>
-        <div className="w-screen flex justify-around items-center h-[60%]">
-          <div className="pl-24">
-            <Image
-              src="/assets/sunn.png"
-              className="xl:w-20 xsm:w-14"
-              alt="Logo"
-              width={300}
-              height={300}
-            />
-          </div>
-          <div className="pt-2 relative lg:w-[36vw] xsm:w-[50vw] text-gray-600">
-            <div className="pt-2 relative mx-auto  text-gray-600 h-[6vh] w-[42vw] ">
-              <input
-                className="rounded-lg shadow  bg-white px-5 pr-16 w-[80%] h-[100%] text-sm focus:outline-none"
-                type="search"
-                name="search"
-                placeholder="Search"
-                onChange={(e) => dispatch(addSearch(e.target.value))}
-                onKeyUp={handleKeyDown}
-              />
-              <button
-                type="submit"
-                className="absolute right-[21%] top-[2vh]   text-slate-500"
-                onClick={() => {
-                  router.push({ pathname: `/subcat`, query: data });
-                }}
-              >
-                <SearchIcon className=" text-slate-700 text-[20px]" />
-              </button>
+
+        <div className="xsm:hidden lg:block pr-[110px] ">
+          <div className="flex flex-row gap-x-2">
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <FacebookIcon className="group-hover:text-[#1673eb] text-[16px]" />
+            </div>
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <InstagramIcon className="group-hover:text-[#f40873] text-[16px]" />
+            </div>
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <TwitterIcon className="group-hover:text-[#1c96e8] text-[16px]" />
+            </div>
+            <div className="group  shadow shadow-slate-400 bg-white p-2  rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <WhatsAppIcon className="group-hover:text-[#1ad03f] text-[16px]" />
+            </div>
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <LocalPhoneOutlinedIcon className="group-hover:text-[#d02f1a] text-[16px]" />
             </div>
           </div>
-          <Link href="/cart">
-            <div className="xsm:min-w-[20px] lg:w-[37px] relative">
-              <Image
-                src="/assets/cart2.png"
-                className="lg:w-7 xsm:w-[30px]"
-                alt="Cart"
-                width={300}
-                height={300}
-              />
-              {product.length === 0 ? (
-                ""
-              ) : (
-                <p className="absolute  xsm:float-right   bg-[var(--second-color)] top-[-5px] right-0 xsm:h-[20px] xsm:w-[20px] xsm:text-[12px]  lg:h-5  lg:w-5 text-center lg:text-sm text-white rounded-full">
-                  {product.length}
-                </p>
-              )}
-            </div>
-          </Link>
-          <div className="xsm:hidden lg:block pr-[110px]">
-            <p className="lg:text-md text-[var(--first-color)] text-xl lg:font-bold ">
-              For Contact:
-            </p>
-            <p className="text-black font-semi-bold">123-534-8364</p>
+        </div>
+        <Badge count={get(product, "length", "")} size="small" color="#943074">
+          <div className="shadow shadow-slate-400 bg-white p-1  rounded">
+            <Link href="/cart">
+              <ShoppingCartCheckoutOutlinedIcon className="!text-md" />
+            </Link>
           </div>
+        </Badge>
+        <div className="bg-white shadow shadow-slate-300 rounded p-2 h-[4vh] w-[5vw] flex items-center  justify-center">
+          <button
+            className="pl-1 xsm:text-[10px] sm:text-md flex gap-x-1 items-center font-medium text-[--second-color] border-none lg:text-lg"
+            onClick={() => {
+              setLogin(!login);
+            }}
+          >
+            <h1 className="font-bold tracking-wider">Login</h1>
+          </button>
         </div>
       </div>
-      <Modal
-        open={register}
-        width={1000}
-        footer={false}
-        onCancel={() => setRegister(!register)}
-      >
-        <Register />;
-      </Modal>
-      <Modal
-        open={login}
-        width={1000}
-        footer={false}
-        onCancel={() => {
-          setLogin(!login);
-        }}
-      >
+
+      <Modal open={login} width={1000} footer={false}>
         <Login />;
       </Modal>
     </div>

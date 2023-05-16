@@ -48,17 +48,21 @@ export default function Swipper({ setLoading }) {
   });
 
   return (
-    <div className="w-[80vw] m-auto flex ">
-      <Swiper
+    <div className="w-screen flex justify-center">
+ <div className="lg:w-[80vw]  w-screen gap-x-2  justify-center flex flex-col lg:flex-row">
+        <div className="lg:w-[50vw] lg:h-[35vh]">
+           <Swiper
         modules={[Navigation, Autoplay, Pagination]}
-        className="myswiper w-[70%] m-auto"
+        className="p-0 lg:h-[35vh]"
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         autoplay={{ delay: 4000 }}
+       
       >
         {left.map((data, index) => {
           return (
             <SwiperSlide
+              className="lg:p-0 p-1 "
               key={index}
               onClick={() =>
                 router.push({
@@ -67,25 +71,26 @@ export default function Swipper({ setLoading }) {
                 })
               }
             >
-              <div className="h-[35vh] bg-right bg-no-repeat bg-[red] w-[60vw]">
+              
                 <Image
                   src={data.image}
-                  className=" !h-[35vh] pr-10 !w-[100vw] "
+                  className="!w-[100%] !h-[100%]"
                   width={800}
                   height={800}
                   alt="not found"
                 ></Image>
-              </div>
+              
             </SwiperSlide>
           );
         })}
       </Swiper>
-      <div className="flex flex-col gap-[4.8px] text-white">
+     </div>
+      <div className="flex lg:w-[20vw] lg:h-[35vh] justify-center items-center lg:flex-col ">
         {top.map((data) => {
           return (
             <>
               <div
-                className="  h-[17.2vh] w-[23.5vw]"
+                className=" lg:w-[20vw] lg:h-[17vh] lg:p-0 p-1"
                 onClick={() =>
                   router.push({
                     pathname: `/product/${data.productid}`,
@@ -100,7 +105,7 @@ export default function Swipper({ setLoading }) {
                   height={300}
                   alt="not found"
                 />
-                <p className="text-3xl w-28">Upto 20% Offer</p>
+                
               </div>
             </>
           );
@@ -110,7 +115,7 @@ export default function Swipper({ setLoading }) {
           return (
             <>
               <div
-                className="bg-[#613f75]  h-[17.2vh] w-[23.5vw] "
+                className="lg:w-[20vw] lg:h-[17vh]  lg:p-0 p-1"
                 onClick={() =>
                   router.push({
                     pathname: `/product/${data.productid}`,
@@ -125,12 +130,14 @@ export default function Swipper({ setLoading }) {
                   height={300}
                   alt="not found"
                 />
-                <p className="text-3xl w-28">Upto 30% Offer</p>
+                
               </div>
             </>
           );
         })}
       </div>
     </div>
+    </div>
+   
   );
 }
