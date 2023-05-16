@@ -14,12 +14,11 @@ function Layout({ children }) {
     <div>
       {router.pathname.split("/").includes("dashboard") ? "" : <Navbar />}
       {children}
-      {
-        router.pathname.split("/").includes("dashboard") || result.length > 0
-          ? ""
-          : ""
-        // <Footer />
-      }
+      {router.pathname.split("/").includes("dashboard") || result.length > 0 ? (
+        ""
+      ) : (
+        <Footer />
+      )}
     </div>
   );
 }
