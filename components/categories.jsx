@@ -55,7 +55,7 @@ function Categories({ setLoading }) {
             rows: 2,
           }}
           slidesPerView={1}
-          spaceBetween={10}
+         
 
           modules={[Grid, Pagination, Navigation, Autoplay]}
           navigation={{
@@ -63,11 +63,22 @@ function Categories({ setLoading }) {
           }}
           
           breakpoints={{
+          640: {
+            slidesPerView: 2,
          
+          },
+          768: {
+            slidesPerView: 4,
+          
+          },
+          1024: {
+            slidesPerView: 5,
+          
+          },
        }}
 
           autoplay={{ delay: 2000 }}
-          className={`mySwiper flex xsm:w-[80vw] lg:w-[80vw]`}
+          className={`mySwiper flex xsm:w-[80vw] lg:w-[80vw] `}
         >
           {category.map((data) => {
             return (

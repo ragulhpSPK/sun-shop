@@ -6,7 +6,7 @@ import Image from "next/image";
 function Delivery() {
   return (
     <div
-      className="flex justify-evenly items-center mt-6 xsm:h-[6vh] sm:h-[8vh] md:h-[10vh] lg:h-[16vh] xsm:pt-[1vh] lg:pt-[3vh] xsm:w-[90vw] lg:w-[80vw] m-auto  text-black "
+      className="flex justify-evenly items-center mt-6 xsm:h-[6vh] sm:h-[8vh] md:h-[10vh] lg:h-[16vh] xsm:pt-[1vh] lg:pt-[3vh] xxl:pt-0 xsm:w-[90vw] lg:w-[80vw] m-auto  text-black "
       id={styles.shadow}
     >
       {delivery.map((data, index) => {
