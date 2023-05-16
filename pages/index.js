@@ -12,13 +12,13 @@ import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import SyncIcon from "@mui/icons-material/Sync";
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const result = useSelector((data) => {
     return data.search.searches;
   });
 
   const antIcon = (
-    <ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />
+    <LoadingOutlined style={{ fontSize: 40 }} className="animate-spin" />
   );
 
   return (
@@ -41,7 +41,6 @@ export default function Home() {
           ) : (
             <>
               <Swiper setLoading={setLoading} />
-
               <Delivery />
               <Categories setLoading={setLoading} />
               <Bestdeals />

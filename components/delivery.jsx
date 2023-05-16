@@ -11,20 +11,20 @@ function Delivery() {
     >
       {delivery.map((data, index) => {
         return (
-          <div className="w-40 m-auto " key={index}>
-            <div className="pl-5 ">
+          <div className="xl:w-50 m-auto " key={index}>
+            <div className="flex  flex-col items-center justify-center">
               <div
-                className={`lg:w-[30%] lg:h-10 xsm:w-[5vw] flex items-center justify-center  border rounded-2xl hover:scale-125 duration-1000`}
+                className={`xsm:!h-[2vh] md:!h-[3vh] xl:!h-[4vh] xsm:w-fit xl:w-[3vw]  flex items-center justify-center  border rounded-2xl hover:scale-125 duration-1000`}
               >
                 <Image
                   src={data.image}
                   alt="Icons"
-                  className="lg:w-12"
+                  className="xsm:h-[1.5vh] xsm:!w-fit md:!h-[2vh] xl:!h-[3vh]"
                   width={300}
                   height={300}
                 />
               </div>
-               <div className=" lg:pt-1  lg:text-[15px] xsm:text-[8px] xsm:h-[2vh]">
+               <div className=" lg:pt-1  lg:text-[15px] xl:!text-xl  xsm:!text-[8px] md:text-[10px] xsm:h-[2vh]">
               <p>{data.desc}</p>
             </div>
             </div>

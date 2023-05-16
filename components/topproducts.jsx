@@ -73,7 +73,7 @@ function Topproducts({setLoading}) {
           return (
             <div
               className=" l
-              lg:w-[18vw] xl:w-[12vw] border shadow-lg lg:h-[28vh] relative mt-5 xsm:w-[43vw] xsm:h-[25vh] md:w-[28vw] md:h-[28vh"
+              lg:w-[18vw] xl:w-[16vw]  border shadow-lg lg:h-[28vh] relative mt-5 xsm:w-[43vw] xsm:h-[25vh] md:w-[28vw] md:h-[28vh"
               key={data._id}
             >
               <div>
@@ -96,7 +96,7 @@ function Topproducts({setLoading}) {
                 </div>
 
                 <div className="lg:h-[5vh] ">
-                  <h1 className="text-center xsm:text-[8px] lg:text-[12px] font-bold">
+                  <h1 className="text-center xsm:text-[8px] lg:text-[12px] font-bold xl:p-[3px]">
                     {data.title}
                   </h1>
                   <p className="text-center xsm:text-[12px]">Rs:{data.price}</p>

@@ -22,9 +22,11 @@ function Categories({ setLoading }) {
       setLoading(true);
       const result = await getAllCatagory();
       setCategory(get(result, "data.data"));
-      setLoading(false);
+      
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,62 +54,17 @@ function Categories({ setLoading }) {
           grid={{
             rows: 2,
           }}
-       
+          slidesPerView={1}
+          spaceBetween={10}
+
           modules={[Grid, Pagination, Navigation, Autoplay]}
           navigation={{
             clickable: true,
           }}
           
           breakpoints={{
-
-            320: {
-               width: 320,
-              slidesPerView: 1,
-              grid: {
-                rows:2,
-              }
-            },
-           
-             480: {
-              width: 480,
-              slidesPerView: 1,
-              grid: {
-                rows:2,
-              }
-            },
-            640: {
-              width: 640,
-              slidesPerView: 3,
-              grid: {
-                rows:2,
-              }
-            },
-            748: {
-              width: 748,
-              slidesPerView: 4,
-              grid: {
-                rows:2,
-              }
-            },
-
-            1024: {
-              width: 1024,
-              slidesPerView: 6,
-              grid: {
-                rows:2,
-              }
-            },
-            1320: {
-              width: 1320,
-              slidesPerView: 6,
-              grid: {
-                rows:2,
-              }
-            },
-
-            
-           
-          }}
+         
+       }}
 
           autoplay={{ delay: 2000 }}
           className={`mySwiper flex xsm:w-[80vw] lg:w-[80vw]`}
@@ -115,9 +72,10 @@ function Categories({ setLoading }) {
           {category.map((data) => {
             return (
               <SwiperSlide
-                className="xsm:!h-[17vh] lg:!w-[10vw] lg:!h-[17vh] border lg:py-5 cursor-pointer !flex flex-col items-center justify-center"
+                className="border border-slate-300 cursor-pointer !flex flex-col items-center justify-center"
                 key={data.id}
                 onClick={() => {
+                  console.log(data._id)
                   router.push({
                     pathname: "/allCat",
                     query: { cat_id: data._id },
@@ -130,7 +88,7 @@ function Categories({ setLoading }) {
                     height={100}
                     alt="logo"
                     src={data.image}
-                    className="w-fit xsm:!h-[10vh] xsm:w-fit lg:!h-[7vh] m-auto mt-6"
+                    className="w-fit xsm:!h-[10vh] xsm:w-fit lg:!h-[5vh] m-auto mt-6"
                     preview={false}
                   />
                 </div>

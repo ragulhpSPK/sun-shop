@@ -82,12 +82,12 @@ function AllCat() {
   };
 
   useEffect(() => {
-    if (router.pathname === "/allCat") {
-      router.push({
-        pathname: "/allCat",
-        query: { _id: 123 },
-      });
-    }
+    // if (router.pathname === "/allCat") {
+    //   router.push({
+    //     pathname: "/allCat",
+    //     query: { _id: 123 },
+    //   });
+    // }
     fetchData();
   }, []);
 
@@ -255,7 +255,7 @@ function AllCat() {
   };
 
   const antIcon = (
-    <SyncIcon style={{ fontSize: 40 }} className="animate-spin" />
+    <LoadingOutlined style={{ fontSize: 40 }} className="animate-spin" />
   );
 
   const allProductsHandler = () => {
@@ -396,8 +396,8 @@ function AllCat() {
                 dataSource={priceval.length > 0 ? priceval : filerProduct}
                 renderItem={(data, index) => {
                   return (
-                    <List.Item key={index}>
-                      <div className="">
+                    <List.Item key={index} className="!mt-[5vh]">
+                      <div>
                         <Card
                           hoverable
                           style={{
@@ -463,12 +463,9 @@ function AllCat() {
                             <Image
                               alt="example"
                               src={data.image[0]}
-                              width={100}
-                              height={100}
+                              width={80}
+                              height={80}
                               preview={false}
-                              // style={{
-                              //   marginLeft: "50px",
-                              // }}
                             />
                             <h1 className="text-[16px] pt-[2vh]">
                               {data.title}
@@ -676,16 +673,17 @@ function AllCat() {
               return (
                 <List.Item
                   key={index}
-                  className="flex items-center justify-center"
+                  className="flex items-center justify-center "
                 >
                   <Card
                     hoverable
                     style={{
                       width: 265,
-                      height: 310,
+                      height: 330,
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
+                      alignContent: "center",
                       backgroundColor: "white",
                       alignSelf: "center",
                       margin: "auto",
@@ -696,7 +694,7 @@ function AllCat() {
                     actions={[
                       <div
                         key={"key"}
-                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4vh] md:w-[10vw] w-[25vw] text-white flex items-center justify-center !border-none"
+                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4vh] md:w-[10vw] !w-[20vw] text-white flex items-center justify-center !border-none"
                         onClick={() => {
                           router.push({
                             pathname: "/cart",
@@ -740,7 +738,7 @@ function AllCat() {
                           query: { id: data._id },
                         })
                       }
-                      className="flex flex-col items-center "
+                      className="flex flex-col items-center justify-center"
                     >
                       <Image
                         alt="example"
@@ -748,13 +746,13 @@ function AllCat() {
                         width={70}
                         height={70}
                         preview={false}
-                        className="!h-[10vh] w-fit"
+                        className="xsm:!h-[10vh] md:!h-[8vh] pt-[1vh] lg:!h-[12vh] xl:!h-[10vh] w-fit"
                       />
-                      <h1 className="text-[14px] h-[10vh] xsm:pt-[3vh] md:pt-[6vh] lg:pt-[1vh] xl:pt-[2vh]">
+                      <h1 className="xsm:text-[14px] h-[10vh] md:text-[18px] md:leading-tight md:tracking-tight xsm:pt-[3vh] md:pt-[6vh] lg:pt-[1vh] xl:pt-[2vh]">
                         {data.title}
                       </h1>
 
-                      <h1 className="text-[16px] !mt-[5px] font-bold md:pt-[2vh] xl:pt-0">
+                      <h1 className="text-[16px] !mt-[5px] font-bold md:pt-[3vh] xl:pt-0">
                         &#8377;{data.price}
                       </h1>
                     </div>

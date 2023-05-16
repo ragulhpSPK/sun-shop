@@ -2,6 +2,7 @@ import dbconnect from "@/connection/conn";
 import Order from "../../../models/order";
 
 export default async function orderController(req, res) {
+  return res.status(200).send("hey");
   dbconnect();
   switch (req.method) {
     case "GET": {

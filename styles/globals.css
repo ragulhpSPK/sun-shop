@@ -156,6 +156,11 @@ button,
   height: 20px !important;
 }
 
+ .swiper-button-prev:after,
+ .swiper-button-next:after{
+  font-size: 50px !important;
+}
+
 .swiper-button-disabled {
   opacity: 0 !important;
 }
@@ -180,38 +185,6 @@ button,
   font-variant: initial;
   line-height: 1;
 }
-
-/* .swiper-wrapper{
-  width: 2600px !important;
-} */
-
-
-
- /* @media screen and (max-width: 480px) {
- .swiper-wrapper{
-  width: 9000px !important;
-}
-} */
-
-/* @media screen and (min-width: 580) {
-  .swiper-wrapper{
-  width: 500px !important;
-} */
-/* } */
-/* 
-@media screen and (max-width: 768px) {
-  .swiper-wrapper{
-  width: 3200px !important;
-}
-}
-
-@media screen and (max-width: 1024) {
-   .swiper-wrapper{
-  width: 6000px !important;
-}
-} */
-
-
 
 
 /* ant design drawer */
@@ -300,3 +273,27 @@ button,
 
 /* ant steps style customization */
 
+.ant-steps-vertical{
+  height: 500px !important;
+}
+
+
+@media (max-width:920px) {
+  .ant-steps-horizontal{
+    width: 600px !important;
+   
+  }
+}
+
+
+/* antd card */
+
+.ant-card {
+  margin-top: 70px !important;
+
+}
+
+.ant-card-actions{
+  border: none !important;
+  
+}

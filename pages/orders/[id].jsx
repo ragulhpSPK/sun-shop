@@ -56,22 +56,22 @@ function Orders() {
     }
   };
 
-  console.log(products.length);
+
 
   return (
-    <div className="flex flex-col gap-[5vh] justify-around mt-[5vh] w-[80vw] p-[5vw] m-auto min-h-[70vh]">
+    <div className="flex flex-col gap-[5vh] justify-around mt-[5vh] steps:!w-[100vw] steps:px-[1vw]  xl:!w-[70vw] xl:p-[5vw] xl:m-auto min-h-[70vh]">
       {products.length === 0 ? (
         <p className="text-center text-4xl text-slate-500 pt-[25vh]">
           No order to show
         </p>
       ) : (
         <div
-          className="xxl:h-[20vh] xsm:h-[60vh] flex items-center justify-center p-[4vw]"
+          className="xxl:h-[20vh] xsm:min-h-[60vh] xsm:!w-[90vw] xsm:self-center xsm:pl-[5vw] xl:pl-0 steps:!w-[100vw] xl:!w-[70vw] flex items-center justify-center xl:p-[4vw]"
           id={styles.shadow3}
         >
           <Steps
-            className={`${status[0] === "Cancelled" ? "invisible" : "visible"}`}
-            size="large"
+            className={`${status[0] === "Cancelled" ? "invisible" : "visible"} xxl:pl-[3vw]`}
+            size="small"
               lineWidth={1}
              
             items={[
@@ -123,7 +123,8 @@ function Orders() {
                 ),
               },
               ]}
-            
+              responsive={true}
+              
           />
         </div>
       )}
@@ -131,12 +132,12 @@ function Orders() {
       {products.map((data) => {
         return (
           <>
-            <div className="flex flex-col" key={data._id}>
+            <div className="flex flex-col " key={data._id}>
               <div
-                className="flex flex-col gap-[15px] bg-white p-[5vh]"
+                className="flex flex-col xsm:!w-[90vw]  gap-[15px] bg-white p-[5vh] xsm:self-center  steps:!w-[100vw] xl:!w-[70vw]"
                 id={styles.shadow3}
               >
-                <div className="flex xsm:flex-col md:flex-row justify-between">
+                <div className="flex xsm:flex-col  md:flex-row xsm:items-center  xsm:!justify-between">
                     <h1 className="xsm:text-[16px] md:text-2xl p-4">Purchased Item</h1>
                 {status[0] === "Delivered" ? (
                   <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center">
@@ -153,7 +154,7 @@ function Orders() {
                   </p>
                 ) : (
                   <button
-                    className="bg-red-600 !text-white p-[8px] xsm:mb-[8px] xl:mb-0 xsm:w-[40vw] h-[5vh] md:w-[20vw] xl:w-[9vw] rounded-md"
+                    className="bg-red-600 !text-white p-[5px] xsm:mb-[8px] xl:mb-0 xsm:w-[40vw] xl:!h-[5vh] md:w-[20vw] xl:w-[9vw] lg:h-[7vh] rounded-md"
                     onClick={() => {
                       handleClick(data._id, data);
                     }}
@@ -163,10 +164,10 @@ function Orders() {
                 )}
                 </div>
               
-                <div className="flex  w-[70vw] flex-wrap xsm:gap-x-10 md:gap-x-6 xl:gap-x-10 gap-y-20">
+                <div className="flex  w-[70vw] flex-wrap xsm:gap-x-10 md:gap-x-6 xl:gap-x-10 gap-y-20 xsm:items-center xsm:justify-center" >
                   {data.image.map((img, index) => {
                     return (
-                      <div key={index} className="xxl:!w-[10vw] xsm:!w-[40vw] sm:!w-[20vw] md:w-[10vw]  flex  shadow-2xl rounded-box items-center justify-center flex-col h-[15vh]">
+                      <div key={index} className="xxl:!w-[10vw] xsm:!w-[40vw] sm:!w-[20vw] md:w-[10vw] lg:min-h-[20vh]  flex  shadow-2xl rounded-box items-center justify-center flex-col h-[15vh]">
                         <div>
                           <Image
                           src={data.image.length === 1 ? img : img[0]}
@@ -186,7 +187,7 @@ function Orders() {
                 </div>
 
                 <h1
-                  className={`xsm:text-md md:text-xl xl:text-3xl pt-[5px] text-slate-600 ${
+                  className={`xsm:text-md md:text-xl xl:text-3xl pt-[5px] text-slate-600 xsm:text-center ${
                     data.total === null ? "hidden" : "block"
                   }`}
                 >

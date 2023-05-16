@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useRef, useEffect } from "react";
 import React from "react";
 import styles from "../../styles/zoom.module.css";
@@ -27,7 +28,7 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [cartID, setCartID] = useState([]);
   const dispatch = useDispatch();
-  const [loading,setLoading]=useState(true)
+  const [loading, setLoading] = useState(true);
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -35,12 +36,12 @@ export default function App() {
 
   const fetchData = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const result = [await getAllproducts(), await getAllCart()];
-  
+
       setProduct(get(result, "[0].data.data", []));
       setCart(get(result, "[1].data.message", []));
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -61,18 +62,13 @@ export default function App() {
         return data._id === router.query.id;
       })
     );
-
-
   }, [product, router.query.id]);
-
-  
 
   useEffect(() => {
     filterData.map((img) => setImgs(img.image[0]));
   }, [filterData]);
 
   const handleClick = async (data) => {
-    
     try {
       const formData = {
         data: {
@@ -92,12 +88,16 @@ export default function App() {
     }
   };
 
-  const AntIcon=(<ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />)
+  const AntIcon = (
+    <ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />
+  );
 
   return (
     // <Spin loading={false} tip="loading data..." size="large"  indicator={AntIcon}>
- <div
-        className={`xl:h-[80vh] xl:w-[80vw] xsm:flex-col xl:flex xsm:w-[100vw]  xl:flex-row justify-center  xl:m-auto xl:mt-10 ${loading===true?"invisible":"visible"}`}
+    <div
+      className={`xl:h-[80vh] xl:w-[80vw] xsm:flex-col xl:flex xsm:w-[100vw]  xl:flex-row justify-center  xl:m-auto xl:mt-10 ${
+        loading === true ? "invisible" : "visible"
+      }`}
       id={style.shadow3}
     >
       <div className={`${styles.container} xl:w-[30vw] xl:m-auto`}>
@@ -115,13 +115,12 @@ export default function App() {
             {result &&
               filterData.map((img) => {
                 return img.image.map((image, i) => {
-                  
                   return (
                     <>
                       <div className="xl:pt-[5vh]">
                         <div
                           className={
-                         image.includes(imgs)
+                            image.includes(imgs)
                               ? "border-4 border-[--third-color]"
                               : "border-none"
                           }
@@ -147,26 +146,73 @@ export default function App() {
       </div>
       {result &&
         filterData.map((data, index) => {
-          console.log(data,"data")
+          console.log(data, "data");
           return (
-            <div className="xl:pt-32 xl:w-[60vw] xl:pl-28 xsm:p-[8px] flex flex-col xsm:items-center xl:items-start" key={index}>
-              <h1 className="xl:text-xl font-semibold xsm:text-md">{data.title}</h1>
-              <p className="text-xl text-slate-800 pt-1">Rs:{data.offer}</p>
+            <div
+              className="xl:pt-32 xl:w-[60vw] xl:pl-28 xsm:p-[8px] flex flex-col xsm:items-center xl:items-start"
+              key={index}
+            >
+              <h1 className="xl:text-xl font-semibold xsm:text-md">
+                {data.title}
+              </h1>
+
+              {data.flashStatus == true ? (
+                <div>
+                  <span>
+                    <s>&#8377;{data.price}</s>-
+                  <p className="font-bold text-sm text-red-500">-{data.offer}% Off</p>
+                  </span>
+
+                  {data.offer !== null || 0 ? (
+                    <p className="text-xl text-slate-800 pt-1">
+                      &#8377;
+                      {Math.round(data.price - (data.price / 100) * data.offer)}
+                    </p>
+                  ) : (
+                    <p className="text-xl text-slate-800 pt-1">
+                      &#8377;{data.price}
+                    </p>
+                  )}
+                </div>
+              ) : data.bestStatus === true ? (
+                <div>
+                  <s>&#8377;{data.price}</s> <p className="font-bold text-sm text-red-500">-{data.bestOffer}% Off</p>
+                  {data.bestOffer !== null || 0 ? (
+                    <p className="text-xl text-slate-800 pt-1">
+                      &#8377;
+                      {Math.round(
+                        data.price - (data.price / 100) * data.bestOffer
+                      )}
+                    </p>
+                  ) : (
+                    <p className="text-xl text-slate-800 pt-1">
+                      &#8377;{data.price}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                  <p className="text-xl text-slate-800 pt-1">
+                      &#8377;{data.price}
+                    </p>
+              )}
+
               <h2 className="xl:text-2xl pt-5 font-bold xsm:text-xl">
                 Product Specifications
               </h2>
-         
+
               {data.highlight.split(",").map((res, index) => {
                 return (
-                  <li className="xl:text-xl xsm:text-[12px] pt-2 xsm:self-start xsm:pl-[2vw] sm:self-center sm:w-[50vw]" key={index}>
+                  <li
+                    className="xl:text-xl xsm:text-[12px] pt-2 xsm:self-start xsm:pl-[2vw] sm:self-center sm:w-[50vw]"
+                    key={index}
+                  >
                     {res}.
                   </li>
                 );
               })}
 
               <div className="pt-10 flex lg:gap-5 xsm:pl-0  justify-around xsm:w-[80vw] sm:pr-[8vw] sm:w-[40vw] xl:!pl-0">
-              
-                {cartID[0]&&cartID[0].productId === data._id ? (
+                {cartID[0] && cartID[0].productId === data._id ? (
                   <button
                     className="bg-slate-300 text-[#000] shadow-2xl hover:bg-[--second-color] hover:scale-105 hover:font-medium hover:text-white duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
                     onClick={() => {
@@ -204,6 +250,5 @@ export default function App() {
         })}
     </div>
     // </Spin>
-   
   );
 }
