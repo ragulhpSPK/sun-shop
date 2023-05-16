@@ -1,5 +1,5 @@
 import dbconnect from "@/connection/conn";
-import User from "@/models/user";
+import Message from "@/models/message";
 import { notification } from "antd";
 import { isEmpty } from "lodash";
 import Jwt from "jsonwebtoken";
@@ -30,37 +30,37 @@ export default async function MessageController(req, res) {
         // });
         // console.log(sendMessage);
 
-        const validateUser = await User.find({ number: req.body.number });
-        console.log(validateUser);
-        // if (!isEmpty(validateUser)) {
-        //   console.log(validateUser, "validate user");
-        //   const auth = {
-        //     number: validateUser[0].number,
-        //   };
+        const validateUser = await Message.find({ number: req.body.number });
 
-        //   const token = Jwt.sign({ user: auth }, process.env.SECRET_KEY);
+        if (!isEmpty(validateUser)) {
+          console.log(validateUser, "validate user");
+          const auth = {
+            number: validateUser[0].number,
+          };
 
-        //   return res.status(200).send({
-        //     message: excrypt(token),
-        //     data: excrypt(validateUser[0]._id),
-        //   });
+          const token = Jwt.sign({ user: auth }, process.env.SECRET_KEY);
 
-        //   // notification.send({
-        //   //   message: "Alreay you registered please signin for continue",
-        //   // });
-        // } else {
-        //   const message = await new User({ ...req.body });
-        //   message.save();
+          return res.status(200).send({
+            message: excrypt(token),
+            data: excrypt(validateUser[0]._id),
+          });
 
-        //   const token = await Jwt.sign(
-        //     { user: message },
-        //     process.env.SECRET_KEY
-        //   );
-        //   return res.status(200).send({
-        //     message: excrypt(token),
-        //     data: excrypt(message),
-        //   });
-        // }
+          // notification.send({
+          //   message: "Alreay you registered please signin for continue",
+          // });
+        } else {
+          const message = await new Message({ ...req.body });
+          message.save();
+
+          const token = await Jwt.sign(
+            { user: message },
+            process.env.SECRET_KEY
+          );
+          return res.status(200).send({
+            message: excrypt(token),
+            data: excrypt(message),
+          });
+        }
       } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "failed" });

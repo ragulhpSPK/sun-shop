@@ -10,9 +10,9 @@ function Footer() {
   const router=useRouter()
   return (
     <div className={`h-[40vh] w-[100vw] mt-40`}>
-      <div className="grid xsm:grid-cols-2 lg:grid-cols-4 xsm:gap-x-[20px] xsm:gap-y-[20px] lg:gap-x-48 w-[80vw]  m-auto border-b border-gray-400 pb-5">
-        <div className="flex flex-col gap-2 xsm:text-[12px] lg:text-md font-medium xl:text-lg">
-          <h1 className="lg:text-2xl xsm:text-xl xxl:text-3xl font-semibold pb-2">Customer Service</h1>
+      <div className="grid grid-cols-4 gap-x-48 w-[80vw]  m-auto border-b border-gray-400 pb-5">
+        <div className="flex flex-col gap-2 text-md font-medium">
+          <h1 className="text-2xl font-semibold pb-2">Customer Service</h1>
           <p className="hover:text-[--third-color] hover:font-semibold">
             Help Center
           </p>
@@ -35,8 +35,8 @@ function Footer() {
             Contact Us
           </p>
         </div>
-        <div className="flex flex-col xsm:text-[12px] xl:text-lg gap-2 text-md font-medium">
-          <h1 className="lg:text-2xl xsm:text-xl xxl:text-3xl font-semibold pb-2">About Sun</h1>
+        <div className="flex flex-col gap-2 text-md font-medium">
+          <h1 className="text-2xl font-semibold pb-2">About Sun</h1>
           <Link href="/footers/About">
             <p className="hover:text-[--third-color] hover:font-semibold">
               About Us
@@ -62,8 +62,8 @@ function Footer() {
             Flash Deals
           </p>
         </div>
-        <div className="flex flex-col xsm:text-[12px]  xl:text-lg gap-2 text-md font-medium">
-          <h1 className="lg:text-2xl xsm:text-xl xxl:text-3xl font-semibold pb-2">Follow Us </h1>
+        <div className="flex flex-col gap-2 text-md font-medium">
+          <h1 className="text-2xl font-semibold pb-2">Follow Us </h1>
           <div className="group hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
             <FacebookIcon className="group-hover:text-[#1673eb] " />
             <h1 className="text-md">Facebook</h1>
@@ -81,9 +81,9 @@ function Footer() {
             <h1 className="text-md">Whatsapp</h1>
           </div>
         </div>
-        <div className="flex flex-col xsm:text-[12px]  xl:text-lg gap-2 text-md font-medium">
-          <h1 className="lg:text-2xl xsm:text-xl xxl:text-3xl font-semibold pb-2">Sun App Download</h1>
-          <p className="hover:text-[--third-color]  hover:font-semibold">
+        <div className="flex flex-col gap-2 text-md font-medium">
+          <h1 className="text-2xl font-semibold pb-2">Sun App Download</h1>
+          <p className="hover:text-[--third-color] hover:font-semibold">
             Google play
           </p>
         </div>
@@ -91,7 +91,7 @@ function Footer() {
       <div>
         <div className="w-[80vw] m-auto pt-10">
           <div className="text-center">
-            <span className="text-2xl">&#169;</span> Sun All Rights
+            <span className="text-2xl">&#169;</span> Sun Shopee.All Rights
             reserved 2023
           </div>
         </div>

@@ -17,9 +17,11 @@ const bannerSchema = new mongoose.Schema(
     },
     productid: {
       type: String,
+      require: true,
     },
     productname: {
       type: String,
+      require: true,
     },
     status: {
       type: String,

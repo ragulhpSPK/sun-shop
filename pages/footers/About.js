@@ -3,25 +3,25 @@ import React from "react";
 
 function About() {
   return (
-    <div className="min-h-[200vh] xl:w-[80vw] xsm:w-[90vw] m-auto">
-      <div className="min-h-[195vh] xl:w-[80vw] xsm:w-[90vw] bg-[#fff]  mt-5 shadow-xl">
-        <h1 className="xl:text-[22px] xsm:text-[12px] w-[55vw] m-auto pt-10">
+    <div className="min-h-[200vh] w-[80vw] m-auto">
+      <div className="min-h-[195vh] w-[80vw] bg-[#fff]  mt-5 shadow-xl">
+        <h1 className="text-[28px] w-[55vw] m-auto pt-10">
           Welcome to our e-commerce website! We are excited to provide you with
           a seamless shopping experience that is easy, enjoyable, and secure.
         </h1>
-        <div className="xsm:flex xsm:flex-col xl:grid xl:grid-cols-2 pt-16 xl:gap-y-28 xl:ml-28">
-          <div className="pb-[2vh]">
+        <div className="grid grid-cols-2 pt-16 gap-y-28 ml-28">
+          <div>
             <Image
               width={100}
               height={100}
               alt="logo"
               src="/assets/about.jpg"
-              className="w-fit rounded-full xsm:h-[15vh]  md:h-[20vw] xsm:m-auto xl:h-[32vh] xl:ml-20"
+              className="w-[26vw] rounded-[50%] h-[46vh] ml-20"
             />
           </div>
           <div>
-            <div className="xl:text-md xl:w-[35vw] bg-[--third-color] p-5 text-white rounded-md pb-[2vh]">
-              <h1 className="xsm:text-5xl xl:text-6xl ">About Us </h1>
+            <div className="text-xl w-[30vw] bg-[--third-color] p-5 text-white rounded-md">
+              <h1 className="text-6xl">About Us </h1>
               <p className="tracking-wider pt-3">
                 At our online shopping website, we are dedicated to providing
                 our customers with a seamless shopping experience from start to
@@ -39,8 +39,8 @@ function About() {
               </p>
             </div>
           </div>
-          <div className="pt-[2vh]">
-            <div className="xl:text-md xl:w-[35vw] bg-[--third-color] p-5 text-white rounded-md">
+          <div>
+            <div className="w-[30vw]   bg-[--third-color] p-5 text-white rounded-md">
               <p className="text-xl tracking-wider pt-3">
                 At our online shopping website, we are dedicated to providing
                 our customers with a seamless shopping experience from start to
@@ -57,26 +57,26 @@ function About() {
               </p>
             </div>
           </div>
-          <div className="pt-[2vh]">
+          <div>
             <Image
               width={100}
               height={100}
               alt="logo"
               src="/assets/about2.jpg"
-              className="w-fit rounded-full xsm:h-[15vh] md:h-[20vw] xsm:m-auto xl:h-[32vh] xl:ml-20"
+              className="w-[26vw] rounded-[50%] h-[46vh] ml-10"
             />
           </div>
-          <div className="pt-[2vh]">
+          <div>
             <Image
               width={100}
               height={100}
               alt="logo"
               src="/assets/about4.avif"
-              className="w-fit rounded-full xsm:h-[15vh] md:h-[20vw] xsm:m-auto xl:h-[32vh] xl:ml-20"
+              className="w-[26vw] rounded-[50%] h-[46vh] ml-20"
             />
           </div>
-          <div className="pt-[2vh]">
-            <div className="xl:text-md xl:w-[35vw] bg-[--third-color] p-5 text-white rounded-md ">
+          <div>
+            <div className="w-[30vw]  bg-[--third-color] p-5 text-white rounded-md">
               <p className="text-xl tracking-wider pt-3">
                 We understand that shopping online can be daunting, which is why
                 we have taken extra measures to ensure the safety and security

@@ -65,6 +65,7 @@ function Banner() {
   };
 
   const handleFinish = async (value) => {
+   
     if (updateid === "") {
       setLoading(true);
       try {
@@ -79,6 +80,7 @@ function Banner() {
             })[0].title,
             status: value.status,
           },
+         
         };
         await createBanner(formData);
         setOpen(false);
@@ -92,6 +94,8 @@ function Banner() {
       }
     } else {
       try {
+
+   
         setLoading(true);
 
         const formData = {
@@ -125,6 +129,8 @@ function Banner() {
     fetchData();
   }, []);
 
+  
+
   const props = {
     name: "file",
     multiple: true,
@@ -154,6 +160,7 @@ function Banner() {
   };
 
   const handleDelete = (updateid) => {
+   
     try {
       deleteBanner(updateid);
 
@@ -199,9 +206,7 @@ function Banner() {
                             ? "volcano"
                             : data.status === "Top"
                             ? "purple"
-                            : data.status === "BestDeals"
-                            ? "#faad14"
-                            : "#magenta"
+                            : "magenta"
                         }`}
                         className="absolute top-[-20px] left-[-35px]"
                       ></Badge.Ribbon>
@@ -259,11 +264,7 @@ function Banner() {
         <Modal open={open} footer={false} destroyOnClose>
           <Form form={form} onFinish={handleFinish}>
             <Form.Item name="name" rules={[{ required: true }]}>
-              <Input
-                size="large"
-                placeholder="Enter Banner Name"
-                className="w-[25vw]"
-              />
+              <Input size="large" placeholder="Enter Banner Name" className="w-[25vw]"/>
             </Form.Item>
             <Form.Item name="productname" rules={[{ required: true }]}>
               <Select
@@ -279,7 +280,6 @@ function Banner() {
                     </Option>
                   );
                 })}
-                <Option value="Best Deals">Best Deals</Option>
               </Select>
             </Form.Item>
 
@@ -288,12 +288,11 @@ function Banner() {
                 size="large"
                 placeholder="Select your status here.."
                 onChange={(e) => setStatus(e)}
-                className="!w-[25vw]"
+                 className="!w-[25vw]"
               >
                 <Option value="Left">left</Option>
                 <Option value="Top">Top</Option>
                 <Option value="Bottom">Bottom</Option>
-              
               </Select>
             </Form.Item>
 
@@ -315,17 +314,7 @@ function Banner() {
                     />
                   </div>
                 ) : (
-                  <Dragger
-                    {...props}
-                    multiple={true}
-                    style={{
-                      width: "450px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft: "10px",
-                    }}
-                  >
+                  <Dragger {...props} multiple={true} style={{width:"450px",display:"flex",alignItems:"center",justifyContent:"center",marginLeft:"10px"}}>
                     <p className="ant-upload-drag-icon">
                       <InboxOutlined />
                     </p>

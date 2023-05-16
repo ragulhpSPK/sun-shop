@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useRef, useEffect } from "react";
 import React from "react";
 import styles from "../../styles/zoom.module.css";
@@ -22,13 +21,13 @@ export default function App() {
   const [addcart, setAddCart] = useState();
   const [current, setCurrentImage] = useState();
   const router = useRouter();
-  const [imgs, setImgs] = useState([]);
+  const [img, setImg] = useState([]);
   const [product, setProduct] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [cart, setCart] = useState([]);
   const [cartID, setCartID] = useState([]);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  const [loading,setLoading]=useState(true)
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -36,12 +35,12 @@ export default function App() {
 
   const fetchData = async () => {
     try {
-      setLoading(true);
+      setLoading(true)
       const result = [await getAllproducts(), await getAllCart()];
-
+  
       setProduct(get(result, "[0].data.data", []));
       setCart(get(result, "[1].data.message", []));
-      setLoading(false);
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -62,13 +61,18 @@ export default function App() {
         return data._id === router.query.id;
       })
     );
+
+
   }, [product, router.query.id]);
 
+  
+
   useEffect(() => {
-    filterData.map((img) => setImgs(img.image[0]));
+    filterData.map((img) => setImg(img.image[0]));
   }, [filterData]);
 
   const handleClick = async (data) => {
+    
     try {
       const formData = {
         data: {
@@ -88,27 +92,23 @@ export default function App() {
     }
   };
 
-  const AntIcon = (
-    <ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />
-  );
+  const AntIcon=(<ReloadOutlined style={{ fontSize: 40 }} className="animate-spin" />)
 
   return (
     // <Spin loading={false} tip="loading data..." size="large"  indicator={AntIcon}>
-    <div
-      className={`xl:h-[80vh] xl:w-[80vw] xsm:flex-col xl:flex xsm:w-[100vw]  xl:flex-row justify-center  xl:m-auto xl:mt-10 ${
-        loading === true ? "invisible" : "visible"
-      }`}
+ <div
+        className={`h-[80vh] w-[80vw] flex justify-center  m-auto mt-10 ${loading===true?"invisible":"visible"}`}
       id={style.shadow3}
     >
-      <div className={`${styles.container} xl:w-[30vw] xl:m-auto`}>
+      <div className={`${styles.container} w-[30vw] m-auto`}>
         <div className={styles.left}>
-          <div className={`${styles.left_2} xl:pl-[8vw]`}>
+          <div className={`${styles.left_2} pl-[12vw]`}>
             <Image
               width={350}
               height={100}
               alt="logo"
-              src={current || imgs}
-              className="xl:h-[34vh] xl:!w-fit xsm:h-[20vh] xsm:m-auto xsm:w-fit xsm:pt-[3vh]"
+              src={current || img}
+              className="h-[50vh] !w-10vw"
             />
           </div>
           <div className={styles.left_1}>
@@ -117,11 +117,11 @@ export default function App() {
                 return img.image.map((image, i) => {
                   return (
                     <>
-                      <div className="xl:pt-[5vh]">
+                      <div className="pt-[5vh]">
                         <div
                           className={
-                            image.includes(imgs)
-                              ? "border-4 border-[--third-color]"
+                            i == 0
+                              ? "border border-[--third-color]"
                               : "border-none"
                           }
                           id={styles.img_wrap}
@@ -133,7 +133,7 @@ export default function App() {
                             height={100}
                             alt="logo"
                             src={image}
-                            className="xl:w-40"
+                            className="w-40"
                           />
                         </div>
                       </div>
@@ -146,73 +146,24 @@ export default function App() {
       </div>
       {result &&
         filterData.map((data, index) => {
-          console.log(data, "data");
           return (
-            <div
-              className="xl:pt-32 xl:w-[60vw] xl:pl-28 xsm:p-[8px] flex flex-col xsm:items-center xl:items-start"
-              key={index}
-            >
-              <h1 className="xl:text-xl font-semibold xsm:text-md">
-                {data.title}
-              </h1>
-
-              {data.flashStatus == true ? (
-                <div>
-                  <span>
-                    <s>&#8377;{data.price}</s>-
-                  <p className="font-bold text-sm text-red-500">-{data.offer}% Off</p>
-                  </span>
-
-                  {data.offer !== null || 0 ? (
-                    <p className="text-xl text-slate-800 pt-1">
-                      &#8377;
-                      {Math.round(data.price - (data.price / 100) * data.offer)}
-                    </p>
-                  ) : (
-                    <p className="text-xl text-slate-800 pt-1">
-                      &#8377;{data.price}
-                    </p>
-                  )}
-                </div>
-              ) : data.bestStatus === true ? (
-                <div>
-                  <s>&#8377;{data.price}</s> <p className="font-bold text-sm text-red-500">-{data.bestOffer}% Off</p>
-                  {data.bestOffer !== null || 0 ? (
-                    <p className="text-xl text-slate-800 pt-1">
-                      &#8377;
-                      {Math.round(
-                        data.price - (data.price / 100) * data.bestOffer
-                      )}
-                    </p>
-                  ) : (
-                    <p className="text-xl text-slate-800 pt-1">
-                      &#8377;{data.price}
-                    </p>
-                  )}
-                </div>
-              ) : (
-                  <p className="text-xl text-slate-800 pt-1">
-                      &#8377;{data.price}
-                    </p>
-              )}
-
-              <h2 className="xl:text-2xl pt-5 font-bold xsm:text-xl">
+            <div className="pt-32 w-[60vw] pl-28" key={index}>
+              <h1 className="text-2xl font-semibold">{data.title}</h1>
+              <p className="text-xl text-slate-800 pt-1">Rs:{data.price}</p>
+              <h2 className="text-2xl pt-5 font-bold">
                 Product Specifications
               </h2>
-
               {data.highlight.split(",").map((res, index) => {
                 return (
-                  <li
-                    className="xl:text-xl xsm:text-[12px] pt-2 xsm:self-start xsm:pl-[2vw] sm:self-center sm:w-[50vw]"
-                    key={index}
-                  >
-                    {res}.
+                  <li className="text-xl pt-2" key={index}>
+                    {res}
                   </li>
                 );
               })}
 
-              <div className="pt-10 flex lg:gap-5 xsm:pl-0  justify-around xsm:w-[80vw] sm:pr-[8vw] sm:w-[40vw] xl:!pl-0">
-                {cartID[0] && cartID[0].productId === data._id ? (
+              <div className="pt-10 flex gap-7 justify-between w-fit pl-5">
+              
+                {cartID[0]&&cartID[0].productId === data._id ? (
                   <button
                     className="bg-slate-300 text-[#000] shadow-2xl hover:bg-[--second-color] hover:scale-105 hover:font-medium hover:text-white duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
                     onClick={() => {
@@ -223,7 +174,7 @@ export default function App() {
                   </button>
                 ) : (
                   <button
-                    className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 xl:text-xl rounded-md px-3 xl:h-[5vh] xl:w-[10vw] xl:py-[8px] xsm:h-[4vh]"
+                    className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
                     onClick={() => {
                       handleClick(data);
                       dispatch(addproduct({ ...filterData }));
@@ -234,7 +185,7 @@ export default function App() {
                 )}
 
                 <button
-                  className="bg-[var(--second-color)] hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md xl:h-[5vh] xl:w-[8vw]  xl:px-3 xl:py-2 xsm:h-[4vh] xsm:w-[25vw] sm:w-[12vw]"
+                  className="bg-[var(--second-color)] hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] text-xl rounded-md h-[5vh] w-[6vw] px-3 py-2"
                   onClick={() => {
                     router.push({
                       pathname: "/cart",
@@ -250,5 +201,6 @@ export default function App() {
         })}
     </div>
     // </Spin>
+   
   );
 }

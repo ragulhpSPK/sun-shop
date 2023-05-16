@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Modal, Form, Input, Button, Image, notification } from "antd";
-// import Login from "./Login";
+import Login from "./Login";
 import { useState } from "react";
 import { createMessage, getAllMessage } from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
@@ -13,17 +13,14 @@ import { get } from "lodash";
 import Cookies from "js-cookie";
 import { excrypt } from "@/helper/shared";
 import { useRouter } from "next/router";
-import { Label } from "@mui/icons-material";
-// import TextArea from "antd/es/input/TextArea";
 
-function Login() {
+function Register() {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [otp, setOtp] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState();
   const [expandForm, setExpandForm] = useState(false);
   const [numbers, setNumbers] = useState();
-  const [profile, setProfile] = useState(false);
   const router = useRouter();
 
   const generateRecaptchaVerifier = () => {
@@ -42,7 +39,7 @@ function Login() {
   const fetchData = async () => {
     try {
       const result = await getAllMessage();
-
+      console.log(result);
       setNumbers(get(result, "data.message"));
     } catch (err) {
       console.log(err);
@@ -71,33 +68,22 @@ function Login() {
     }
   };
 
-  // const verifyOtp = async () => {
-  //   try {
-  //     if (otp.length === 6) {
-  //       let confirmationResult = window.confirmationResult;
-  //       const result = await confirmationResult.confirm(otp);
-  //       await createMessage({ number: get(result, "user.phoneNumber", "") });
-  //       // Cookies.set(
-  //       //   "profie",
-  //       //   JSON.stringify(excrypt(get(result, "user.phoneNumber", "")))
-  //       // );
-  //       notification.success({ message: "data added successfully" });
-  //     }
-  //   } catch (err) {
-  //     router.push("/");
-  //     console.log(err);
-  //     notification.error({ message: "Something went wrong" });
-  //   }
-  // };
   const verifyOtp = async () => {
-    if (otp.length === 6) {
-      let confirmationResult = window.confirmationResult;
-      const result = await confirmationResult.confirm(otp);
-      if (get(result, "user.phoneNumber", "") === phoneNumber) {
-        setProfile(true);
-        setExpandForm(false);
-        setPhoneNumber(get(result, "user.phoneNumber", ""));
+    try {
+      if (otp.length === 6) {
+        let confirmationResult = window.confirmationResult;
+        const result = await confirmationResult.confirm(otp);
+        await createMessage({ number: get(result, "user.phoneNumber", "") });
+        Cookies.set(
+          "profie",
+          JSON.stringify(excrypt(get(result, "user.phoneNumber", "")))
+        );
+        notification.success({ message: "data added successfully" });
       }
+    } catch (err) {
+      router.push("/");
+      console.log(err);
+      notification.error({ message: "Something went wrong" });
     }
   };
 
@@ -105,17 +91,13 @@ function Login() {
     verifyOtp();
   }, [otp]);
 
-  const handleFinish = (value) => {
-    console.log(value);
-  };
-
   return (
     <div>
-      <div className={`${profile === true ? "hidden" : "block"} `}>
+      {!open ? (
         <div className="pt-[5vh]">
-          <div className="h-[40vh]">
-            <div className="flex justify-around">
-              <div className=" h-[40vh] backdrop-blur-sm bg-[--third-color] rounded-md flex flex-col items-center justify-center">
+          <div className="w-[50vw] h-[40vh] m-auto shadow-lg">
+            <div className="flex ">
+              <div className="w-[25vw] h-[40vh] backdrop-blur-sm bg-[--third-color] rounded-md flex flex-col items-center justify-center">
                 <h1 className="text-white text-xl w-[60%] ">
                   Register With Your Mobile Number Via OTP...
                 </h1>
@@ -127,8 +109,12 @@ function Login() {
                   preview={false}
                 />
               </div>
-              <div className=" flex rounded-md  flex-col  gap-y-20">
-                <Form form={form} name="control-hooks" layout="vertical">
+              <div className="w-[40vw] h-[40vh] flex rounded-md  flex-col items-center justify-between   pl-[2vw] pr-[2vw]">
+                <Form
+                  style={{ maxWidth: 500 }}
+                  form={form}
+                  name="control-hooks"
+                >
                   <Form.Item
                     name="number"
                     label="Phone Number"
@@ -139,114 +125,96 @@ function Login() {
                       fontSize: "30px",
                       color: "red",
                     }}
+                    className="ml-[-225px]"
                   >
                     <Input
                       size="large"
                       placeholder="+91 9839288383"
+                      className="!w-[15vw]"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </Form.Item>
-
-                  <Button
-                    className={`w-[100%] bg-[--third-color]  h-[5vh] text-xl -tracking-tighter !text-white hover:!border-none hover:!scale-105 duration-1000`}
-                    htmlType="submit"
-                    style={{ color: "white" }}
-                    onClick={requestOTP}
-                  >
-                    Request Otp
-                  </Button>
+                  <p className="text-md !w-[25vw] text-base font-medium">
+                    Secure access to our e-commerce platform by
+                    {/* <a className="text-blue-600">Terms of Use</a> and &nbsp; */}
+                    &nbsp;
+                    <a className="text-blue-600">Our Privacy Policy</a>
+                    &nbsp; before Register in.
+                  </p>
+                  <Form.Item>
+                    <Button
+                      className={` bg-[--third-color] !w-[22vw] h-[5vh] !mt-[15px] text-xl -tracking-tighter !text-white hover:!border-none hover:!scale-105 duration-1000`}
+                      htmlType="submit"
+                      style={{ color: "white" }}
+                      onClick={requestOTP}
+                    >
+                      Request Otp
+                    </Button>
+                  </Form.Item>
                 </Form>
-                <p className="text-md  text-base font-medium">
-                  Secure access to our e-commerce platform by
-                  {/* <a className="text-blue-600">Terms of Use</a> and &nbsp; */}
-                  &nbsp;
-                  <a className="text-blue-600">Our Privacy Policy</a>
-                  &nbsp; before Register in.
-                </p>
+                <div className="pb-[10px] m-auto w-[22vw]">
+                  <a
+                    className="text-blue-600 font-medium "
+                    onClick={() => {
+                      setOpen(!open);
+                    }}
+                  >
+                    Already a registered user? Login
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      ) : (
+        <div>
+          <Login />
+        </div>
+      )}
 
-        <Modal
-          open={expandForm}
-          footer={false}
-          header={false}
-          className="!w-[24vw] absolute top-[22vh] right-[30vw]"
-        >
-          <div
-            className={`
+      <Modal
+        open={expandForm}
+        footer={false}
+        header={false}
+        onCancel={() => setExpandForm(!expandForm)}
+        className="!w-[24vw] absolute top-[22vh] right-[30vw]"
+      >
+        <div
+          className={`
            
           w-[20vw] h-[15vw] bg-white rounded-md flex flex-col justify-around items-center`}
+        >
+          <label
+            htmlFor="otp"
+            className="font-bold text-xl text-black text-center "
           >
-            <label
-              htmlFor="otp"
-              className="font-bold text-xl text-black text-center "
-            >
-              Enter your OTP
-            </label>
-            <OtpInput
-              value={otp}
-              onChange={(value) => {
-                setOtp(value);
-              }}
-              numInputs={6}
-              otpType="number"
-              disabled={false}
-              autoFocus
-              renderInput={(props) => (
-                <input {...props} className="border-2 h-10 !w-8 ml-2" />
-              )}
-            ></OtpInput>
-            {/* <button
+            Enter your OTP
+          </label>
+          <OtpInput
+            value={otp}
+            onChange={(value) => {
+              setOtp(value);
+            }}
+            numInputs={6}
+            otpType="number"
+            disabled={false}
+            autoFocus
+            renderInput={(props) => (
+              <input {...props} className="border-2 h-10 !w-8 ml-2" />
+            )}
+          ></OtpInput>
+          {/* <button
             className="bg-[--third-color] w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
             // onClick={handleFinish}
           >
             <span>Verify OTP</span>
           </button> */}
-          </div>
-        </Modal>
-        <div id="recaptacha-container"></div>
-      </div>
-
-      <div className={`${profile === true ? "block" : "hidden"}`}>
-        <Form
-          className="w-[30vw] m-auto flex flex-col"
-          layout="vertical"
-          form={form}
-          onFinish={handleFinish}
-        >
-          <Form.Item label="First Name" className="!text-2xl" name="firstName">
-            <Input placeholder="Enter First Name" />
-          </Form.Item>
-          <Form.Item label="Last  Name" name="lastName">
-            <Input placeholder="Enter Last Name" />
-          </Form.Item>
-          <Form.Item label="Email" name="email">
-            <Input placeholder="Enter Your Email" />
-          </Form.Item>
-          <Form.Item label="Number" name="number1">
-            <Input placeholder="Enter Your Number" />
-          </Form.Item>
-          <Form.Item label="Alternate Number" name="number2">
-            <Input placeholder="Enter Your Alternate Number" />
-          </Form.Item>
-          <Form.Item label="Address">
-            <Input.TextArea placeholder="Write Your Address here"></Input.TextArea>
-          </Form.Item>
-          <div className="flex justify-between">
-            <Button className=" !bg-[--second-color] !h-[4vh]">
-              May Be Later
-            </Button>
-            <Button className=" !bg-[--second-color] !h-[4vh] !w-[6vw]">
-              Submit
-            </Button>
-          </div>
-        </Form>
-      </div>
+        </div>
+      </Modal>
+      <div id="recaptacha-container"></div>
     </div>
   );
 }
 
-export default Login;
+export default Register;
