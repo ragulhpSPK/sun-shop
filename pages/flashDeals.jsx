@@ -1,13 +1,55 @@
 import React from "react";
-
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import Image from "next/image";
+import { getAllproducts } from "@/helper/utilities/apiHelper";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { get } from "lodash";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 function FlashDeals() {
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [product, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const fetchData = async () => {
+    setLoading(true)
+    try {
+      const result = await getAllproducts();
+      setProducts(get(result, "data.data", []));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false)
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setFilteredProducts(
+      product.filter((data) => {
+        return data.flashStatus === true;
+      })
+    );
+  }, [product]);
+
+   const antIcon = (
+    <LoadingOutlined style={{ fontSize: 40 }} className="animate-spin" />
+  );
+
+
   return (
-    <div>
-      <div className="bg-[--third-color] w-[90vw] m-auto h-[35vh]">
-        <div className="text-[8vw] text-white text-center pt-10  ">
+    <Spin  spinning={loading}
+          tip="Loading Data..."
+          size="large"
+          indicator={antIcon}>
+      <div className="bg-[--third-color] w-[90vw] m-auto ">
+        <div className="text-[6vw] text-white text-center xsm:p-[4vh] xl:p-[7vh]  ">
           <p>
             Flash
             <ElectricBoltIcon
@@ -31,124 +73,70 @@ function FlashDeals() {
           /> */}
         </div>
       </div>
-      <div className="w-[90vw] m-auto mt-10 grid grid-cols-5 gap-28">
-        <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <Image
-            width={100}
-            height={100}
-            alt="logo"
-            src="/assets/watch2.png"
-            className="w-40 m-auto"
-          />
-          <div>
-            <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
-            <div className="flex justify-between w-[100%]">
-              <p className="text-center pl-5 pt-3 text-xl">Rs:3000</p>
-              <div className="pt-3">
-                <button className="w-20 bg-[--third-color] h-8 text-white">
-                  Buy now
-                </button>
+      <div className="w-[90vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-4 grid xxl:!grid-cols-5 xxl:gap-28">
+        {product.map((data) => {
+         
+          return (
+            <>
+              <div className="xxl:h-[30vh] sm:w-[40vw] md:w-[25vw] md:h-[30vh] xl:w-[20vw] flex flex-col xsm:mt-[5vh] justify-between xxl:w-[14vw] border shadow-lg  relative">
+                <div onClick={() =>
+                    router.push({
+                      pathname: `/product/${data._id}`,
+                      query: { id: data._id },
+                    })
+                  }>
+                  <Image
+                    width={100}
+                    height={100}
+                    alt="logo"
+                    src={data.image[0]}
+                    className="xxl:h-[14vh] xsm:h-[20vh] md:h-[10vh] w-fit m-auto pt-[18px] xl:h-[15vh]"
+                  />
+
+                  <p className="flex flex-col absolute top-0 right-0 bg-[--fifth-color] text-sm font-semibold text-black px-3">
+                    <span>{data.offer}%</span>OFF
+                  </p>
+                </div>
+
+                <div onClick={() =>
+                    router.push({
+                      pathname: `/product/${data._id}`,
+                      query: { id: data._id },
+                    })
+                  }>
+                  <p className="text-center xxl:text-md xxl:h-[8vh] md:text-sm  font-bold pt-[8px] p-[10px]">
+                    {data.title}
+                  </p>
+                  <div className="flex justify-between w-[100%]" >
+                    <p className="text-center pl-5 pt-3 text-xl m-auto " onClick={() =>
+                    router.push({
+                      pathname: `/product/${data._id}`,
+                      query: { id: data._id },
+                    })
+                  }>
+                      &#8377;{data.price}
+                    </p>
+                    <div className="pt-3">
+                      <button
+                        className="w-20 bg-[--third-color] h-8 text-white"
+                        onClick={() => {
+                          router.push({
+                            pathname: "/cart",
+                            query: { _id: data._id },
+                          });
+                        }}
+                      >
+                        Buy now
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <p className="flex flex-col absolute top-0 right-0 bg-[--fifth-color] text-sm font-semibold text-black px-3">
-            <span>56%</span>OFF
-          </p>
-        </div>
-        <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <Image
-            width={100}
-            height={100}
-            alt="logo"
-            src="/assets/watch2.png"
-            className="w-40 m-auto"
-          />
-          <div>
-            <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
-            <div className="flex justify-between w-[100%]">
-              <p className="text-center pl-5 pt-3 text-xl">Rs:3000</p>
-              <div className="pt-3">
-                <button className="w-20 bg-[--third-color] h-8 text-white">
-                  Buy now
-                </button>
-              </div>
-            </div>
-          </div>
-          <p className="flex flex-col absolute top-0 text-sm font-semibold text-black right-0 bg-[--fifth-color] px-3">
-            <span>56%</span>OFF
-          </p>
-        </div>
-        <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <Image
-            width={100}
-            height={100}
-            alt="logo"
-            src="/assets/watch2.png"
-            className="w-40 m-auto"
-          />
-          <div>
-            <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
-            <div className="flex justify-between w-[100%]">
-              <p className="text-center pl-5 pt-3 text-xl">Rs:3000</p>
-              <div className="pt-3">
-                <button className="w-20 bg-[--third-color] h-8 text-white">
-                  Buy now
-                </button>
-              </div>
-            </div>
-          </div>
-          <p className="flex flex-col absolute text-sm font-semibold text-black top-0 right-0 bg-[--fifth-color] px-3">
-            <span>56%</span>OFF
-          </p>
-        </div>
-        <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <Image
-            width={100}
-            height={100}
-            alt="logo"
-            src="/assets/watch2.png"
-            className="w-40 m-auto"
-          />
-          <div>
-            <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
-            <div className="flex justify-between w-[100%]">
-              <p className="text-center pl-5 pt-3 text-xl">Rs:3000</p>
-              <div className="pt-3">
-                <button className="w-20 bg-[--third-color] h-8 text-white">
-                  Buy now
-                </button>
-              </div>
-            </div>
-          </div>
-          <p className="flex flex-col text-sm font-semibold text-black absolute top-0 right-0 bg-[--fifth-color] px-3">
-            <span>56%</span>OFF
-          </p>
-        </div>
-        <div className="h-fit w-[11vw] border shadow-lg  relative">
-          <Image
-            width={100}
-            height={100}
-            alt="logo"
-            src="/assets/watch2.png"
-            className="w-40 m-auto"
-          />
-          <div>
-            <p className="text-center text-lg">Boat Blutooth Watch P1433</p>
-            <div className="flex justify-between w-[100%]">
-              <p className="text-center pl-5 pt-3 text-xl">Rs:3000</p>
-              <div className="pt-3">
-                <button className="w-20 bg-[--third-color] h-8 text-white">
-                  Buy now
-                </button>
-              </div>
-            </div>
-          </div>
-          <p className="flex flex-col absolute text-sm font-semibold text-black top-0 right-0 bg-[--fifth-color] px-3">
-            <span>56%</span>OFF
-          </p>
-        </div>
+            </>
+          );
+        })}
       </div>
-    </div>
+    </Spin>
   );
 }
 
