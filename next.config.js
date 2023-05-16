@@ -6,6 +6,9 @@ const nextConfig = {
     SECRET_KEY: process.env.SECRET_KEY,
     PLAIN_TEXT: process.env.PLAIN_TEXT,
   },
+  serverRuntimeConfig: {
+    setTimeout: 30,
+  },
 };
 
 module.exports = nextConfig;
