@@ -46,11 +46,11 @@ function Bestdeals() {
   }, [product]);
 
   return (
-    <div className="flex flex-col ">
- <div className="xsm:pt-5 md:pt-0   flex flex-col gap-[2vh]  md:justify-between">
+    <div className="flex flex-col pt-[3vh]">
+ <div className="xsm:pt-5 md:pt-0   flex flex-col gap-[2vh]  md:justify-between ">
       <div className="  xsm:!w-[90vw] lg:w-[80vw] m-auto flex ">
         <div className="flex flex-col   xsm:!w-[92vw] sm:w-[90vw] lg:!w-[80vw] m-auto !rounded-xl">
-          <div className="flex justify-between px-1 bg-[var(--second-color)]   ">
+          <div className="flex justify-between px-1 bg-[var(--second-color)] xxl:p-[4vh]">
             <div className="flex flex-col justify-around">
               <Image
                 width={100}
@@ -103,7 +103,7 @@ function Bestdeals() {
                     src={data.image[0]}
                     className="xl:!h-[10vh] md:!h-[8vh] lg:!h-[8vh] xsm:!h-[6vh] xxl:!h-[9vh] xsm:w-fit m-auto pt-[2vh]"
                   />
-                  <div className="bg-[var(--fifth-color)] xsm:text-[8px] md:text-[10px] xsm:leading-3 lg:text-md font-semibold text-black xsm:w-[24px] xsm:h-[25px] lg:w-[2.5vw] lg:h-[3vh] lg:leading-tight md:w-[26px] md:h-[28px] absolute top-0 right-0 skew-[20px] flex flex-col lg:text-sm text-center">
+                  <div className="bg-[var(--fifth-color)] xsm:text-[8px] md:text-[10px] xsm:leading-3 lg:text-md font-semibold text-black  lg:w-[2.5vw]  lg:leading-tight md:w-[26px] absolute top-0 right-0 skew-[20px] flex flex-col lg:text-sm text-center">
                     <span className="lg:text-[10px]">{data.bestOffer}%</span>
                     <span className="lg:text-[10px]">OFF</span>
                   </div>
@@ -137,14 +137,14 @@ function Bestdeals() {
         id={styles.shadow2}
       >
         <div>
-          <div className="flex xsm:w-[90vw] lg:w-[80vw]  text-xl h- justify-between m-auto px-5 bg-[var(--second-color)] py-3 text-white">
+          <div className="flex xsm:w-[90vw] lg:w-[80vw]  text-xl  justify-between m-auto px-5 bg-[var(--second-color)] py-3 text-white">
             <h1>Flash Deals</h1>
             <Link href="flashDeals">
               <h1 className=" text-xl">See All &#8594;</h1>
             </Link>
           </div>
         </div>
-        <div className="pt-5 ">
+        <div >
           <Swiper
             slidesPerView={1}
             pagination={{
@@ -171,7 +171,7 @@ function Bestdeals() {
             {filteredProducts.map((data) => {
               return (
                 <SwiperSlide
-                  className="  border-r border-b border-l  border-slate-200 "
+                  className="  border-r border-b border-l relative border-slate-200 "
                   key={data._id}
                   onClick={() =>
                     router.push({
@@ -187,7 +187,7 @@ function Bestdeals() {
                     src={data.image[0]}
                     className="xsm:!h-[10vh] sm:!h-[12vh] lg:!h-[7.5vh] xl:!h-[12vh] xl:pt-[3vh] !w-fit m-auto"
                   />
-                  <div className="flex flex-col bg-[var(--fifth-color)] text-sm font-semibold text-black w-14 text-center absolute top-0 right-0">
+                  <div className="flex flex-col  bg-[var(--fifth-color)] text-xsm leading-tight font-semibold text-black w-10 text-center absolute top-0 right-0">
                     <span>{data.offer} %</span>
                     OFF
                   </div>

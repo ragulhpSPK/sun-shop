@@ -42,13 +42,13 @@ function Categories({ setLoading }) {
             Shop By Category
           </h1>
           <Link href="/products">
-            <p className="text-center  xsm:text-sm sm:text-md lg:text-2xl lg:pr-10 pt-5 font-semibold">
+            <p className="text-center xsm:text-sm sm:text-md lg:text-2xl lg:pr-10 pt-5 font-semibold">
               View All
             </p>
           </Link>
         </div>
       </div>
-      <div className="xsm:h-[35vh] xsm:mt-[10px] lg:h-[35vh] xsm:w-[90vw] lg:w-[80vw] m-auto shadow-xl ">
+      <div className=" xsm:mt-[10px]  xsm:w-[90vw] lg:w-[80vw] m-auto shadow-xl ">
         <Swiper
          
           grid={{
@@ -64,7 +64,7 @@ function Categories({ setLoading }) {
           
           breakpoints={{
           640: {
-              slidesPerView: 2,
+            slidesPerView: 2,
              rows: 2,
          
           },

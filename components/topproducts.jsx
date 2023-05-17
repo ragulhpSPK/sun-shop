@@ -68,7 +68,7 @@ function Topproducts({setLoading}) {
           Top Products
         </h1>
       </div>
-      <div className="grid xsm:grid-cols-2 md:grid-cols-3 md:gap-[2vw] lg:grid-cols-4 xxl:grid-cols-5 lg:gap-x-10 xl:gap-[5vw] gap-y-2">
+      <div className="grid xsm:grid-cols-2 md:grid-cols-3 md:gap-[2vw] lg:grid-cols-4 xxl:grid-cols-5 items-center justify-center  xl:gap-[2vw] ">
         {topProducts.map((data) => {
           return (
             <div

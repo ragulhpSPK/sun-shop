@@ -6,7 +6,7 @@ import Image from "next/image";
 function Delivery() {
   return (
     <div
-      className="flex justify-evenly items-center mt-6 xsm:h-[6vh] sm:h-[8vh] md:h-[10vh] lg:h-[16vh] xsm:pt-[1vh] lg:pt-[3vh] xxl:pt-0 xsm:w-[90vw] lg:w-[80vw] m-auto  text-black "
+      className="flex justify-evenly items-center  mt-6 xsm:h-[6vh] sm:h-[8vh] md:h-[10vh]  lg:h-[16vh]   xxl:pt-0 xsm:w-[90vw] lg:w-[80vw] m-auto  text-black "
       id={styles.shadow}
     >
       {delivery.map((data, index) => {
@@ -14,7 +14,7 @@ function Delivery() {
           <div className="xl:w-50 m-auto " key={index}>
             <div className="flex  flex-col items-center justify-center">
               <div
-                className={`xsm:!h-[2vh] md:!h-[3vh] xl:!h-[4vh] xsm:w-fit xl:w-[3vw]  flex items-center justify-center  border rounded-2xl hover:scale-125 duration-1000`}
+                className={`   flex items-center justify-center  border rounded-2xl hover:scale-125 duration-1000`}
               >
                 <Image
                   src={data.image}
