@@ -103,15 +103,15 @@ function Bestdeals() {
                     src={data.image[0]}
                     className="xl:!h-[10vh] md:!h-[8vh] lg:!h-[8vh] xsm:!h-[6vh] xxl:!h-[9vh] xsm:w-fit m-auto pt-[2vh]"
                   />
-                  <div className="bg-[var(--fifth-color)] xsm:text-[8px] md:text-[10px] xsm:leading-3 lg:text-md font-semibold text-black  lg:w-[2.5vw]  lg:leading-tight md:w-[26px] absolute top-0 right-0 skew-[20px] flex flex-col lg:text-sm text-center">
+                  <div className="bg-[var(--fifth-color)] xsm:!text-[8px] md:text-[10px] xsm:leading-tight lg:text-md font-semibold text-black xsm:w-[7vw] lg:w-[2.5vw]   lg:leading-tight md:w-[26px] absolute top-0 right-0 skew-[20px] flex flex-col lg:text-sm text-center">
                     <span className="lg:text-[10px]">{data.bestOffer}%</span>
                     <span className="lg:text-[10px]">OFF</span>
                   </div>
-                  <p className="text-center xsm:text-[8px] lg:pt-[1vh] md:!text-[13px] md:pt-0  xsm:pt-[10px]   lg:text-[8px] lg:leading-tight lg:tracking-tight  xxl:text-[12px] font-semibold lg:h-[10vh] xxl:!h-[5vh]">
+                  <p className="text-center xsm:text-[8px] lg:pt-[15px] md:!text-[13px] md:pt-0  xsm:pt-[10px]   lg:text-[8px] lg:leading-tight lg:tracking-tight xl:!text-[11px] px-[10px] xxl:!text-[14px] xxl:pt-0 font-semibold lg:h-[10vh] xxl:!h-[5vh]">
                     {data.title}
                   </p>
                   {data.bestOffer !== null || 0 ? (
-                    <p className="text-center flex flex-row-reverse pt-[1vh] gap-2 pb-2 xsm:text-[10px] xsm:font-semibold md:text-[13px] xsm:pt-[10px]lg:pt-0 lg:text-lg font-medium">
+                    <p className="text-center flex flex-row-reverse pt-[15px] gap-2 pb-2 xsm:text-[10px] xsm:font-semibold md:text-[13px] xsm:pt-[10px]lg:pt-0 lg:text-lg font-medium">
                       <s>&#8377;{data.price}</s>
                       &#8377;
                       {Math.round(
@@ -187,7 +187,7 @@ function Bestdeals() {
                     src={data.image[0]}
                     className="xsm:!h-[10vh] sm:!h-[12vh] lg:!h-[7.5vh] xl:!h-[12vh] xl:pt-[3vh] !w-fit m-auto"
                   />
-                  <div className="flex flex-col  bg-[var(--fifth-color)] text-xsm leading-tight font-semibold text-black w-10 text-center absolute top-0 right-0">
+                  <div className="flex flex-col  bg-[var(--fifth-color)] text-xsm leading-tight font-semibold text-black w-8 text-center absolute top-0 right-0">
                     <span>{data.offer} %</span>
                     OFF
                   </div>

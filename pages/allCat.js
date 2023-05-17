@@ -375,7 +375,7 @@ function AllCat() {
                 </div>
               </div>
             </div>
-            <div className="h-[90vh] overflow-y-scroll">
+            <div className=" overflow-y-scroll">
               <List
                 grid={{
                   gutter: 16,
@@ -650,24 +650,14 @@ function AllCat() {
             </div>
           </Drawer>
         </div>
-        <div className=" overflow-y-scroll flex  justify-center ">
+        <div className="  flex  justify-center ">
           <List
-            grid={{
-              gutter: 16,
-              xs: 1,
-              sm: 2,
-              md: 2,
-              lg: 3,
-              xl: 4,
-              xxl: 5,
-            }}
             pagination={{
               pageSize: 20,
               align: "end",
               position: "top",
               size: "small",
             }}
-            className=" !w-[90vw] "
             dataSource={priceval.length > 0 ? priceval : filerProduct}
             renderItem={(data, index) => {
               return (

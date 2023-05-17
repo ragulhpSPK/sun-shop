@@ -29,6 +29,8 @@ export default function App() {
   const [cartID, setCartID] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+   const [index,setIndex] = useState("")
+   const [index1,setIndex1] = useState("")
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -65,7 +67,7 @@ export default function App() {
   }, [product, router.query.id]);
 
   useEffect(() => {
-    filterData.map((img) => setImgs(img.image[0]));
+    filterData.map((img,i) => { setImgs(img.image[0]),setIndex1(i) });
   }, [filterData]);
 
   const handleClick = async (data) => {
@@ -94,46 +96,50 @@ export default function App() {
 
   return (
     // <Spin loading={false} tip="loading data..." size="large"  indicator={AntIcon}>
-    <div
-      className={`xl:h-[80vh] xl:w-[80vw] xsm:flex-col xl:flex xsm:w-[100vw]  xl:flex-row justify-center  xl:m-auto xl:mt-10 ${
-        loading === true ? "invisible" : "visible"
-      }`}
-      id={style.shadow3}
+    <div className="flex lg:h-[80vh] justify-center xsm:w-[100vw] lg:[80vw]"  >
+<div    
+      className="xsm:flex-col flex lg:!flex-row !pt-[12vh]"
+     
     >
-      <div className={`${styles.container} xl:w-[30vw] xl:m-auto`}>
+      <div className={`${styles.container}`}>
         <div className={styles.left}>
-          <div className={`${styles.left_2} xl:pl-[8vw]`}>
+          <div className={`${styles.left_2} flex items-center justify-center lg:pl-[8vw]`}>
             <Image
-              width={350}
-              height={100}
+              width={300}
+              height={300}
               alt="logo"
-              src={current || imgs}
-              className="xl:h-[34vh] xl:!w-fit xsm:h-[20vh] xsm:m-auto xsm:w-fit xsm:pt-[3vh]"
+                src={current || imgs}
+                className="xsm:w-[50vw] sm:w-[50vw] lg:w-[20vw] flex items-center justify-center xsm:pb-[2vh] lg:ml-[6vw]"
+             
             />
           </div>
-          <div className={styles.left_1}>
+          <div className={`${styles.left_1} `}>
             {result &&
               filterData.map((img) => {
                 return img.image.map((image, i) => {
+               
                   return (
                     <>
-                      <div className="xl:pt-[5vh]">
+                      <div className="xl:pt-[5vh]  xsm:pl-[3vw] sm:!pl-[5vw] lg:!pl-[3vw]  flex items-center justify-center">
                         <div
                           className={
-                            image.includes(imgs)
-                              ? "border-4 border-[--third-color]"
-                              : "border-none"
+                         current&&current.includes(image)
+                              ? "border-4 border-[--third-color] "
+                              : "border-none "
                           }
                           id={styles.img_wrap}
                           key={i}
-                          onMouseEnter={() => setCurrentImage(image)}
+                         onMouseEnter={() => {
+                            setCurrentImage(image);
+                            setIndex(i)
+                          }}
                         >
                           <Image
-                            width={100}
-                            height={100}
+                            width={200}
+                            height={300}
                             alt="logo"
                             src={image}
-                            className="xl:w-40"
+                            className="xl:w-40 "
                           />
                         </div>
                       </div>
@@ -144,15 +150,16 @@ export default function App() {
           </div>
         </div>
       </div>
-      {result &&
+      <div className="xsm:pt-[3vh] lg:pt-0 xl:pt-[8vh] xxl:pt-[1vh] flex items-center justify-center">
+         {result &&
         filterData.map((data, index) => {
-          console.log(data, "data");
+       
           return (
             <div
-              className="xl:pt-32 xl:w-[60vw] xl:pl-28 xsm:p-[8px] flex flex-col xsm:items-center xl:items-start"
+              className="xsm:pl-[2vw]"
               key={index}
             >
-              <h1 className="xl:text-xl font-semibold xsm:text-md">
+              <h1 className="xl:text-xl  font-semibold xsm:text-md">
                 {data.title}
               </h1>
 
@@ -249,6 +256,10 @@ export default function App() {
           );
         })}
     </div>
+      </div>
+    </div>
+    
+     
     // </Spin>
   );
 }

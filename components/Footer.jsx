@@ -9,9 +9,9 @@ import { useRouter } from "next/router";
 function Footer() {
   const router=useRouter()
   return (
-    <div className={`h-[40vh] w-[100vw] mt-40`}>
+    <div className={` w-[100vw] mt-40`}>
       <div className="grid xsm:grid-cols-2 lg:grid-cols-4 xsm:gap-x-[20px] xsm:gap-y-[20px] lg:gap-x-48 w-[80vw]  m-auto border-b border-gray-400 pb-5">
-        <div className="flex flex-col gap-2 xsm:text-[12px] lg:text-md font-medium xl:text-lg">
+        <div className="flex flex-col gap-2 xsm:text-[12px] lg:text-md font-medium xl:text-lg md:w-[20vw]">
           <h1 className="lg:text-2xl xsm:text-xl xxl:text-3xl font-semibold pb-2">Customer Service</h1>
           <p className="hover:text-[--third-color] hover:font-semibold">
             Help Center

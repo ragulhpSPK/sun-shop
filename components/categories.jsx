@@ -48,7 +48,7 @@ function Categories({ setLoading }) {
           </Link>
         </div>
       </div>
-      <div className=" xsm:mt-[10px]  xsm:w-[90vw] lg:w-[80vw] m-auto shadow-xl ">
+      <div className=" xsm:mt-[10px]  xsm:w-[90vw] lg:w-[80vw] m-auto shadow-xl py-[3vh]">
         <Swiper
          
           grid={{
@@ -110,12 +110,12 @@ function Categories({ setLoading }) {
                     height={100}
                     alt="logo"
                     src={data.image}
-                    className="w-fit xsm:!h-[10vh] xsm:w-fit lg:!h-[5vh] m-auto mt-6"
+                    className="!h-[7vh]  m-auto mt-6"
                     preview={false}
                   />
                 </div>
                 <div className="flex flex-col   items-center">
-                  <h1 className="text-justify text-lg">{data.name}</h1>
+                  <h1 className="text-justify text-md ">{data.name}</h1>
                   <p className="text-justify text-md">{data.items}</p>
                 </div>
               </SwiperSlide>

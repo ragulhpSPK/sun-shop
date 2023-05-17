@@ -207,7 +207,7 @@ function Cart() {
     >
       <div>
         {!Buy ? (
-          <div className="flex relative min-h-screen xsm:hidden xxl:block">
+          <div className="flex relative min-h-screen xsm:hidden xl:block">
             <div className="flex">
               <div className="pt-10">
                 {products && products.length > 0 ? (
@@ -304,7 +304,7 @@ function Cart() {
                 ""
               ) : (
                 <div
-                  className={`mt-14 w-[18vw] h-[35vh] text-white ${
+                  className={`mt-14 m        l-[3vw] w-[18vw] h-[35vh] text-white ${
                     check ? "hidden" : "block"
                   } `}
                 >
@@ -502,7 +502,7 @@ function Cart() {
         {/* </div> */}
 
         <div
-          className={`xsm:w-[90vw] m-auto bg-slate-50 shadow-xl h-fit xsm:mt-[6vh] xxl:hidden ${
+          className={`xsm:w-[90vw] m-auto bg-slate-50 shadow-xl h-fit xsm:mt-[6vh] xl:hidden ${
             check ? "invisible" : "visible"
           }`}
         >

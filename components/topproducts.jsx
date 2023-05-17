@@ -64,7 +64,7 @@ function Topproducts({setLoading}) {
   return (
     <div className="xsm:w-[90vw] lg:w-[80vw] m-auto pt-10">
       <div className="text-xl">
-        <h1 className="bg-[var(--second-color)] py-3 px-2 text-white">
+        <h1 className="bg-[var(--second-color)] py-3 px-2  text-white">
           Top Products
         </h1>
       </div>
@@ -96,7 +96,7 @@ function Topproducts({setLoading}) {
                 </div>
 
                 <div className="lg:h-[5vh] ">
-                  <h1 className="text-center xsm:text-[8px] lg:text-[12px] font-bold xl:p-[3px]">
+                  <h1 className="text-center xsm:text-[8px] pt-[5px] lg:text-[12px] font-bold xl:p-[3px]">
                     {data.title}
                   </h1>
                   <p className="text-center xsm:text-[12px]">Rs:{data.price}</p>

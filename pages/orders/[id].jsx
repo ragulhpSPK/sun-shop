@@ -66,11 +66,11 @@ function Orders() {
         </p>
       ) : (
         <div
-          className="xxl:h-[20vh] xsm:min-h-[60vh] xsm:!w-[90vw] xsm:self-center xsm:pl-[5vw] xl:pl-0 steps:!w-[100vw] xl:!w-[70vw] flex items-center justify-center xl:p-[4vw]"
+          className="pt-[3vh] xsm:!w-[90vw] sm:!pt-[10vh] md:pt-0 md:py-[5vh]  xsm:self-center xsm:pl-[5vw] xl:pl-0 steps:!w-[100vw] xl:!w-[70vw] flex items-center justify-center xl:p-[4vw]"
           id={styles.shadow3}
         >
           <Steps
-            className={`${status[0] === "Cancelled" ? "invisible" : "visible"} xxl:pl-[3vw]`}
+            className={`${status[0] === "Cancelled" ? "invisible" : "visible"} xxl:pl-[3vw] `}
             size="small"
               lineWidth={1}
              

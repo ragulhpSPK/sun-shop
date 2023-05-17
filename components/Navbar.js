@@ -68,7 +68,7 @@ function Navbar() {
   return (
     <div>
       <div
-        className={`h-[10vh] w-screen flex flex-row  items-center justify-around  ${
+        className={`h-[10vh] xsm:w-[98vw] xl:w-screen flex flex-row  items-center justify-around  ${
           router.pathname.split("/").includes("allCat")
             ? "!shadow-none"
             : "shadow shadow-slate-100 bg-[white]"
@@ -86,7 +86,7 @@ function Navbar() {
         <div className=" relative lg:w-[36vw] xsm:w-[60vw] text-gray-600">
           <div className=" relative mx-auto  text-gray-600 h-[5vh] xsm:w-[70vw] sm:w-[42vw] ">
             <input
-              className="rounded-lg shadow  bg-white px-5 pr-16 w-[80%] xsm:h-[90%] sm:h-[100%] text-sm focus:outline-none"
+              className="rounded-lg shadow  bg-white ml-[2vw] px-5 pr-16 xsm:w-[75%] md:w-[80%] xsm:h-[90%] sm:h-[100%] text-sm focus:outline-none"
               type="search"
               name="search"
               placeholder="Search"
@@ -95,7 +95,7 @@ function Navbar() {
             />
             <button
               type="submit"
-              className="absolute right-[21%] top-[10px]  text-slate-500"
+              className="absolute md:right-[21%] xsm:right-[26%] xsm:top-[8px] xl:top-[10px]  text-slate-500"
               onClick={() => {
                 router.push({ pathname: `/subcat`, query: data });
               }}
@@ -124,16 +124,21 @@ function Navbar() {
             </div>
           </div>
         </div>
-        <Badge count={get(product, "length", "")} size="small" color="#943074">
+        <Badge
+          count={get(product, "length", "")}
+          size="small"
+          color="#943074"
+          className="pr-[2vw] xl:pr-0"
+        >
           <div className="shadow shadow-slate-400 bg-white p-1  rounded">
             <Link href="/cart">
-              <ShoppingCartCheckoutOutlinedIcon className="!text-md" />
+              <ShoppingCartCheckoutOutlinedIcon className="xsm:text-[16px] xl:!text-lg " />
             </Link>
           </div>
         </Badge>
-        <div className="bg-white shadow shadow-slate-300 rounded p-2 h-[4vh] w-[5vw] flex items-center  justify-center">
+        <div className="bg-white shadow shadow-slate-300 rounded p-2 xl:h-[4vh] xl:w-[5vw] xsm:w-[15vw] xsm:h-[3vh] sm:w-[8vw] flex items-center  justify-center">
           <button
-            className="pl-1 xsm:text-[10px] sm:text-md flex gap-x-1 items-center font-medium text-[--second-color] border-none lg:text-lg"
+            className="pl-1 xsm:text-[10px]  sm:text-md flex gap-x-1 items-center font-medium text-[--second-color] border-none lg:text-lg"
             onClick={() => {
               setLogin(!login);
             }}
