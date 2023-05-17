@@ -64,17 +64,28 @@ function Categories({ setLoading }) {
           
           breakpoints={{
           640: {
-            slidesPerView: 2,
+              slidesPerView: 2,
+             rows: 2,
          
           },
           768: {
             slidesPerView: 4,
+             rows: 2,
           
           },
           1024: {
-            slidesPerView: 5,
+            slidesPerView: 6,
+             rows: 2,
           
-          },
+            },
+            1280: {
+              slidesPerView: 7,
+               rows: 2,
+            },
+            1420:{
+              slidesPerView: 8,
+               rows: 2,
+            },
        }}
 
           autoplay={{ delay: 2000 }}
