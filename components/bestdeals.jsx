@@ -46,10 +46,11 @@ function Bestdeals() {
   }, [product]);
 
   return (
-    <div className="xsm:pt-5 md:pt-0 lg:pt-5  flex flex-col">
-      <div className=" xsm:h-[50vh] md:h-[40vh] lg:h-[120vh] xl:h-[50vh] xxl:h-[45vh] xsm:!w-[90vw] lg:w-[80vw] m-auto flex ">
-        <div className="flex flex-col  xl:h-[45vh] md:h-[20vh] xsm:!w-[92vw] sm:w-[90vw] lg:!w-[80vw] m-auto !rounded-xl">
-          <div className="flex justify-between px-1 bg-[var(--second-color)]  lg:!h-[30vh] ">
+    <div className="flex flex-col ">
+ <div className="xsm:pt-5 md:pt-0   flex flex-col gap-[2vh]  md:justify-between">
+      <div className="  xsm:!w-[90vw] lg:w-[80vw] m-auto flex ">
+        <div className="flex flex-col   xsm:!w-[92vw] sm:w-[90vw] lg:!w-[80vw] m-auto !rounded-xl">
+          <div className="flex justify-between px-1 bg-[var(--second-color)]   ">
             <div className="flex flex-col justify-around">
               <Image
                 width={100}
@@ -73,7 +74,7 @@ function Bestdeals() {
                 height={100}
                 alt="logo"
                 src="/assets/deals2.png"
-                className="lg:w-16 lg:h-14 xsm:w-[25px] xsm:h-[30px] xsm:pt-[4px] "
+                className="lg:w-16 lg:h-14 xsm:w-[28px] xsm:h-[30px] xsm:pt-[4px] "
               />
               <Link href="/Allbestdeals">
                 <pre className="text-white pr-2 xsm:text-[10px] md:text-[14px] xsm:w-[100%] lg:text-2xl">
@@ -86,7 +87,7 @@ function Bestdeals() {
             {bestProducts.slice(0, 6).map((data) => {
               return (
                 <div
-                  className="relative flex flex-col  items-center justify-center xsm:w-[40vw] xsm:h-[18vh] md:w-[22vw] md:h-[22vh]  lg:h-[30vh] xl:h-[25vh]   bg-[#fff] shadow-md"
+                  className="relative flex flex-col  items-center justify-center xsm:w-[40vw] xsm:h-[18vh] md:w-[22vw] md:h-[22vh]   xl:h-[25vh]   bg-[#fff] shadow-md"
                   key={data._id}
                   onClick={() =>
                     router.push({
@@ -100,17 +101,17 @@ function Bestdeals() {
                     height={100}
                     alt="logo"
                     src={data.image[0]}
-                    className="xl:!h-[10vh] md:!h-[8vh] lg:!h-[8vh] xsm:!h-[6vh] xxl:!h-[9vh] xsm:w-fit m-auto "
+                    className="xl:!h-[10vh] md:!h-[8vh] lg:!h-[8vh] xsm:!h-[6vh] xxl:!h-[9vh] xsm:w-fit m-auto pt-[2vh]"
                   />
-                  <div className="bg-[var(--fifth-color)] xsm:text-[8px] md:text-[10px] xsm:leading-3 lg:text-md font-semibold text-black xsm:w-[20px] xsm:h-[25px] lg:w-[2vw] lg:h-[3vh] lg:leading-tight md:w-[25px] md:h-[28px] absolute top-0 right-0 skew-[20px] flex flex-col lg:text-sm text-center">
+                  <div className="bg-[var(--fifth-color)] xsm:text-[8px] md:text-[10px] xsm:leading-3 lg:text-md font-semibold text-black xsm:w-[24px] xsm:h-[25px] lg:w-[2.5vw] lg:h-[3vh] lg:leading-tight md:w-[26px] md:h-[28px] absolute top-0 right-0 skew-[20px] flex flex-col lg:text-sm text-center">
                     <span className="lg:text-[10px]">{data.bestOffer}%</span>
                     <span className="lg:text-[10px]">OFF</span>
                   </div>
-                  <p className="text-center xsm:text-[8px] md:!text-[13px] md:pt-0  xsm:pt-[10px] lg:pt-0  lg:text-[8px] lg:leading-tight lg:tracking-tight  xxl:text-[12px] font-semibold lg:h-[10vh] xxl:!h-[5vh]">
+                  <p className="text-center xsm:text-[8px] lg:pt-[1vh] md:!text-[13px] md:pt-0  xsm:pt-[10px]   lg:text-[8px] lg:leading-tight lg:tracking-tight  xxl:text-[12px] font-semibold lg:h-[10vh] xxl:!h-[5vh]">
                     {data.title}
                   </p>
                   {data.bestOffer !== null || 0 ? (
-                    <p className="text-center flex flex-row-reverse  gap-2 pb-2 xsm:text-[10px] xsm:font-semibold md:text-[13px] xsm:pt-[10px]lg:pt-0 lg:text-lg font-medium">
+                    <p className="text-center flex flex-row-reverse pt-[1vh] gap-2 pb-2 xsm:text-[10px] xsm:font-semibold md:text-[13px] xsm:pt-[10px]lg:pt-0 lg:text-lg font-medium">
                       <s>&#8377;{data.price}</s>
                       &#8377;
                       {Math.round(
@@ -132,7 +133,7 @@ function Bestdeals() {
       {/* Flash Deals */}
 
       <div
-        className="h-[28vh] xsm:mt-[30vh] lg:mt-14 xsm:w-[90vw] lg:w-[80vw] m-auto "
+        className="  xsm:w-[90vw] lg:w-[80vw] m-auto "
         id={styles.shadow2}
       >
         <div>
@@ -145,44 +146,32 @@ function Bestdeals() {
         </div>
         <div className="pt-5 ">
           <Swiper
-            // slidesPerView={5}
-            spaceBetween={30}
+            slidesPerView={1}
             pagination={{
               clickable: false,
             }}
             modules={[Autoplay]}
             autoplay={{ delay: 3000 }}
-            className="mySwiper w-[75vw] lg:!h-[20vh]"
+            className="mySwiper !w-[80vw] "
             breakpoints={{
-              480: {
-                width: 480,
-                slidesPerView: 1,
-              },
-
-              520: {
-                width: 640,
+              640: {
                 slidesPerView: 2,
               },
-
-              924: {
-                width: 924,
-                slidesPerView: 3,
-              },
-              1024: {
-                width: 924,
+              768: {
                 slidesPerView: 4,
               },
-
-              2940: {
-                width: 924,
+              1024: {
                 slidesPerView: 5,
+              },
+              1220: {
+                slidesPerView: 6,
               },
             }}
           >
             {filteredProducts.map((data) => {
               return (
                 <SwiperSlide
-                  className="relative w-[10vw]  border-r border-b border-l border-slate-200 "
+                  className="  border-r border-b border-l  border-slate-200 "
                   key={data._id}
                   onClick={() =>
                     router.push({
@@ -202,9 +191,9 @@ function Bestdeals() {
                     <span>{data.offer} %</span>
                     OFF
                   </div>
-                  <div className="flex items-center justify-center xl:pt-[2vh]">
+                  <div className="flex items-center justify-center xl:pt-[2vh] pt-[2vh]">
                     {data.offer !== null || 0 ? (
-                      <p className="text-lg  flex flex-row-reverse gap-2 xsm:text-md xsm:font-semibold font-medium">
+                      <p className="text-lg  flex flex-row-reverse gap-2 pb-[2vh] xsm:text-md xsm:font-semibold font-medium">
                         <s>&#8377;{data.price}</s>
                         &#8377;
                         {Math.round(
@@ -221,8 +210,11 @@ function Bestdeals() {
           </Swiper>
         </div>
       </div>
-    </div>
+      </div>
+       </div>
   );
+   
+   
 }
 
 export default Bestdeals;

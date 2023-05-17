@@ -48,7 +48,7 @@ function Categories({ setLoading }) {
           </Link>
         </div>
       </div>
-      <div className="xsm:h-[38vh] xsm:mt-[10px] lg:h-[38vh] xsm:w-[90vw] lg:w-[80vw] m-auto shadow-xl ">
+      <div className="xsm:h-[35vh] xsm:mt-[10px] lg:h-[35vh] xsm:w-[90vw] lg:w-[80vw] m-auto shadow-xl ">
         <Swiper
          
           grid={{

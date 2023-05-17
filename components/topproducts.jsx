@@ -68,17 +68,17 @@ function Topproducts({setLoading}) {
           Top Products
         </h1>
       </div>
-      <div className="grid xsm:grid-cols-2 md:grid-cols-3 md:gap-[2vw] lg:grid-cols-4 xl:grid-cols-5 lg:gap-x-10 xl:gap-[5vw] gap-y-2">
+      <div className="grid xsm:grid-cols-2 md:grid-cols-3 md:gap-[2vw] lg:grid-cols-4 xxl:grid-cols-5 lg:gap-x-10 xl:gap-[5vw] gap-y-2">
         {topProducts.map((data) => {
           return (
             <div
               className=" l
-              lg:w-[18vw] xl:w-[16vw]  border shadow-lg lg:h-[28vh] relative mt-5 xsm:w-[43vw] xsm:h-[25vh] md:w-[28vw] md:h-[28vh"
+              lg:w-[18vw] xl:w-[16vw]  border shadow-lg relative mt-5 xsm:w-[43vw] xsm:h-[25vh] md:w-[28vw] md:h-[28vh]"
               key={data._id}
             >
               <div>
                 <div
-                  className="lg:h-[18vh] xsm:h-[14vh] flex items-center justify-center"
+                  className=" xsm:h-[14vh] flex items-center justify-center"
                   onClick={() =>
                     router.push({
                       pathname: `/product/${data._id}`,
