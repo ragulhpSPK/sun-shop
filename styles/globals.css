@@ -236,13 +236,13 @@ button,
   border: none !important;
 }
 
-.ant-row {
+/* .ant-row {
   width: 80vw !important;
   display: grid !important;
   grid-template-columns: auto auto auto auto auto;
   row-gap: 1rem !important;
   padding-top: 5vh;
-}
+} */
 
 .ant-select:hover {
   transform: scale(1.009) !important;

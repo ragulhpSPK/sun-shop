@@ -140,3 +140,13 @@ export const addOrRemoveBest = (formData) => {
   console.log(formData);
   axios.put(`/api/bestDeals/`, formData);
 };
+
+// authentication
+
+export const authHandler = (formData) => {
+  return axios.post(`/api/auth/`, formData);
+};
+
+export const getOneUer = (formData) => {
+  return axios.get(`/api/auth/${formData}`);
+};

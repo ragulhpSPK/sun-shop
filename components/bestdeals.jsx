@@ -185,7 +185,7 @@ function Bestdeals() {
                     height={100}
                     alt="logo"
                     src={data.image[0]}
-                    className="xsm:!h-[10vh] sm:!h-[12vh] lg:!h-[7.5vh] xl:!h-[12vh] xl:pt-[3vh] !w-fit m-auto"
+                    className="xsm:!h-[10vh] sm:!h-[12vh] lg:!h-[7.5vh] xsm:pt-[2vh] xl:!h-[12vh] xl:pt-[3vh] !w-fit m-auto"
                   />
                   <div className="flex flex-col  bg-[var(--fifth-color)] text-xsm leading-tight font-semibold text-black w-8 text-center absolute top-0 right-0">
                     <span>{data.offer} %</span>

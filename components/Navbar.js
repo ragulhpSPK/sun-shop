@@ -19,7 +19,7 @@ import Image from "next/image";
 import { getAllCart } from "../helper/utilities/apiHelper";
 import { get } from "lodash";
 import Login from "../pages/Authentication/Register";
-// import Login from "@/pages/Authentication/Login";
+
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 
 function Navbar() {
@@ -149,7 +149,7 @@ function Navbar() {
       </div>
 
       <Modal open={login} width={1000} footer={false}>
-        <Login />;
+        <Login setLogin={setLogin} />;
       </Modal>
     </div>
   );
