@@ -275,7 +275,7 @@ function AllCat() {
         } xsm:hidden xxl:block`}
       >
         <div className="flex">
-          <div className="w-[16vw]  h-[90vh] overflow-scroll pl-20 leading-10 ">
+          <div className="w-[16vw]  h-[60vh] overflow-scroll pl-20 leading-10 ">
             <div
               className={`flex items-center  font-bold pt-[3vh] ${
                 router.query._id === "123"
@@ -327,7 +327,7 @@ function AllCat() {
             })}
           </div>
           <div className="flex flex-col w-[80vw] m-auto ">
-            <div className="ml-10 mt-2 h-[8vh] flex justify-center items-center bg-white  ">
+            <div className="ml-10  h-[8vh] flex justify-center items-center bg-white  ">
               <div className="flex gap-[5vw] pb-5">
                 <div className="pt-[15px]">
                   <Select
@@ -424,7 +424,7 @@ function AllCat() {
                             </div>,
                             <div
                               key={"key"}
-                              className="bg-[--third-color]    p-[7px] text-white flex items-center justify-center rounded-sm float-right"
+                              className="bg-[--third-color] p-[7px] text-white flex items-center justify-center rounded-sm float-right"
                             >
                               {cart.find((res) => {
                                 return res.productId === data._id;
@@ -658,7 +658,7 @@ function AllCat() {
               sm: 2,
               md: 2,
               lg: 3,
-              xl: 3,
+              xl: 4,
               xxl: 5,
             }}
             pagination={{
@@ -693,7 +693,7 @@ function AllCat() {
                     actions={[
                       <div
                         key={"key"}
-                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4vh] md:!w-[8vw] !w-[20vw] text-white flex items-center justify-center !border-none"
+                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4.5vh] md:!w-[8vw] !w-[20vw] text-white flex items-center justify-center !border-none"
                         onClick={() => {
                           router.push({
                             pathname: "/cart",
@@ -705,7 +705,7 @@ function AllCat() {
                       </div>,
                       <div
                         key={"key"}
-                        className="bg-[--third-color] h-[5vh] md:w-[7vw] md:h-[4vh] w-[15vw]  text-white flex items-center justify-center rounded-sm float-right"
+                        className="bg-[--third-color] h-[5vh] md:w-[7vw] md:h-[4.5vh] w-[15vw]  text-white flex items-center justify-center rounded-sm float-right"
                       >
                         {cart.find((res) => {
                           return res.productId === data._id;
@@ -745,9 +745,9 @@ function AllCat() {
                         width={70}
                         height={70}
                         preview={false}
-                        className="xsm:!h-[10vh] md:!h-[10vh] pt-[1vh] lg:!h-[12vh] xl:!h-[10vh] w-fit"
+                        // className="xsm:!h-[10vh] md:!h-[10vh] pt-[1vh]  xl:!h-[10vh] w-fit"
                       />
-                      <h1 className="xsm:text-[14px]  md:text-[14px] md:leading-tight md:tracking-tight xsm:pt-[3vh] md:!pt-[5vh] lg:pt-[1vh] xl:pt-[2vh]">
+                      <h1 className="xsm:text-[14px] md:text-[14px] md:leading-tight md:tracking-tight xsm:pt-[3vh] md:!pt-[5vh] lg:pt-[1vh] xl:pt-[2vh]">
                         {data.title}
                       </h1>
 

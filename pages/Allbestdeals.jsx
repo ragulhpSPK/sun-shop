@@ -96,7 +96,7 @@ const [banner,setBanner] = useState([]);
            
             return (
               <div
-                className="relative xxl:!w-[13vw]  xsm:w-[70vw] sm:w-[40vw]  md:!w-[27vw]  xl:!w-[20vw] flex flex-col justify-between xl:h-[36vh] border bg-[#fff] border-gray-200 m-auto shadow-lg"
+                className="relative xxl:!w-[13vw]  xsm:w-[70vw] sm:w-[40vw]  md:!w-[27vw]  xl:!w-[20vw] flex flex-col justify-between  border bg-[#fff] border-gray-200 m-auto shadow-lg"
                 key={data.id}
               >
                 <div className="flex flex-col" onClick={() =>
@@ -124,7 +124,7 @@ const [banner,setBanner] = useState([]);
                 </div>
 
                 <div className="flex justify-between">
-                  <div className="pl-[2vw]  w-[100%]">
+                  <div className="pl-[2vw]  w-[100%] pt-[2vh]">
                        {data.offer !== null || 0 ? (
                     <p className="text-lg text-center flex flex-row-reverse w-[60%] pb-[1vh] font-medium">
                       <s>&#8377;{data.price}</s>

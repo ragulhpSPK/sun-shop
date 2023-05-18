@@ -58,22 +58,10 @@ function FlashDeals() {
             />
             Deals
           </p>
-          {/* <TypeAnimation
-            sequence={[
-              "Flash", // Types 'One'
-              1000, // Waits 1s
-              "", // Deletes 'One' and types 'Two'
-              2000, // Waits 2s
-              "<ElectricBoltIcon />",
-              "Deals", // Types 'Three' without deleting 'Two'
-              () => {
-                console.log("Sequence completed"); // Place optional callbacks anywhere in the array
-              },
-            ]}
-          /> */}
+        
         </div>
       </div>
-      <div className="w-[80vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-4 grid xxl:!grid-cols-5 xxl:gap-14">
+      <div className="w-[80vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-3 grid xxl:!grid-cols-5  xxl:gap-14 ">
         {product.map((data) => {
          
           return (

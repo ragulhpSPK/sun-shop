@@ -113,7 +113,7 @@ function Register({ setLogin }) {
         <div className="lg:w-[50vw] lg:h-[38vh] xsm:!w-[95vw]  m-auto ">
           <div className="flex lg:flex-row xsm:flex-col">
             <div className="lg:w-[30vw] xxl:w-[20vw] xsm:w-[75vw] xsm:h-[30vh] xsm: lg:h-[40vh] backdrop-blur-sm bg-[--third-color] rounded-md md:flex-row xsm:flex-col flex xl:flex-col items-center justify-center">
-              <h1 className="text-white xsm:text-[18px] lg:text-lg md:pl-[2vw] md:text-2xl xsm:w-[85%] lg:w-[60%] ">
+              <h1 className="text-white xsm:text-[18px] lg:text-lg md:pl-[2vw] lg:pt-[2vh] md:text-2xl xsm:w-[85%] lg:w-[60%] ">
                 Register With Your Mobile Number Via OTP...
               </h1>
               <Image
@@ -122,7 +122,7 @@ function Register({ setLogin }) {
                 width={200}
                 height={200}
                 preview={false}
-                  className="xsm:!w-[40vw] md:!w-[30vw]"
+                  className="xsm:!w-[40vw] md:!h-[10vw]"
               />
             </div>
             <div className="lg:w-[30vw] lg:h-[40vh] flex rounded-md !pt-[2vh] flex-col lg:items-center lg:justify-between   pr-[2vw]">
@@ -160,7 +160,7 @@ function Register({ setLogin }) {
                 </p>
                 <Form.Item className="flex items-center justify-center w-[80%]">
                   <Button
-                    className={` bg-[--third-color] xsm:h-[5vh] xsm:w-[40vw]  lg:!w-[22vw] lg:h-[5vh] !mt-[15px] lg:text-lg -tracking-tighter !text-white hover:!border-none hover:!scale-105 duration-1000`}
+                    className={` bg-[--third-color] xsm:h-[5vh] xsm:w-[40vw] lg:!w-[22vw] lg:h-[6vh] !mt-[15px] lg:text-md  !text-white hover:!border-none hover:!scale-105 duration-1000`}
                     htmlType="submit"
                     style={{ color: "white" }}
                     onClick={requestOTP}
