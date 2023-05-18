@@ -183,7 +183,7 @@ function Cart() {
   // console.log(
   //   allProducts.filter((data) => {
   //     return data._id === router.query._id;
-  //   })[0].price
+  //   })[0].pricedef
   // );
 
   const BuyId = allProducts

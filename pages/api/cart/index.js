@@ -3,7 +3,6 @@ import Cart from "../../../models/cart";
 
 export default async function cartController(req, res) {
   dbconnect();
-
   switch (req.method) {
     case "GET":
       {
@@ -17,7 +16,6 @@ export default async function cartController(req, res) {
       break;
     case "POST":
       {
-        console.log(req.body);
         try {
           const cart = await new Cart({ ...req.body.data });
           const result = await cart.save();

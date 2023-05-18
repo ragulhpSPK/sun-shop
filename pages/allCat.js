@@ -384,7 +384,7 @@ function AllCat() {
                   md: 3,
                   lg: 4,
                   xl: 4,
-                  xxl: 5,
+                  xxl: 4,
                 }}
                 pagination={{
                   pageSize: 20,
@@ -402,7 +402,7 @@ function AllCat() {
                           hoverable
                           style={{
                             width: 295,
-                            height: 330,
+                            height: 310,
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
@@ -412,7 +412,7 @@ function AllCat() {
                           actions={[
                             <div
                               key={"key"}
-                              className="bg-[--third-color] rounded-sm ml-[15px] text-[20px] h-[5vh] w-[10vw] text-white flex items-center justify-center !border-none"
+                              className="bg-[--third-color] rounded-sm  text-[20px] p-[6px] w-[8vw] text-white flex items-center justify-center !border-none"
                               onClick={() => {
                                 router.push({
                                   pathname: "/cart",
@@ -424,13 +424,13 @@ function AllCat() {
                             </div>,
                             <div
                               key={"key"}
-                              className="bg-[--third-color] h-[5vh] w-[3vw] mr-[15px] text-white flex items-center justify-center rounded-sm float-right"
+                              className="bg-[--third-color]    p-[7px] text-white flex items-center justify-center rounded-sm float-right"
                             >
                               {cart.find((res) => {
                                 return res.productId === data._id;
                               }) ? (
                                 <button
-                                  className="text-white text-[14px] rounded-md"
+                                  className="text-white p-[7px] rounded-md !text-[12px] leading-tight tracking-tight"
                                   onClick={() =>
                                     router.push({ pathname: "/cart" })
                                   }
@@ -440,7 +440,7 @@ function AllCat() {
                               ) : (
                                 <ShoppingCartOutlined
                                   style={{
-                                    fontSize: "25px",
+                                    fontSize: "28px",
                                   }}
                                   onClick={() => {
                                     handleClick(data._id, data);
@@ -652,6 +652,15 @@ function AllCat() {
         </div>
         <div className="  flex  justify-center ">
           <List
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 2,
+              md: 2,
+              lg: 3,
+              xl: 3,
+              xxl: 5,
+            }}
             pagination={{
               pageSize: 20,
               align: "end",
@@ -669,7 +678,7 @@ function AllCat() {
                     hoverable
                     style={{
                       width: 265,
-                      height: 330,
+                      height: 310,
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
@@ -684,7 +693,7 @@ function AllCat() {
                     actions={[
                       <div
                         key={"key"}
-                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4vh] md:w-[10vw] !w-[20vw] text-white flex items-center justify-center !border-none"
+                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4vh] md:!w-[8vw] !w-[20vw] text-white flex items-center justify-center !border-none"
                         onClick={() => {
                           router.push({
                             pathname: "/cart",
@@ -736,9 +745,9 @@ function AllCat() {
                         width={70}
                         height={70}
                         preview={false}
-                        className="xsm:!h-[10vh] md:!h-[8vh] pt-[1vh] lg:!h-[12vh] xl:!h-[10vh] w-fit"
+                        className="xsm:!h-[10vh] md:!h-[10vh] pt-[1vh] lg:!h-[12vh] xl:!h-[10vh] w-fit"
                       />
-                      <h1 className="xsm:text-[14px] h-[10vh] md:text-[18px] md:leading-tight md:tracking-tight xsm:pt-[3vh] md:pt-[6vh] lg:pt-[1vh] xl:pt-[2vh]">
+                      <h1 className="xsm:text-[14px]  md:text-[14px] md:leading-tight md:tracking-tight xsm:pt-[3vh] md:!pt-[5vh] lg:pt-[1vh] xl:pt-[2vh]">
                         {data.title}
                       </h1>
 

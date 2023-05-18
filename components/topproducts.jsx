@@ -14,19 +14,21 @@ import { useRouter } from "next/router";
 import { notification } from "antd";
 import { addproduct } from "@/redux/cartSlice";
 import { useDispatch } from "react-redux";
+import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+
 
 function Topproducts({setLoading}) {
   const [products, setProducts] = useState([]);
   // const [topProducts,setTopProducts] = useState([])
   const [cart, setCart] = useState([]);
   const dispatch = useDispatch();
-
   const router = useRouter();
 
   const fetchData = async () => {
     try {
       setLoading(true)
       const result = [await getAllproducts(), await getAllCart()];
+    
       setProducts(get(result, "[0].data.data"));
       setCart(get(result, "[1].data.message"));
       setLoading(false)
@@ -64,7 +66,7 @@ function Topproducts({setLoading}) {
   return (
     <div className="xsm:w-[90vw] lg:w-[80vw] m-auto pt-10">
       <div className="text-xl">
-        <h1 className="bg-[var(--second-color)] py-3 px-2  text-white">
+        <h1 className="bg-[var(--second-color)] py-3 px-2  xsm:text-[14px] md:text-md xl:text-xl text-white">
           Top Products
         </h1>
       </div>
@@ -109,19 +111,13 @@ function Topproducts({setLoading}) {
                   </div>
                 ) : (
                   <div
-                    className="bg-[var(--fifth-color)] xsm:!w-[30px] xsm:h-[25px] lg:w-[55px] lg:h-[35px]  xl:h-[35px] xl:!w-[45px] absolute right-0 bottom-0"
+                    className="bg-[var(--fifth-color)] xsm:!w-[30px] flex !items-center !justify-center xsm:h-[25px] lg:w-[55px] lg:h-[35px]  xl:h-[35px] xl:!w-[45px] absolute right-0 bottom-0"
                     onClick={() => {
                       handleClick(data._id, data);
                       dispatch(addproduct({ ...data }));
                     }}
                   >
-                    <Image
-                      width={100}
-                      height={100}
-                      alt="logo"
-                      src="/assets/cart2.png"
-                      className="lg:w-5 lg:pt-2 xsm:w-4 m-auto pt-1"
-                    />
+                 <ShoppingCartCheckoutOutlinedIcon/>
                   </div>
                 )}
               </div>

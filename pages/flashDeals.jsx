@@ -48,7 +48,7 @@ function FlashDeals() {
           tip="Loading Data..."
           size="large"
           indicator={antIcon}>
-      <div className="bg-[--third-color] w-[90vw] m-auto ">
+      <div className="bg-[--third-color] w-[80vw] m-auto ">
         <div className="text-[6vw] text-white text-center xsm:p-[4vh] xl:p-[7vh]  ">
           <p>
             Flash
@@ -73,12 +73,12 @@ function FlashDeals() {
           /> */}
         </div>
       </div>
-      <div className="w-[90vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-4 grid xxl:!grid-cols-5 xxl:gap-28">
+      <div className="w-[80vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-4 grid xxl:!grid-cols-5 xxl:gap-14">
         {product.map((data) => {
          
           return (
             <>
-              <div className="xxl:h-[30vh] sm:w-[40vw] md:w-[25vw] md:h-[30vh] xl:w-[20vw] flex flex-col xsm:mt-[5vh] justify-between xxl:w-[14vw] border shadow-lg  relative">
+              <div className="xxl:h-[30vh] sm:w-[40vw] md:w-[25vw]  xl:w-[20vw] flex flex-col xsm:mt-[5vh] justify-between xxl:w-[14vw] border shadow-lg  relative">
                 <div onClick={() =>
                     router.push({
                       pathname: `/product/${data._id}`,
@@ -90,10 +90,10 @@ function FlashDeals() {
                     height={100}
                     alt="logo"
                     src={data.image[0]}
-                    className="xxl:h-[14vh] xsm:h-[20vh] md:h-[10vh] w-fit m-auto pt-[18px] xl:h-[15vh]"
+                    className="xxl:h-[12vh] xsm:h-[20vh] sm:h-[10vh] md:h-[10vh] w-fit m-auto pt-[18px] xl:h-[12vh]"
                   />
 
-                  <p className="flex flex-col absolute top-0 right-0 bg-[--fifth-color] text-sm font-semibold text-black px-3">
+                  <p className="flex flex-col absolute top-0 right-0 bg-[--fifth-color] text-sm font-semibold text-black px-2 leading-tight tracking-tight">
                     <span>{data.offer}%</span>OFF
                   </p>
                 </div>

@@ -16,7 +16,6 @@ export default async function MessageController(req, res) {
   switch (req.method) {
     case "GET": {
       try {
-        console.log(req.query, "trigered");
         const result = await User.find({ number: req.query.id });
         return res.status(200).send({ message: result });
       } catch (err) {

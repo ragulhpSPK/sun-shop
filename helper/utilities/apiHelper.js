@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // Categories starting
 export const createCatagory = (formData) => {
@@ -149,4 +150,8 @@ export const authHandler = (formData) => {
 
 export const getOneUer = (formData) => {
   return axios.get(`/api/auth/${formData}`);
+};
+
+export const getOneUerforNav = () => {
+  return axios.get(`/api/auth/`);
 };

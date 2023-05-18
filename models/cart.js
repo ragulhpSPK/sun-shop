@@ -9,6 +9,10 @@ const cartSchema = new mongoose.Schema(
       type: Array,
     },
 
+    userId: {
+      type: String,
+    },
+
     name: {
       type: String,
     },

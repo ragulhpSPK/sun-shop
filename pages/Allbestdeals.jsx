@@ -9,6 +9,7 @@ import { Spin, notification } from "antd";
 import { addproduct } from "@/redux/cartSlice";
 import { useDispatch } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
+import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 
 function Allbestdeals() {
   const [product, setProducts] = useState([]);
@@ -75,27 +76,7 @@ const [banner,setBanner] = useState([]);
           size="large"
           indicator={antIcon}>
  <div className="w-[80vw] m-auto">
-      {/* <div className="bg-[url('/assets/bg-8.jpg')] flex flex-col bg-cover backdrop-blur-md bg-white/30  h-[40vh] w-[80vw] m-auto  shadow-xl shadow-black/30">
-        <div className=" flex justify-evenly items-center pt-10">
-          <h1 className="text-6xl text-white w-[500px] pl-[6vw]">
-            Daily Best Deals
-          </h1>
-          <Image
-            width={700}
-            height={500}
-            alt="logo"
-            src="/assets/bestdeals2.png"
-            className="mt-[-40px] ml-[-7vw]"
-          />
-          <p className="text-5xl text-white w-[300px]">Upto 50% Offers</p>
-        </div>
-        <div>
-          <p className="text-[28px] text-white w-[80vw] text-center mt-[-40px]">
-            Unbeatable daily deals on top-rated products,with discounts upto 30%
-            offer...
-          </p>
-        </div>
-      </div> */}
+      
       {banner.filter(data => {
         return data.status==="Bestdeals"
       }).map(res => {
@@ -115,7 +96,7 @@ const [banner,setBanner] = useState([]);
            
             return (
               <div
-                className="relative xxl:!w-[13vw] xxl:h-[32vh] xsm:w-[70vw] sm:w-[40vw] sm:h-[36vh] md:!w-[27vw] md:h-[28vh] xl:!w-[20vw] lg:h-[40vh] flex flex-col justify-between xl:h-[36vh] border bg-[#fff] border-gray-200 m-auto shadow-lg"
+                className="relative xxl:!w-[13vw]  xsm:w-[70vw] sm:w-[40vw]  md:!w-[27vw]  xl:!w-[20vw] flex flex-col justify-between xl:h-[36vh] border bg-[#fff] border-gray-200 m-auto shadow-lg"
                 key={data.id}
               >
                 <div className="flex flex-col" onClick={() =>
@@ -132,7 +113,7 @@ const [banner,setBanner] = useState([]);
                       src={data.image[0]}
                       className="xl:h-[18vh] xsm:h-[20vh] md:h-[12vh] lg:h-[16vh] w-fit pt-10 m-auto"
                     />
-                    <p className="bg-[--fifth-color] text-sm font-semibold text-black w-14 h-10 absolute top-0 right-0  flex flex-col  text-center">
+                    <p className="bg-[--fifth-color] text-[12px] font-semibold text-black  p-[5px] tracking-tight leading-tight absolute top-0 right-0  flex flex-col  text-center">
                       <span>{data.bestOffer}%</span>
                       OFF
                     </p>
@@ -143,15 +124,15 @@ const [banner,setBanner] = useState([]);
                 </div>
 
                 <div className="flex justify-between">
-                  <div className="pl-[2vw]">
+                  <div className="pl-[2vw]  w-[100%]">
                        {data.offer !== null || 0 ? (
-                    <p className="text-lg text-center flex flex-col font-medium">
+                    <p className="text-lg text-center flex flex-row-reverse w-[60%] pb-[1vh] font-medium">
                       <s>&#8377;{data.price}</s>
                       &#8377;
                       {Math.round(data.price - (data.price / 100) * data.bestOffer)}
                     </p>
                   ) : (
-                      <p className="text-lg text-center flex flex-col font-medium">{data.price}</p>
+                      <p className="text-lg text-center  font-medium">{data.price}</p>
                   )}
                     </div>
                 
@@ -163,13 +144,7 @@ const [banner,setBanner] = useState([]);
                       dispatch(addproduct({ ...data }));
                     }}
                   >
-                    <Image
-                      width={100}
-                      height={100}
-                      alt="logo"
-                      src="/assets/cart2.png"
-                      className="w-6 m-auto pt-1"
-                    />
+                   <ShoppingCartCheckoutOutlinedIcon/>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { Modal, Form, Input, Button, Image, notification } from "antd";
-
+import { Modal, Form, Input, Button, Image, notification,Drawer } from "antd";
 import { useState } from "react";
 import { authHandler, createMessage, getOneUer } from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
@@ -13,7 +12,8 @@ import { get, isEmpty } from "lodash";
 import Cookies from "js-cookie";
 import { excrypt } from "@/helper/shared";
 import { useRouter } from "next/router";
-
+import { useDispatch } from 'react-redux';
+import { changeUserValues } from "@/redux/userSlice";
 
 
 function Register({ setLogin }) {
@@ -27,6 +27,7 @@ function Register({ setLogin }) {
   const router = useRouter();
   const [formModal, setFormModal] = useState(false);
 
+  const dispatch = useDispatch();
   const generateRecaptchaVerifier = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
       "recaptacha-container",
@@ -39,22 +40,6 @@ function Register({ setLogin }) {
       authentication
     );
   };
-
-  const fetchData = async () => {
-    try {
-      const result = await getOneUer();
-      console.log(result);
-      setNumbers(get(result, "data.message"));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    // fetchData();
-  }, []);
-
-  console.log(phoneNumber);
 
   const requestOTP = async (e) => {
     setLogin(false);
@@ -78,11 +63,13 @@ function Register({ setLogin }) {
   const verifyOtp = async () => {
     if (otp.length === 6) {
       const result = await getOneUer(phoneNumber);
-      console.log(result,"jehrlekh")
+     
     if (isEmpty(result.data.message)) { 
       setFormModal(true);
     } else {
-      await authHandler({number:phoneNumber});
+      const result = await authHandler({ number: phoneNumber }); 
+      Cookies.set("x-o-t-p", result.data.data);
+      dispatch(changeUserValues({user:result.data.data}))
       notification.success({message:"Continue to shop"})
     }
       setExpandForm(false);
@@ -111,7 +98,9 @@ function Register({ setLogin }) {
   }, [otp]);
   const handleSubmit = async (values) => {
     try {
-      await authHandler(values);
+      const result = await authHandler(values);
+      dispatch(changeUserValues({user:result.data.data}))
+      Cookies.set("x-o-t-p", result.data.data);
       setFormModal(false);
       notification.success({message:"Continue to shop"})
     } catch (err) {
@@ -120,11 +109,11 @@ function Register({ setLogin }) {
 }
   return (
     <div>
-      <div className="pt-[5vh]">
-        <div className="w-[50vw] h-[40vh] m-auto shadow-lg">
-          <div className="flex ">
-            <div className="w-[25vw] h-[40vh] backdrop-blur-sm bg-[--third-color] rounded-md flex flex-col items-center justify-center">
-              <h1 className="text-white text-xl w-[60%] ">
+      <div className="">
+        <div className="lg:w-[50vw] lg:h-[38vh] xsm:!w-[95vw]  m-auto ">
+          <div className="flex lg:flex-row xsm:flex-col">
+            <div className="lg:w-[30vw] xxl:w-[20vw] xsm:w-[75vw] xsm:h-[30vh] xsm: lg:h-[40vh] backdrop-blur-sm bg-[--third-color] rounded-md md:flex-row xsm:flex-col flex xl:flex-col items-center justify-center">
+              <h1 className="text-white xsm:text-[18px] lg:text-lg md:pl-[2vw] md:text-2xl xsm:w-[85%] lg:w-[60%] ">
                 Register With Your Mobile Number Via OTP...
               </h1>
               <Image
@@ -133,10 +122,11 @@ function Register({ setLogin }) {
                 width={200}
                 height={200}
                 preview={false}
+                  className="xsm:!w-[40vw] md:!w-[30vw]"
               />
             </div>
-            <div className="w-[40vw] h-[40vh] flex rounded-md  flex-col items-center justify-between   pl-[2vw] pr-[2vw]">
-              <Form style={{ maxWidth: 500 }} form={form} name="control-hooks">
+            <div className="lg:w-[30vw] lg:h-[40vh] flex rounded-md !pt-[2vh] flex-col lg:items-center lg:justify-between   pr-[2vw]">
+              <Form style={{ maxWidth: 500 }} form={form} name="control-hooks" className="xsm:pl-[3vw] lg:pl-[12vw] xl:pl-[6vw] xxl:pl-[2vw]">
                 <Form.Item
                   name="number"
                   label="Phone Number"
@@ -147,27 +137,30 @@ function Register({ setLogin }) {
                   style={{
                     fontSize: "30px",
                     color: "red",
+                    
                   }}
-                  className="ml-[-225px]"
+                  className="!w-[40vw] !text-[8px]"
+                 
                 >
                   <Input
                     size="large"
                     placeholder="+91 9839288383"
-                    className="!w-[15vw]"
+                    className="xsm:w-[50vw] lg:!w-[16vw] " 
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
+                    
                   />
                 </Form.Item>
-                <p className="text-md !w-[25vw] text-base font-medium">
+                <p className=" lg:!w-[25vw] xsm:text-[18px] md:text-[24px] sm:text-[12px]  xsm:w-[80vw] lg:text-base font-medium">
                   Secure access to our e-commerce platform by
                   {/* <a className="text-blue-600">Terms of Use</a> and &nbsp; */}
                   &nbsp;
                   <a className="text-blue-600">Our Privacy Policy</a>
                   &nbsp; before Register in.
                 </p>
-                <Form.Item>
+                <Form.Item className="flex items-center justify-center w-[80%]">
                   <Button
-                    className={` bg-[--third-color] !w-[22vw] h-[5vh] !mt-[15px] text-xl -tracking-tighter !text-white hover:!border-none hover:!scale-105 duration-1000`}
+                    className={` bg-[--third-color] xsm:h-[5vh] xsm:w-[40vw]  lg:!w-[22vw] lg:h-[5vh] !mt-[15px] lg:text-lg -tracking-tighter !text-white hover:!border-none hover:!scale-105 duration-1000`}
                     htmlType="submit"
                     style={{ color: "white" }}
                     onClick={requestOTP}
@@ -195,7 +188,7 @@ function Register({ setLogin }) {
         >
           <label
             htmlFor="otp"
-            className="font-bold text-xl text-black text-center "
+            className="font-bold text-lg text-black text-center "
           >
             Enter your OTP
           </label>
@@ -212,12 +205,7 @@ function Register({ setLogin }) {
               <input {...props} className="border-2 h-10 !w-8 ml-2" />
             )}
           ></OtpInput>
-          {/* <button
-            className="bg-[--third-color] w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
-            // onClick={handleFinish}
-          >
-            <span>Verify OTP</span>
-          </button> */}
+       
         </div>
       </Modal>
       <Modal open={formModal} footer={false}>
@@ -253,7 +241,7 @@ function Register({ setLogin }) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
 export default Register;

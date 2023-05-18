@@ -98,8 +98,7 @@ export default function App() {
     // <Spin loading={false} tip="loading data..." size="large"  indicator={AntIcon}>
     <div className="flex lg:h-[80vh] justify-center xsm:w-[100vw] lg:[80vw]"  >
 <div    
-      className="xsm:flex-col flex lg:!flex-row !pt-[12vh]"
-     
+      className="xsm:flex-col flex lg:!flex-row !pt-[12vh]"   
     >
       <div className={`${styles.container}`}>
         <div className={styles.left}>
@@ -116,8 +115,7 @@ export default function App() {
           <div className={`${styles.left_1} `}>
             {result &&
               filterData.map((img) => {
-                return img.image.map((image, i) => {
-               
+                return img.image.map((image, i) => {      
                   return (
                     <>
                       <div className="xl:pt-[5vh]  xsm:pl-[3vw] sm:!pl-[5vw] lg:!pl-[3vw]  flex items-center justify-center">
@@ -217,11 +215,10 @@ export default function App() {
                   </li>
                 );
               })}
-
               <div className="pt-10 flex lg:gap-5 xsm:pl-0  justify-around xsm:w-[80vw] sm:pr-[8vw] sm:w-[40vw] xl:!pl-0">
                 {cartID[0] && cartID[0].productId === data._id ? (
                   <button
-                    className="bg-slate-300 text-[#000] shadow-2xl hover:bg-[--second-color] hover:scale-105 hover:font-medium hover:text-white duration-1000 text-xl rounded-md px-3 h-[5vh] w-[8vw] py-2"
+                    className="bg-slate-300 text-[#000] shadow-2xl hover:bg-[--second-color] hover:scale-105 hover:font-medium hover:text-white duration-1000 text-sm rounded-md px-3 lg:h-[6vh] xl:h-[5vh] w-[8vw] py-2"
                     onClick={() => {
                       router.push({ pathname: "/cart" });
                     }}
@@ -230,7 +227,7 @@ export default function App() {
                   </button>
                 ) : (
                   <button
-                    className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 xl:text-xl rounded-md px-3 xl:h-[5vh] xl:w-[10vw] xl:py-[8px] xsm:h-[4vh]"
+                    className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 xl:text-xl rounded-md lg:h-[6vh] px-3 xl:h-[5vh] xl:w-[10vw] xl:py-[8px] xsm:h-[4vh]"
                     onClick={() => {
                       handleClick(data);
                       dispatch(addproduct({ ...filterData }));
@@ -241,7 +238,7 @@ export default function App() {
                 )}
 
                 <button
-                  className="bg-[var(--second-color)] hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md xl:h-[5vh] xl:w-[8vw]  xl:px-3 xl:py-2 xsm:h-[4vh] xsm:w-[25vw] sm:w-[12vw]"
+                  className="bg-[var(--second-color)] hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md lg:h-[6vh] xl:h-[5vh] xl:w-[8vw]  xl:px-3 xl:py-2 xsm:h-[4vh] xsm:w-[25vw] sm:w-[12vw]"
                   onClick={() => {
                     router.push({
                       pathname: "/cart",

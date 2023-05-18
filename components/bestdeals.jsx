@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { get } from "lodash";
 import { useRouter } from "next/router";
 
+
 function Bestdeals() {
   const [product, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -137,10 +138,10 @@ function Bestdeals() {
         id={styles.shadow2}
       >
         <div>
-          <div className="flex xsm:w-[90vw] lg:w-[80vw]  text-xl  justify-between m-auto px-5 bg-[var(--second-color)] py-3 text-white">
+          <div className="flex xsm:w-[90vw] lg:w-[80vw] md:text-md xsm:text-[14px]  xl:text-xl  justify-between m-auto px-5 bg-[var(--second-color)] py-3 text-white">
             <h1>Flash Deals</h1>
             <Link href="flashDeals">
-              <h1 className=" text-xl">See All &#8594;</h1>
+              <h1 className="xsm:text-[14px] xl:text-xl md:text-md">See All &#8594;</h1>
             </Link>
           </div>
         </div>
@@ -187,13 +188,13 @@ function Bestdeals() {
                     src={data.image[0]}
                     className="xsm:!h-[10vh] sm:!h-[12vh] lg:!h-[7.5vh] xsm:pt-[2vh] xl:!h-[12vh] xl:pt-[3vh] !w-fit m-auto"
                   />
-                  <div className="flex flex-col  bg-[var(--fifth-color)] text-xsm leading-tight font-semibold text-black w-8 text-center absolute top-0 right-0">
+                  <div className="flex flex-col  bg-[var(--fifth-color)] xsm:text-[10px] tracking-tight text-bold leading-tight font-semibold text-black w-8 text-center absolute top-0 right-0">
                     <span>{data.offer} %</span>
                     OFF
                   </div>
                   <div className="flex items-center justify-center xl:pt-[2vh] pt-[2vh]">
                     {data.offer !== null || 0 ? (
-                      <p className="text-lg  flex flex-row-reverse gap-2 pb-[2vh] xsm:text-md xsm:font-semibold font-medium">
+                      <p className="xl:text-lg xsm:text-[14px]  flex flex-row-reverse gap-2 pb-[2vh] xsm:text-md xsm:font-semibold font-medium">
                         <s>&#8377;{data.price}</s>
                         &#8377;
                         {Math.round(
