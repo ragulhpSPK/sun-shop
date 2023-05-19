@@ -82,12 +82,6 @@ function AllCat() {
   };
 
   useEffect(() => {
-    // if (router.pathname === "/allCat") {
-    //   router.push({
-    //     pathname: "/allCat",
-    //     query: { _id: 123 },
-    //   });
-    // }
     fetchData();
   }, []);
 
@@ -471,9 +465,55 @@ function AllCat() {
                               {data.title}
                             </h1>
 
-                            <h1 className="text-[16px] !mt-[5px] font-bold ">
-                              &#8377;{data.price}
-                            </h1>
+                            {data.flashStatus == true ? (
+                              <div>
+                                <span className="flex">
+                                  <s className="text-sm">&#8377;{data.price}</s>
+                                  -
+                                  <p className="font-bold text-sm text-red-500">
+                                    -{data.offer}% Off
+                                  </p>
+                                </span>
+
+                                {data.offer !== null || 0 ? (
+                                  <p className="text-xl text-slate-800 pt-1">
+                                    &#8377;
+                                    {Math.round(
+                                      data.price -
+                                        (data.price / 100) * data.offer
+                                    )}
+                                  </p>
+                                ) : (
+                                  <p className="text-xl text-slate-800 pt-1">
+                                    &#8377;{data.price}
+                                  </p>
+                                )}
+                              </div>
+                            ) : data.bestStatus === true ? (
+                              <div>
+                                <s>&#8377;{data.price}</s>{" "}
+                                <p className="font-bold text-sm text-red-500">
+                                  -{data.bestOffer}% Off
+                                </p>
+                                {data.bestOffer !== null || 0 ? (
+                                  <p className="text-xl text-slate-800 pt-1">
+                                    &#8377;
+                                    {Math.round(
+                                      data.price -
+                                        (data.price / 100) * data.bestOffer
+                                    )}
+                                  </p>
+                                ) : (
+                                  <p className="text-xl text-slate-800 pt-1">
+                                    &#8377;{data.price}
+                                  </p>
+                                )}
+                              </div>
+                            ) : (
+                              <p className="text-xl text-slate-800 pt-1">
+                                &#8377;{data.price}
+                              </p>
+                            )}
                           </div>
                         </Card>
                       </div>
@@ -657,7 +697,6 @@ function AllCat() {
               xs: 1,
               sm: 2,
               md: 2,
-              lg: 3,
               xl: 4,
               xxl: 5,
             }}
@@ -693,7 +732,7 @@ function AllCat() {
                     actions={[
                       <div
                         key={"key"}
-                        className="bg-[--third-color] rounded-sm  text-[14px] h-[5vh] md:h-[4.5vh] md:!w-[8vw] !w-[20vw] text-white flex items-center justify-center !border-none"
+                        className="bg-[--third-color] rounded-sm  text-[14px] py-[10px] md:!w-[8vw] !w-[20vw] text-white flex items-center justify-center !border-none"
                         onClick={() => {
                           router.push({
                             pathname: "/cart",
@@ -705,7 +744,7 @@ function AllCat() {
                       </div>,
                       <div
                         key={"key"}
-                        className="bg-[--third-color] h-[5vh] md:w-[7vw] md:h-[4.5vh] w-[15vw]  text-white flex items-center justify-center rounded-sm float-right"
+                        className="bg-[--third-color] h-[5vh] md:w-[7vw] py-[10px] w-[15vw]  text-white flex items-center justify-center rounded-sm float-right"
                       >
                         {cart.find((res) => {
                           return res.productId === data._id;

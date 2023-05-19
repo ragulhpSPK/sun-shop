@@ -7,11 +7,11 @@
 .left {
   display: flex;
   flex-direction: column;
+  
 }
 
 .left_1 {
   display: flex;
- 
   margin-left: 10vw !important;
 }
 
@@ -23,6 +23,8 @@
 #img_wrap img {
   width: 8vw !important;
   object-fit: contain;
+  height: 8vh  !important;
+  padding-top: 3vh !important;
 }
 
 .left_2 .img {

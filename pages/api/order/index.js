@@ -1,5 +1,6 @@
 import dbconnect from "@/connection/conn";
 import Order from "../../../models/order";
+import { middleware } from "../../../helper/utilities/middleware";
 
 export default async function orderController(req, res) {
   dbconnect();
@@ -15,6 +16,8 @@ export default async function orderController(req, res) {
 
     case "POST": {
       try {
+        await middleware(req, res);
+        req.body.data.userId = req.body.uid.id;
         const order = await new Order({ ...req.body.data });
         const result = order.save();
         return res.status(200).send({ message: result });

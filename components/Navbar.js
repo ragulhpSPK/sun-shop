@@ -102,7 +102,7 @@ function Navbar() {
             />
             <button
               type="submit"
-              className="absolute md:right-[21%] xsm:right-[26%] xsm:top-[8px] xl:top-[10px]  text-slate-500"
+              className="absolute md:right-[21%] xsm:right-[26%] xl:right-[18%] xsm:top-[8px] xl:top-[16px]  text-slate-500"
               onClick={() => {
                 router.push({ pathname: `/subcat`, query: data });
               }}
@@ -139,7 +139,7 @@ function Navbar() {
           className="xsm:mr-[3vw] xl:pr-0 flex items-center justify-center"
         >
           <div className="shadow shadow-slate-400 bg-white p-1  rounded">
-            <Link href="/cart">
+            <Link href="/profiles/SideNavbar#2">
               <ShoppingCartCheckoutOutlinedIcon className="xsm:text-[16px] sm:!text-lg " />
             </Link>
           </div>
@@ -165,7 +165,7 @@ function Navbar() {
             size={20}
             className="xsm:!text-[12px]"
             onClick={() => {
-              setDrawOpen(true);
+              router.push({ pathname: "/profiles/SideNavbar" });
             }}
           >
             {activeUser.firstName?.split("")[0]}
@@ -184,46 +184,6 @@ function Navbar() {
         <Login setLogin={setLogin} />;
       </Modal>
 
-      <div>
-        <Drawer
-          placement="left"
-          open={drawOpen}
-          className="relative"
-          onClose={() => setDrawOpen(false)}
-          width={200}
-        >
-          <div className="flex flex-col">
-            <div className="text-lg text-slate-600 flex flex-col gap-[2vh] pl-[2vw]">
-              <p onClick={() => setProfile(true)}>Profile</p>
-              <p
-                onClick={() => {
-                  router.push({ pathname: "/cart" });
-                  setDrawOpen(false);
-                }}
-              >
-                Carts
-              </p>
-              <p
-                onClick={() => {
-                  router.push({ pathname: `/orders/${1}` });
-                  setDrawOpen(false);
-                }}
-              >
-                Orders
-              </p>
-              <p onClick={() => router.push({ pathname: "/Orderhis" })}>
-                Order History
-              </p>
-            </div>
-            <div
-              className="absolute bottom-0 text-slate-600 text-lg "
-              onClick={handleLogOut}
-            >
-              <p className="pl-[2vw]">LogOut</p>
-            </div>
-          </div>
-        </Drawer>
-      </div>
       <Modal
         open={profile}
         footer={false}
@@ -277,7 +237,7 @@ function Navbar() {
               name="email"
               label={
                 <span>
-                  Email Address{" "}
+                  Email Address
                   <span className="text-slate-400">(optional)</span>
                 </span>
               }

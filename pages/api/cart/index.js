@@ -1,5 +1,6 @@
 import dbconnect from "@/connection/conn";
 import Cart from "../../../models/cart";
+import { middleware } from "../../../helper/utilities/middleware";
 
 export default async function cartController(req, res) {
   dbconnect();
@@ -17,6 +18,8 @@ export default async function cartController(req, res) {
     case "POST":
       {
         try {
+          await middleware(req, res);
+          req.body.data.userId = req.body.uid.id;
           const cart = await new Cart({ ...req.body.data });
           const result = await cart.save();
           return res.status(200).send({ message: result });

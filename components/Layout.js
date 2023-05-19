@@ -16,6 +16,8 @@ function Layout({ children }) {
       {children}
       {router.pathname.split("/").includes("dashboard") || result.length > 0 ? (
         ""
+      ) : router.pathname.split("/").includes("profiles") ? (
+        ""
       ) : (
         <Footer />
       )}

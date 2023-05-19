@@ -62,8 +62,7 @@ function FlashDeals() {
         </div>
       </div>
       <div className="w-[80vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-3 grid xxl:!grid-cols-5  xxl:gap-14 ">
-        {product.map((data) => {
-         
+        {product.map((data) => {  
           return (
             <>
               <div className="xxl:h-[30vh] sm:w-[40vw] md:w-[25vw]  xl:w-[20vw] flex flex-col xsm:mt-[5vh] justify-between xxl:w-[14vw] border shadow-lg  relative">
