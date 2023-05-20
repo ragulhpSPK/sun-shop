@@ -45,10 +45,8 @@ function Cart() {
   const dispatch = useDispatch();
   const [id, setId] = useState([]);
   const [payment, setPayment] = useState("");
-
   const [form] = Form.useForm();
   const { TextArea } = Input;
-
   const [loading, setLoading] = useState(true);
   uuidv1();
 

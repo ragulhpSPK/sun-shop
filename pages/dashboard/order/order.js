@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import AdminNavbar from "../shared/AdminNavbar";
 import Sidenavbar from "../shared/Sidenavbar";
 import { Form, Select, Table, notification } from "antd";
-import { getAllOrder, updateOrder } from "../../../helper/utilities/apiHelper";
+import {
+  getDashBoardOrder,
+  updateOrder,
+} from "../../../helper/utilities/apiHelper";
 import { get } from "lodash";
 
 function Order() {
@@ -19,7 +22,8 @@ function Order() {
 
   const fetchData = async () => {
     try {
-      const result = await getAllOrder();
+      const result = await getDashBoardOrder();
+      console.log(result);
       setOrder(get(result, "data.data", []));
     } catch (err) {
       console.log(err);

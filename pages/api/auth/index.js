@@ -42,10 +42,6 @@ export default async function MessageController(req, res) {
         }
 
         return res.status(200).send({ message: "success" });
-        console.log(req.body, "body");
-        const auth = await authHandler({ ...req.body });
-        console.log(auth, "auth");
-        const results = await auth.save();
       } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "failed" });

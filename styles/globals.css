@@ -268,3 +268,28 @@ button,
   }
 }
 
+
+/* ant descripton */
+
+.ant-descriptions-item-container{
+  flex-direction: column !important;
+}
+
+.ant-descriptions-view{
+  width: 170% !important;
+   padding-top: 5vh !important;
+ 
+}
+
+.ant-descriptions-view table{
+  height: 40vh !important;
+ 
+}
+
+.ant-descriptions-item-label{
+  font-size: 24px !important;
+}
+
+.ant-descriptions-item-content{
+  font-size: 24px !important;
+}

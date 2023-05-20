@@ -14,9 +14,10 @@ import {
   getAllproducts,
   getAllCart,
 } from "../../helper/utilities/apiHelper";
-import { Spin, notification } from "antd";
+import { Drawer, Spin, notification } from "antd";
 import { get } from "lodash";
 import { ReloadOutlined } from "@ant-design/icons";
+import Buy from "../buy";
 
 export default function App() {
   const [current, setCurrentImage] = useState();
@@ -27,6 +28,7 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [openDraw, setopenDraw] = useState(false);
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -69,7 +71,7 @@ export default function App() {
       const formData = {
         data: {
           productId: data._id,
-          image: filterData[0].image,
+          image: filterData[0].image[0],
           name: filterData[0].title,
           total: filterData[0].price,
           quantity: 1,
@@ -122,11 +124,11 @@ export default function App() {
                         <>
                           <div className="xl:pt-[5vh]  xsm:pl-[3vw] sm:!pl-[5vw] lg:!pl-[3vw] lg:!pt-[13vh]  flex items-center justify-center">
                             <div
-                              className={
+                              className={`${
                                 current && current.includes(image)
                                   ? "border-4 border-[--third-color] "
-                                  : "border-none "
-                              }
+                                  : "border-none"
+                              }  bg-slate-100 text-center`}
                               id={styles.img_wrap}
                               key={i}
                               onMouseEnter={() => {
@@ -134,11 +136,11 @@ export default function App() {
                               }}
                             >
                               <Image
-                                width={200}
+                                width={400}
                                 height={300}
                                 alt="logo"
                                 src={image}
-                                className="xl:w-40 "
+                                className="m-auto pb-[1vh]"
                               />
                             </div>
                           </div>
@@ -249,15 +251,21 @@ export default function App() {
                       <button
                         className="bg-[var(--second-color)] hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md lg:h-[6vh] xl:h-[5vh] xl:w-[8vw]  xl:px-3 xl:py-2 xsm:h-[4vh] xsm:w-[25vw] sm:w-[12vw]"
                         onClick={() => {
-                          router.push({
-                            pathname: "/buy",
-                            query: { _id: data._id },
-                          });
+                          setopenDraw(true);
                         }}
                       >
                         Buy Now
                       </button>
                     </div>
+                    <Drawer
+                      width={500}
+                      open={openDraw}
+                      onClose={() => {
+                        setopenDraw(false);
+                      }}
+                    >
+                      <Buy id={router.query.id} />
+                    </Drawer>
                   </div>
                 );
               })}

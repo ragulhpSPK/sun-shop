@@ -83,13 +83,15 @@ function SideNavebar() {
       </div>
 
       <div className="w-[80vw] h-[90vh]  overflow-y-scroll">
-        <div id="1" className="h-[90vh] flex justify-center pt-[10vh]">
+        <div id="1" className="h-[90vh] flex justify-center ">
           {<Profile />}
         </div>
-        <div id="2" className="h-[90vh] flex justify-center ">
+
+        <div id="2" className="h-[90vh] flex justify-center">
           {<Cart />}
         </div>
-        <div id="3" className="h-[90vh] flex justify-center pt-[10vh]">
+
+        <div id="3" className="h-[90vh] flex justify-center ">
           {<Order />}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Badge, Image } from "antd";
+import { Avatar, Badge, Divider, Image, List } from "antd";
 import React from "react";
 import { getAllOrder } from "@/helper/utilities/apiHelper";
 import { useState } from "react";
@@ -25,18 +25,18 @@ function Orders() {
   }, []);
 
   return (
-    <div>
-      <div className=" p-[10px] rounded-md  w-[90%] ">
+    <div className="bg-[#ecf0f1] h-screen w-screen">
+      <div className=" p-[10px] rounded-md  w-[90%]  overflow-y-scroll">
         <h1 className="text-black text-[32px] text-center p-[2vh] ">
           My Orders
         </h1>
       </div>
 
-      <div className="flex flex-col m-auto gap-[2vw] pl-[10vw] items-center justify-center pt-[2vw]">
+      <div className="flex flex-col m-auto gap-[2vw]  items-center justify-center pt-[2vw]">
         {orders.map((data, index) => {
           return (
             <div
-              className="shadow-md m-auto bg-white p-[4vh] xl:w-[60vw] flex flex-col items-center justify-center"
+              className=" m-auto shadow shadow-slate bg-[#E5E9EA] p-[4vh] xl:w-[50vw] flex flex-col items-center justify-center"
               key={index}
               onClick={() => {
                 router.push({
@@ -45,9 +45,9 @@ function Orders() {
                 });
               }}
             >
-              <div className="flex gap-[2vw] pt-[2vh]">
-                <div className="text-xl flex">
-                  <div className="flex flex-col gap-[2vh] ">
+              <div className="flex  gap-[2vw] pt-[2vh]">
+                <div className="text-xl flex flex-row-reverse gap-[2vw]">
+                  <div className="flex flex-col gap-[5vh] ">
                     {data.productname.map((name, i) => {
                       return (
                         <p className="text-slate-600 " key={i}>
@@ -62,11 +62,14 @@ function Orders() {
                       return (
                         <div key={i}>
                           <Image
-                            src={image[0]}
+                            src={image || image[0]}
                             width={70}
-                            height={50}
+                            height={70}
                             alt="img"
+                            className="rounded-full shadow-lg shadow-slate-300 p-2"
                           />
+
+                          {/* <Avatar src={image || image[0]}></Avatar> */}
                         </div>
                       );
                     })}

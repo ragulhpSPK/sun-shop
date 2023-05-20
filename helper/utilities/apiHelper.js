@@ -111,6 +111,14 @@ export const deleteOrder = (formData) => {
 
 // Order Ended
 
+//dashboard orders
+
+export const getDashBoardOrder = () => {
+  return axios.get("/api/dasboard");
+};
+
+//dashboard emded
+
 // Auth Started
 
 export const getAllMessage = () => {
@@ -154,4 +162,9 @@ export const getOneUer = (formData) => {
 
 export const getOneUerforNav = () => {
   return axios.get(`/api/auth/`);
+};
+
+export const userProfile = (formData) => {
+  console.log(formData, "deuhrinj");
+  return axios.put(`/api/auth/raw`, formData);
 };
