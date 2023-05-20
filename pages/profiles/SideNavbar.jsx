@@ -10,6 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Link from "next/link";
 import { Divider } from "antd";
+import Cookies from "js-cookie";
 
 function SideNavebar() {
   const [current, setProfileCurrent] = useState(1);
@@ -19,27 +20,32 @@ function SideNavebar() {
       id: 1,
       name: "Profile",
       img: <AccountCircleIcon />,
-      goto: "#1",
+      goto: "/profiles/SideNavbar/#1",
     },
     {
       id: 2,
       name: "Cart",
       img: <ShoppingCartCheckoutIcon />,
-      goto: "#2",
+      goto: "/profiles/SideNavbar/#2",
     },
     {
       id: 3,
       name: "Orders",
       img: <StoreIcon />,
-      goto: "#3",
+      goto: "/profiles/SideNavbar/#3",
     },
     {
       id: 4,
       name: "Logout",
       img: <LogoutIcon />,
-      goto: "#4",
+      goto: "/",
     },
   ];
+
+  const handleLogout = () => {
+    Cookies.remove("x-o-t-p");
+    dispatch(changeUserValues({ user: [] }));
+  };
 
   return (
     <div className="flex justify-between w-[100vw] flex-row-reverse ">
@@ -58,7 +64,12 @@ function SideNavebar() {
                     : "bg-white"
                 } h-[6vh] rounded`}
               >
-                <Link href={`/profiles/SideNavbar/${res.goto}`}>
+                <Link
+                  href={`${res.goto}`}
+                  onClick={() => {
+                    res.id === 4 && handleLogout();
+                  }}
+                >
                   <div className="flex items-center justify-start gap-1 h-[100%]">
                     <div className="p-3">{res.img}</div>
                     <div className="text-xl font-bold ">{res.name}</div>

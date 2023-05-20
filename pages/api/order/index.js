@@ -7,7 +7,9 @@ export default async function orderController(req, res) {
   switch (req.method) {
     case "GET": {
       try {
-        const order = await Order.find();
+        await middleware(req, res);
+        const order = await Order.find({ userId: req.query.uid.id });
+
         return res.status(200).send({ data: order });
       } catch (err) {
         return res.status(500).send({ data: "failed" });

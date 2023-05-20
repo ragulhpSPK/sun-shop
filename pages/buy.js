@@ -43,7 +43,7 @@ function Cart() {
   const [form] = Form.useForm();
   const { TextArea } = Input;
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   uuidv1();
 
   const handleCheck = () => {
@@ -77,9 +77,10 @@ function Cart() {
 
       setProduts(get(result, "[0].data.message"));
       setAllProducts(get(result, "[1].data.data"));
-      setLoading(false);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -115,7 +116,6 @@ function Cart() {
     });
 
   const handleSubmit = async (e) => {
-    console.log(e);
     try {
       const formData = {
         data: {

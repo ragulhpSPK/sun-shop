@@ -22,7 +22,6 @@ function Categories({ setLoading }) {
       setLoading(true);
       const result = await getAllCatagory();
       setCategory(get(result, "data.data"));
-      
     } catch (err) {
       console.log(err);
     } finally {
@@ -50,44 +49,36 @@ function Categories({ setLoading }) {
       </div>
       <div className=" xsm:mt-[10px]  xsm:w-[90vw] lg:w-[80vw] m-auto shadow-xl py-[3vh]">
         <Swiper
-         
           grid={{
             rows: 2,
           }}
           slidesPerView={1}
-         
-
           modules={[Grid, Pagination, Navigation, Autoplay]}
           navigation={{
             clickable: true,
           }}
-          
           breakpoints={{
-          640: {
-            slidesPerView: 2,
-             rows: 2,
-         
-          },
-          768: {
-            slidesPerView: 4,
-             rows: 2,
-          
-          },
-          1024: {
-            slidesPerView: 6,
-             rows: 2,
-          
+            640: {
+              slidesPerView: 2,
+              rows: 2,
+            },
+            768: {
+              slidesPerView: 4,
+              rows: 2,
+            },
+            1024: {
+              slidesPerView: 6,
+              rows: 2,
             },
             1280: {
               slidesPerView: 7,
-               rows: 2,
+              rows: 2,
             },
-            1420:{
+            1420: {
               slidesPerView: 8,
-               rows: 2,
+              rows: 2,
             },
-       }}
-
+          }}
           autoplay={{ delay: 2000 }}
           className={`mySwiper flex xsm:w-[80vw] lg:w-[80vw] `}
         >
@@ -97,7 +88,6 @@ function Categories({ setLoading }) {
                 className="border border-slate-300 cursor-pointer !flex flex-col items-center justify-center"
                 key={data.id}
                 onClick={() => {
-                  console.log(data._id)
                   router.push({
                     pathname: "/allCat",
                     query: { cat_id: data._id },

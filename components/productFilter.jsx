@@ -23,14 +23,11 @@ function ProductFilter() {
     }
   };
 
-
   useEffect(() => {
     fetchData();
-  }, [])
- 
+  }, []);
 
   useEffect(() => {
-    console.log(allProducts, "dagdab");
     setProduts(
       allProducts.filter((data) => {
         return (
@@ -71,7 +68,7 @@ function ProductFilter() {
                     <Image
                       width={100}
                       height={100}
-                      src={get(data,"image[0]","")}
+                      src={get(data, "image[0]", "")}
                       alt="Shoes"
                       className="!w-[8vw] h-[100%] m-auto "
                     />

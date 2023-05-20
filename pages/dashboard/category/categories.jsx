@@ -100,10 +100,9 @@ const Categories = (properties) => {
   };
 
   const handleDelete = async (value) => {
- 
     try {
       const result = await deleteCatagory(value._id);
-       
+
       if (get(result, "data.message", "") === "mapped with subcategory") {
         Modal.warning({
           title: "This Category Mapped With SubCategory",
@@ -270,7 +269,7 @@ const Categories = (properties) => {
                   ]}
                   name="name"
                 >
-                  <Input placeholder="Category Name" className="w-[25vw]"/>
+                  <Input placeholder="Category Name" className="w-[25vw]" />
                 </Form.Item>
 
                 <Form.Item className="w-[100%]" name="name">
@@ -291,7 +290,7 @@ const Categories = (properties) => {
                         />
                       </div>
                     ) : (
-                        <Dragger {...props} style={{width:"25vw"}}>
+                      <Dragger {...props} style={{ width: "25vw" }}>
                         <p className="ant-upload-drag-icon">
                           <InboxOutlined />
                         </p>

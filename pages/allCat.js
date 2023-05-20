@@ -124,7 +124,6 @@ function AllCat() {
       get(router, "query._id", "") === "123" &&
       get(router, "query.price", "")
     ) {
-      console.log("trigger");
       setFilerProduct(
         products
           .map((product) => {

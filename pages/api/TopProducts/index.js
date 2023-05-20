@@ -13,7 +13,6 @@ export default async function topProductsController(req, res) {
       }
     }
     case "PUT": {
-      console.log(req.body);
       try {
         await Product.findByIdAndUpdate({ _id: req.body.id }, { ...req.body });
         return res.status(200).send({ message: "success" });

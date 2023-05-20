@@ -1,23 +1,68 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Drawer, Form, Input, Button, Avatar, Descriptions } from "antd";
+import {
+  Drawer,
+  Form,
+  Input,
+  Button,
+  Avatar,
+  Descriptions,
+  notification,
+} from "antd";
 import React from "react";
 import { useState } from "react";
+import { getOneUerforNav, authHandler } from "../../helper/utilities/apiHelper";
+import { useEffect } from "react";
+import { get } from "lodash";
 
 function Profile() {
   const [openDrawer, setOpenDrawer] = useState(false);
-
+  const [profile, setProfile] = useState([]);
   const [form] = Form.useForm();
   const { TextArea } = Input;
 
-  const handleSubmit = (values) => {
-    console.log(values);
+  const fetchData = async () => {
+    try {
+      const result = await getOneUerforNav();
+      setProfile(get(result, "data.message", []));
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleEdit = (data) => {
+    console.log(data);
+    form.setFieldsValue(data);
+  };
+
+  const handleSubmit = async (value) => {
+    try {
+      const formData = {
+        address: value.address,
+        alternateNumber: value.alternateNumber,
+        email: value.email,
+        firstName: value.firstName,
+        number: value.number,
+      };
+      await authHandler(formData);
+      notification.success({ message: "profile updated successfully" });
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log("clilck");
+  };
+
   return (
     <div className="w-[50vw]">
       <div className="flex justify-end">
         <Button
           onClick={() => {
             setOpenDrawer(true);
+            handleEdit(profile[0]);
           }}
           type="primary"
           className="flex flex-row gap-x-1 items-center"
@@ -27,11 +72,17 @@ function Profile() {
         </Button>
       </div>
       <Descriptions title={<div className="!text-2xl">Profile</div>}>
-        <Descriptions.Item label="Name">Zhou Maomao</Descriptions.Item>
-        <Descriptions.Item label="Mobile Number">9876543210</Descriptions.Item>
-        <Descriptions.Item label="Email">Hangzhou, Zhejiang</Descriptions.Item>
+        <Descriptions.Item label="Name">
+          {get(profile, "[0].firstName")}
+        </Descriptions.Item>
+        <Descriptions.Item label="Mobile Number">
+          {get(profile, "[0].number")}
+        </Descriptions.Item>
+        <Descriptions.Item label="Email">
+          {get(profile, "[0].email")}
+        </Descriptions.Item>
         <Descriptions.Item label="Address">
-          No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+          {get(profile, "[0].address")}
         </Descriptions.Item>
       </Descriptions>
       <Drawer

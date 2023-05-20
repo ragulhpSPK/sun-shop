@@ -5,6 +5,7 @@ import { isEmpty } from "lodash";
 import Jwt from "jsonwebtoken";
 import { encrypt } from "../../../helper/utilities/crypt";
 import { middleware } from "@/helper/utilities/middleware";
+import { authHandler } from "@/helper/utilities/apiHelper";
 
 export default async function MessageController(req, res) {
   dbconnect();
@@ -39,7 +40,12 @@ export default async function MessageController(req, res) {
           const data = encrypt(token);
           return res.status(200).send({ data: data });
         }
+
         return res.status(200).send({ message: "success" });
+        console.log(req.body, "body");
+        const auth = await authHandler({ ...req.body });
+        console.log(auth, "auth");
+        const results = await auth.save();
       } catch (err) {
         console.log(err);
         return res.status(500).send({ message: "failed" });

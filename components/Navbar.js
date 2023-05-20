@@ -68,10 +68,6 @@ function Navbar() {
     );
   }, [search]);
 
-  const handleLogOut = () => {
-    Cookies.remove("x-o-t-p");
-  };
-
   return (
     <div>
       <div

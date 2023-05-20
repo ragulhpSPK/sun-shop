@@ -8,9 +8,11 @@ export default async function cartController(req, res) {
     case "GET":
       {
         try {
-          const cart = await Cart.find();
+          await middleware(req, res);
+          const cart = await Cart.find({ userId: req.query.uid.id });
           return res.status(200).send({ message: cart });
         } catch (err) {
+          console.log(err);
           return res.status(500).send({ message: "failed" });
         }
       }

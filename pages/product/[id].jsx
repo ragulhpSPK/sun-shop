@@ -236,7 +236,10 @@ export default function App() {
                           className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 xl:text-xl rounded-md lg:h-[6vh] px-3 xl:h-[5vh] xl:w-[10vw] xl:py-[8px] xsm:h-[4vh]"
                           onClick={() => {
                             handleClick(data);
-                            dispatch(addproduct({ ...filterData }));
+                            dispatch(addproduct({ products: true }));
+                            {
+                              console.log(data);
+                            }
                           }}
                         >
                           Add to Cart
