@@ -57,9 +57,9 @@ function Profile() {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#ecf0f1] flex  justify-center pt-[10vh]">
-      <div className="w-[50vw]">
-        <div className="flex justify-end w-[100%]">
+    <div className="xsm:!w-[100vw] sm:!w-[80vw] h-screen bg-[#ecf0f1] flex overflow-x-hidden justify-center pt-[10vh]">
+      <div className="xsm:w-[90vw] sm:w-[50vw]">
+        <div className="flex justify-end float-right w-[20vw]">
           <Button
             onClick={() => {
               setOpenDrawer(true);
@@ -76,7 +76,7 @@ function Profile() {
         <Descriptions
           column={2}
           title={
-            <div className="!text-2xl flex gap-2 items-center">
+            <div className="!text-2xl flex gap-2 items-center w-[40vw] ">
               <Avatar
                 size="large"
                 style={{ backgroundColor: "var(--third-color)" }}
@@ -106,7 +106,7 @@ function Profile() {
         </Descriptions>
         <Drawer
           open={openDrawer}
-          width={500}
+          width={400}
           onClose={() => setOpenDrawer(false)}
         >
           <Form

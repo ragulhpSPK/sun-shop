@@ -19,6 +19,7 @@ import {
   Image,
   Skeleton,
   Badge,
+  Spin,
 } from "antd";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -35,7 +36,6 @@ import {
 import { get, update } from "lodash";
 import Sidenavbar from "../shared/Sidenavbar";
 import AdminNavbar from "../shared/AdminNavbar";
-import { Co2Sharp } from "@mui/icons-material";
 
 function Banner() {
   const { Dragger } = Upload;
@@ -65,7 +65,6 @@ function Banner() {
   };
 
   const handleFinish = async (value) => {
-   
     if (updateid === "") {
       setLoading(true);
       try {
@@ -76,11 +75,9 @@ function Banner() {
             productid: productId,
             productname: allProducts.filter((data) => {
               return data._id == productId;
-              // if (data._id == productId) console.log(data.title);
             })[0].title,
             status: value.status,
           },
-         
         };
         await createBanner(formData);
         setOpen(false);
@@ -94,8 +91,6 @@ function Banner() {
       }
     } else {
       try {
-
-   
         setLoading(true);
 
         const formData = {
@@ -129,8 +124,6 @@ function Banner() {
     fetchData();
   }, []);
 
-  
-
   const props = {
     name: "file",
     multiple: true,
@@ -160,7 +153,6 @@ function Banner() {
   };
 
   const handleDelete = (updateid) => {
-   
     try {
       deleteBanner(updateid);
 
@@ -181,90 +173,99 @@ function Banner() {
         <div>
           <Sidenavbar />
         </div>
-        <div className="w-[80vw] flex flex-col pt-[5vh]">
-          <div
-            className=" bg-white shadow-lg p-2 float-right self-end"
-            onClick={() => setOpen(!open)}
-          >
-            <AddOutlinedIcon className="text-[--third-color] mr-2" />
+        <Spin spinning={loading}>
+          <div className="w-[80vw] flex flex-col pt-[5vh]">
+            <div
+              className=" bg-white shadow-lg p-2 float-right self-end"
+              onClick={() => setOpen(!open)}
+            >
+              <AddOutlinedIcon className="text-[--third-color] mr-2" />
+            </div>
+
+            <div className="mt-5 grid grid-cols-5  gap-14 justify-start relative">
+              {banner.map((data) => {
+                return (
+                  <Skeleton
+                    active
+                    loading={loading ? true : false}
+                    key={data._id}
+                  >
+                    <Card className="w-[16vw] h-[34vh]  shadow-lg">
+                      <div className="float-left relative pl-[15px] w-[25px]">
+                        <Badge.Ribbon
+                          text={data.status}
+                          color={`${
+                            data.status === "Bottom"
+                              ? "volcano"
+                              : data.status === "Top"
+                              ? "purple"
+                              : data.status === "Best Deals"
+                              ? "#faad14"
+                              : "#magenta"
+                          }`}
+                          className="absolute top-[-20px] left-[-35px]"
+                        ></Badge.Ribbon>
+                      </div>
+
+                      <EditNoteOutlinedIcon
+                        className="absolute right-8 top-[3px] text-[--third-color]"
+                        onClick={() => {
+                          setUpdateId(data._id);
+                          handleEdit(data);
+                        }}
+                      />
+                      <CloseIcon
+                        className=" absolute right-0 top-0 pr-2 font-bold text-3xl text-[--third-color]"
+                        onClick={() => {
+                          // setUpdateId(data._id);
+                          handleDelete(data._id);
+                        }}
+                      />
+
+                      <div className="flex flex-col gap-2  items-center justify-center w-[100%]">
+                        <div className="text-center h-[10vh] pt-[10px] ">
+                          <Image
+                            src={data.image}
+                            alt="not found"
+                            className=" !w-[12vw] !h-[12vh]  mt-4"
+                          />
+                        </div>
+
+                        <div className="pt-10 ">
+                          <h1 className="text-center font-bold text-[16px] ">
+                            {data.name}
+                          </h1>
+                        </div>
+                        <div className="flex gap-[15px] h-[5vh]">
+                          <p className="text-[12px] font-bold ">
+                            {data.productname}
+                          </p>
+                        </div>
+                        <div className=" self-center ">
+                          <Button
+                            type="link"
+                            className="bg-[--third-color] hover:bg-[#780c78] w-[6vw] !h-[4vh] !hover:text-[#000] hover:scale-95 duration-1000"
+                          >
+                            View More
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  </Skeleton>
+                );
+              })}
+            </div>
           </div>
+        </Spin>
 
-          <div className="mt-5 grid grid-cols-5  gap-14 justify-start relative">
-            {banner.map((data) => {
-              return (
-                <Skeleton
-                  active
-                  loading={loading ? true : false}
-                  key={data._id}
-                >
-                  <Card className="w-[16vw] h-[34vh]  shadow-lg">
-                    <div className="float-left relative pl-[15px] w-[25px]">
-                      <Badge.Ribbon
-                        text={data.status}
-                        color={`${
-                          data.status === "Bottom"
-                            ? "volcano"
-                            : data.status === "Top"
-                            ? "purple"
-                            : "magenta"
-                        }`}
-                        className="absolute top-[-20px] left-[-35px]"
-                      ></Badge.Ribbon>
-                    </div>
-
-                    <EditNoteOutlinedIcon
-                      className="absolute right-8 top-[3px] text-[--third-color]"
-                      onClick={() => {
-                        setUpdateId(data._id);
-                        handleEdit(data);
-                      }}
-                    />
-                    <CloseIcon
-                      className=" absolute right-0 top-0 pr-2 font-bold text-3xl text-[--third-color]"
-                      onClick={() => {
-                        // setUpdateId(data._id);
-                        handleDelete(data._id);
-                      }}
-                    />
-
-                    <div className="flex flex-col gap-2  items-center justify-center w-[100%]">
-                      <div className="text-center h-[10vh] pt-[10px] ">
-                        <Image
-                          src={data.image}
-                          alt="not found"
-                          className=" !w-[12vw] !h-[12vh]  mt-4"
-                        />
-                      </div>
-
-                      <div className="pt-10 ">
-                        <h1 className="text-center font-bold text-[16px] ">
-                          {data.name}
-                        </h1>
-                      </div>
-                      <div className="flex gap-[15px] h-[5vh]">
-                        <p className="text-[12px] font-bold ">
-                          {data.productname}
-                        </p>
-                      </div>
-                      <div className=" self-center ">
-                        <Button
-                          type="link"
-                          className="bg-[--third-color] hover:bg-[#780c78] w-[6vw] !h-[4vh] !hover:text-[#000] hover:scale-95 duration-1000"
-                        >
-                          View More
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                </Skeleton>
-              );
-            })}
-          </div>
-        </div>
         <Modal open={open} footer={false} destroyOnClose>
           <Form form={form} onFinish={handleFinish}>
             <Form.Item name="name" rules={[{ required: true }]}>
-              <Input size="large" placeholder="Enter Banner Name" className="w-[25vw]"/>
+              <Input
+                size="large"
+                placeholder="Enter Banner Name"
+                className="w-[25vw]"
+              />
             </Form.Item>
             <Form.Item name="productname" rules={[{ required: true }]}>
               <Select
@@ -288,8 +289,9 @@ function Banner() {
                 size="large"
                 placeholder="Select your status here.."
                 onChange={(e) => setStatus(e)}
-                 className="!w-[25vw]"
+                className="!w-[25vw]"
               >
+                <Option value="Best Deals">Best Deals</Option>
                 <Option value="Left">left</Option>
                 <Option value="Top">Top</Option>
                 <Option value="Bottom">Bottom</Option>
@@ -314,7 +316,17 @@ function Banner() {
                     />
                   </div>
                 ) : (
-                  <Dragger {...props} multiple={true} style={{width:"450px",display:"flex",alignItems:"center",justifyContent:"center",marginLeft:"10px"}}>
+                  <Dragger
+                    {...props}
+                    multiple={true}
+                    style={{
+                      width: "450px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: "10px",
+                    }}
+                  >
                     <p className="ant-upload-drag-icon">
                       <InboxOutlined />
                     </p>

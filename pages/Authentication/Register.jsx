@@ -1,8 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { Modal, Form, Input, Button, Image, notification,Drawer } from "antd";
+import { Modal, Form, Input, Button, Image, notification, Drawer } from "antd";
 import { useState } from "react";
-import { authHandler, createMessage, getOneUer } from "../../helper/utilities/apiHelper";
+import {
+  authHandler,
+  createMessage,
+  getOneUer,
+} from "../../helper/utilities/apiHelper";
 import OtpInput from "react-otp-input";
 import styles from "../../styles/Home.module.css";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
@@ -12,9 +16,8 @@ import { get, isEmpty } from "lodash";
 import Cookies from "js-cookie";
 import { excrypt } from "@/helper/shared";
 import { useRouter } from "next/router";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { changeUserValues } from "@/redux/userSlice";
-
 
 function Register({ setLogin }) {
   const [form] = Form.useForm();
@@ -44,7 +47,7 @@ function Register({ setLogin }) {
   const requestOTP = async (e) => {
     setLogin(false);
     setExpandForm(true);
-    
+
     // e.preventDefault();
     // if (phoneNumber.length >= 12) {
     //   setExpandForm(true);
@@ -63,17 +66,16 @@ function Register({ setLogin }) {
   const verifyOtp = async () => {
     if (otp.length === 6) {
       const result = await getOneUer(phoneNumber);
-     
-    if (isEmpty(result.data.message)) { 
-      setFormModal(true);
-    } else {
-      const result = await authHandler({ number: phoneNumber }); 
-      Cookies.set("x-o-t-p", result.data.data);
-      dispatch(changeUserValues({user:result.data.data}))
-      notification.success({message:"Continue to shop"})
-    }
+
+      if (isEmpty(result.data.message)) {
+        setFormModal(true);
+      } else {
+        const result = await authHandler({ number: phoneNumber });
+        Cookies.set("x-o-t-p", result.data.data);
+        dispatch(changeUserValues({ user: result.data.data }));
+        notification.success({ message: "Continue to shop" });
+      }
       setExpandForm(false);
-      
     }
     // try {
     //   if (otp.length === 6) {
@@ -99,21 +101,21 @@ function Register({ setLogin }) {
   const handleSubmit = async (values) => {
     try {
       const result = await authHandler(values);
-      dispatch(changeUserValues({user:result.data.data}))
+      dispatch(changeUserValues({ user: result.data.data }));
       Cookies.set("x-o-t-p", result.data.data);
       setFormModal(false);
-      notification.success({message:"Continue to shop"})
+      notification.success({ message: "Continue to shop" });
     } catch (err) {
-      notification.error({message: "something went wrong"});
-  }
-}
+      notification.error({ message: "something went wrong" });
+    }
+  };
   return (
     <div>
       <div className="">
-        <div className="lg:w-[50vw] lg:h-[38vh] xsm:!w-[95vw]  m-auto ">
+        <div className="lg:w-[50vw] l m-auto ">
           <div className="flex lg:flex-row xsm:flex-col">
-            <div className="lg:w-[30vw] xxl:w-[20vw] xsm:w-[75vw] xsm:h-[30vh] xsm: lg:h-[40vh] backdrop-blur-sm bg-[--third-color] rounded-md md:flex-row xsm:flex-col flex xl:flex-col items-center justify-center">
-              <h1 className="text-white xsm:text-[18px] lg:text-lg md:pl-[2vw] lg:pt-[2vh] md:text-2xl xsm:w-[85%] lg:w-[60%] ">
+            <div className="lg:w-[30vw] xxl:w-[20vw] xsm:w-[75vw]  xsm: backdrop-blur-sm bg-[--third-color] rounded-md md:flex-row xsm:flex-col flex xl:flex-col items-center justify-center">
+              <h1 className="text-white xsm:text-[14px] lg:text-lg md:pl-[2vw] lg:pt-[2vh] md:text-xl xsm:w-[85%] md:w-[60%] lg:w-[60%] ">
                 Register With Your Mobile Number Via OTP...
               </h1>
               <Image
@@ -122,36 +124,37 @@ function Register({ setLogin }) {
                 width={200}
                 height={200}
                 preview={false}
-                  className="xsm:!w-[40vw] md:!h-[10vw]"
+                className="xsm:!w-[40vw] md:!h-[20vh] lg:h-[10vh]"
               />
             </div>
-            <div className="lg:w-[30vw] lg:h-[40vh] flex rounded-md !pt-[2vh] flex-col lg:items-center lg:justify-between   pr-[2vw]">
-              <Form style={{ maxWidth: 500 }} form={form} name="control-hooks" className="xsm:pl-[3vw] lg:pl-[12vw] xl:pl-[6vw] xxl:pl-[2vw]">
+            <div className="lg:w-[30vw]  flex rounded-md !pt-[2vh] flex-col lg:items-center lg:justify-between   pr-[2vw]">
+              <Form
+                style={{ maxWidth: 500 }}
+                form={form}
+                name="control-hooks"
+                className="xsm:pl-[3vw] lg:pl-[12vw] xl:pl-[6vw] xxl:pl-[2vw]"
+              >
                 <Form.Item
                   name="number"
                   label="Phone Number"
                   rules={[
                     { required: true, message: "Please Enter Your Number" },
                   ]}
-                  
                   style={{
                     fontSize: "30px",
                     color: "red",
-                    
                   }}
                   className="!w-[40vw] !text-[8px]"
-                 
                 >
                   <Input
                     size="large"
                     placeholder="+91 9839288383"
-                    className="xsm:w-[50vw] lg:!w-[16vw] " 
+                    className="xsm:w-[56vw] sm:w-[50vw] md:w-[50vw] lg:!w-[16vw]"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    
                   />
                 </Form.Item>
-                <p className=" lg:!w-[25vw] xsm:text-[18px] md:text-[24px] sm:text-[12px]  xsm:w-[80vw] lg:text-base font-medium">
+                <p className=" lg:!w-[25vw] xsm:text-[14px] md:text-[20px] sm:text-[12px]  xsm:w-[80vw] lg:text-base font-medium">
                   Secure access to our e-commerce platform by
                   {/* <a className="text-blue-600">Terms of Use</a> and &nbsp; */}
                   &nbsp;
@@ -179,16 +182,16 @@ function Register({ setLogin }) {
         footer={false}
         header={false}
         onCancel={() => setExpandForm(!expandForm)}
-        className="!w-[24vw] absolute top-[22vh] right-[30vw]"
+        className="absolute top-[22vh] xsm:!w-[80vw] sm:!w-[55vw] sm:right-[22vw] md:!w-[40vw] md:!right-[30vw] lg:!w-[26vw] xsm:right-[10vw] lg:!right-[40vw] "
       >
         <div
           className={`
            
-          w-[20vw] h-[15vw] bg-white rounded-md flex flex-col justify-around items-center`}
+          h-[18vh] bg-white rounded-md flex flex-col justify-around items-center`}
         >
           <label
             htmlFor="otp"
-            className="font-bold text-lg text-black text-center "
+            className="font-bold text-xl text-slate-700 text-center "
           >
             Enter your OTP
           </label>
@@ -205,43 +208,80 @@ function Register({ setLogin }) {
               <input {...props} className="border-2 h-10 !w-8 ml-2" />
             )}
           ></OtpInput>
-       
         </div>
       </Modal>
-      <Modal open={formModal} footer={false}>
+      <Modal
+        open={formModal}
+        footer={false}
+        onCancel={() => {
+          setFormModal(false);
+        }}
+      >
         <div className="flex flex-col justify-center">
-          <Form form={form} size="small" layout="vertical" onFinish={handleSubmit}>
-            <Form.Item name="firstName" label="Name" rules={[
-                  { required: true, message: "Please Enter Your Name" },
-                  ]}>
+          <Form
+            form={form}
+            size="small"
+            layout="vertical"
+            onFinish={handleSubmit}
+          >
+            <Form.Item
+              name="firstName"
+              label="Name"
+              rules={[{ required: true, message: "Please Enter Your Name" }]}
+            >
               <Input placeholder="Enter Your Name" />
-            </Form.Item            >
-             <Form.Item name="number" label="Mobile Number" rules={[
-                  { required: true, message: "Please Enter Your Mobile Number" },
-                  ]}>
-              <Input placeholder="Enter Your  Mobile number" value={phoneNumber}/>
             </Form.Item>
-            <Form.Item name="alternateNumber" label={<span>Alternate Mobile number <span className="text-slate-400">(optional)</span></span>} rules={[
-                  { message: "Please Enter Your Alternate Mobile number" },
-                  ]}>
+            <Form.Item
+              name="number"
+              label="Mobile Number"
+              rules={[
+                { required: true, message: "Please Enter Your Mobile Number" },
+              ]}
+            >
+              <Input
+                placeholder="Enter Your  Mobile number"
+                value={phoneNumber}
+              />
+            </Form.Item>
+            <Form.Item
+              name="alternateNumber"
+              label={
+                <span>
+                  Alternate Mobile number{" "}
+                  <span className="text-slate-400">(optional)</span>
+                </span>
+              }
+              rules={[{ message: "Please Enter Your Alternate Mobile number" }]}
+            >
               <Input placeholder="Enter Your Alternate Mobile number" />
             </Form.Item>
-            <Form.Item name="email" label={<span>Email Address <span className="text-slate-400">(optional)</span></span>} rules={[
-                  { message: "Please Enter Your Email Address" },
-                  ]}>
+            <Form.Item
+              name="email"
+              label={
+                <span>
+                  Email Address{" "}
+                  <span className="text-slate-400">(optional)</span>
+                </span>
+              }
+              rules={[{ message: "Please Enter Your Email Address" }]}
+            >
               <Input placeholder="Enter Your Alternate Mobile number" />
             </Form.Item>
-            <Form.Item name="address" label={<span>Address</span>} rules={[
-                  { required:true, message: "Please Enter Your Address" },
-                  ]}>
+            <Form.Item
+              name="address"
+              label={<span>Address</span>}
+              rules={[{ required: true, message: "Please Enter Your Address" }]}
+            >
               <TextArea placeholder="Enter Your Address" />
             </Form.Item>
-            <Button htmlType="submit"  className="w-[100%] !h-[4vh]"><span className="text-black">Continue to Shop now</span></Button>
+            <Button htmlType="submit" className="w-[100%] !h-[5vh]">
+              <span className="text-black">Continue to Shop now</span>
+            </Button>
           </Form>
         </div>
       </Modal>
     </div>
-  )
+  );
 }
 
 export default Register;

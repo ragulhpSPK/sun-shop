@@ -49,95 +49,89 @@ export default function Swipper({ setLoading }) {
 
   return (
     <div className="w-screen flex justify-center">
- <div className="lg:w-[80vw]   w-[90vw] gap-x-1  justify-center flex flex-col lg:flex-row">
+      <div className="lg:w-[80vw]   w-[90vw] gap-x-1  justify-center flex flex-col lg:flex-row">
         <div className="lg:w-[60vw] lg:h-[35vh]">
-           <Swiper
-        modules={[Navigation, Autoplay, Pagination]}
-        className="p-0  lg:h-[35vh]"
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        autoplay={{ delay: 4000 }}
-       
-      >
-        {left.map((data, index) => {
-          return (
-            <SwiperSlide
-              className="lg:p-0 px-1 "
-              key={index}
-              onClick={() =>
-                router.push({
-                  pathname: `/product/${data.productid}`,
-                  query: { id: data.productid },
-                })
-              }
-            >
-              
-                <Image
-                  src={data.image}
-                  className="!w-[100%] !h-[100%]"
-                  width={800}
-                  height={800}
-                  alt="not found"
-                ></Image>
-              
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-     </div>
-      <div className="flex lg:w-[20vw] xsm:gap-1 lg:h-[35vh] justify-center  items-center lg:flex-col ">
-        {top.map((data) => {
-          return (
-            <>
-              <div
-                className=" lg:w-[20vw] lg:h-[17vh] lg:p-0 pl-1"
-                onClick={() =>
-                  router.push({
-                    pathname: `/product/${data.productid}`,
-                    query: { id: data.productid },
-                  })
-                }
-              >
-                <Image
-                  src={data.image}
-                  className="!w-[100%] !h-[100%]"
-                  width={300}
-                  height={300}
-                  alt="not found"
-                />
-                
-              </div>
-            </>
-          );
-        })}
+          <Swiper
+            modules={[Navigation, Autoplay, Pagination]}
+            className="p-0  lg:h-[35vh]"
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: true }}
+            autoplay={{ delay: 4000 }}
+          >
+            {left.map((data, index) => {
+              return (
+                <SwiperSlide
+                  className="lg:p-0 px-1 "
+                  key={index}
+                  onClick={() =>
+                    router.push({
+                      pathname: `/product/${data.productid}`,
+                      query: { id: data.productid },
+                    })
+                  }
+                >
+                  <Image
+                    src={data.image}
+                    className="!w-[100%] !h-[100%]"
+                    width={800}
+                    height={800}
+                    alt="not found"
+                  ></Image>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </div>
+        <div className="flex lg:w-[20vw] xsm:gap-1 lg:h-[35vh] justify-center  items-center lg:flex-col ">
+          {top.map((data) => {
+            return (
+              <>
+                <div
+                  className=" lg:w-[20vw] lg:h-[17vh] lg:p-0 pl-1"
+                  onClick={() =>
+                    router.push({
+                      pathname: `/product/${data.productid}`,
+                      query: { id: data.productid },
+                    })
+                  }
+                >
+                  <Image
+                    src={data.image}
+                    className="!w-[100%] !h-[100%]"
+                    width={300}
+                    height={300}
+                    alt="not found"
+                  />
+                </div>
+              </>
+            );
+          })}
 
-        {bottom.map((data) => {
-          return (
-            <>
-              <div
-                className="lg:w-[20vw] lg:h-[17vh]  lg:p-0 pr-1"
-                onClick={() =>
-                  router.push({
-                    pathname: `/product/${data.productid}`,
-                    query: { id: data.productid },
-                  })
-                }
-              >
-                <Image
-                  src={data.image}
-                  className="!w-[100%] !h-[100%]"
-                  width={300}
-                  height={300}
-                  alt="not found"
-                />
-                
-              </div>
-            </>
-          );
-        })}
+          {bottom.map((data) => {
+            return (
+              <>
+                <div
+                  className="lg:w-[20vw] lg:h-[17vh]  lg:p-0 pr-1"
+                  onClick={() =>
+                    router.push({
+                      pathname: `/product/${data.productid}`,
+                      query: { id: data.productid },
+                    })
+                  }
+                >
+                  <Image
+                    src={data.image}
+                    className="!w-[100%] !h-[100%]"
+                    width={300}
+                    height={300}
+                    alt="not found"
+                  />
+                </div>
+              </>
+            );
+          })}
+        </div>
       </div>
     </div>
-    </div>
-   
   );
 }

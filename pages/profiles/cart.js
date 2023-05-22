@@ -48,6 +48,7 @@ function Cart() {
   const [form] = Form.useForm();
   const { TextArea } = Input;
   const [loading, setLoading] = useState(true);
+  const [size, setSize] = useState();
   uuidv1();
 
   const handleCheck = () => {
@@ -190,17 +191,30 @@ function Cart() {
       size="large"
       indicator={antIcon}
     >
-      <div className="bg-[#ecf0f1] w-[85vw] h-[90vh]">
+      <div className="bg-[#ecf0f1] xsm:!w-[100vw] xsm:p-[1vh] sm:p-0 sm:w-[80vw] sm:h-[90vh]">
         <div className="flex gap-[4vw]">
           <div className=" m-auto flex flex-col  !gap-6   h-fit xsm:mt-[6vh] lg:mt-[20vh] ">
             <div className="flex justify-between  p-[1vh]">
-              <h1 className="text-3xl text-slate-700 ">Shopping cart</h1>
+              <h1 className="sm:!text-xl xl:text-3xl text-slate-700 ">
+                Shopping cart
+              </h1>
               <Button
                 onClick={() => {
                   setDrawOpen(true);
+                  setSize(250);
                 }}
                 type="primary"
-                className="float-right"
+                className="float-right sm:hidden"
+              >
+                CheckOut
+              </Button>
+              <Button
+                onClick={() => {
+                  setDrawOpen(true);
+                  setSize(400);
+                }}
+                type="primary"
+                className="float-right xsm:hidden sm:block"
               >
                 CheckOut
               </Button>
@@ -209,7 +223,7 @@ function Cart() {
               products.map((data) => {
                 return (
                   <>
-                    <div className="flex flex-col xsm:w-[90vw] xl:w-[50vw] shadow-sm p-[2vh] bg-[#E5E9EA] relative ">
+                    <div className="flex flex-col  sm:w-[50vw] xl:w-[50vw] shadow-sm p-[2vh] bg-[#E5E9EA] relative ">
                       <div className="flex justify-between items-center p-[10px]  py-[16px]">
                         <Image
                           src={data.image[0]}
@@ -218,7 +232,7 @@ function Cart() {
                           width={100}
                           className="xsm:h-[4vh] xsm:w-fit lg:h-[6vh] xl:h-[6vh] rounded-full ml-[10px]"
                         />
-                        <p className="text-[12px] lg:text-[16px] w-[25vw] font-semibold pl-[8px]">
+                        <p className="xsm:text-[8px] sm:text-[12px] lg:text-[16px] w-[25vw] font-semibold pl-[8px]">
                           {data.name}
                         </p>
                         <div
@@ -252,11 +266,11 @@ function Cart() {
                 );
               })}
             <div className="flex flex-row-reverse shadow-sm bg-[#E5E9EA] justify-between  ">
-              <div className="flex  p-[10px] text-xl">
+              <div className="flex  p-[10px] xsm:text-lg sm:text-xl">
                 <p>Total Price:</p>
                 <p>{prices}</p>
               </div>
-              <div className="flex  p-[10px] text-xl">
+              <div className="flex  p-[10px] xsm:text-lg sm:text-xl">
                 <p>Total Products:</p>
                 <p className="pr-[12px]">{products && products.length}</p>
               </div>
@@ -265,20 +279,21 @@ function Cart() {
               <Button
                 type="primary"
                 onClick={() => router.push({ pathname: "/" })}
-                className="float-right !h-[4vh]"
+                className="float-right !h-[35px]"
               >
                 Continue to Shopping
               </Button>
             </div>
           </div>
-          <Drawer open={draw} onClose={() => setDrawOpen(false)} width={500}>
-            <div className="w-[22vw] shadow mt-[8vh] py-[5vh] pt-[2vh] mr-[3vw] rounded-md">
+          <Drawer open={draw} onClose={() => setDrawOpen(false)} width={size}>
+            <div className=" shadow mt-[8vh] py-[5vh] pt-[2vh] mr-[3vw] rounded-md">
               <Form
                 form={form}
                 size="small"
+                width={400}
                 layout="vertical"
                 onFinish={handleSubmit}
-                className="w-[80%] m-auto !text-white !text-lg"
+                className=" m-auto !text-white !text-lg"
               >
                 <Form.Item
                   name="firstName"

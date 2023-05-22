@@ -69,9 +69,43 @@ function Navbar() {
   }, [search]);
 
   return (
-    <div>
+    <div className="flex flex-col p-[5px]">
+      <div className="bg-[--third-color] p-[8px] rounded-sm lg:hidden">
+        <div className=" pr-[110px] h-[3vh] flex xsm:gap-x-24 justify-between">
+          <div className="flex flex-row xsm:gap-x-1 gap-x-2 pl-[2vw]">
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <FacebookIcon className="group-hover:text-[#1673eb] text-[12px]" />
+            </div>
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <InstagramIcon className="group-hover:text-[#f40873] text-[12px]" />
+            </div>
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <TwitterIcon className="group-hover:text-[#1c96e8] text-[12px]" />
+            </div>
+            <div className="group  shadow shadow-slate-400 bg-white p-2  rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <WhatsAppIcon className="group-hover:text-[#1ad03f] text-[12px]" />
+            </div>
+            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+              <LocalPhoneOutlinedIcon className="group-hover:text-[#d02f1a] text-[12px]" />
+            </div>
+          </div>
+          <Badge
+            count={get(product, "length", "")}
+            size="small"
+            color="#943074"
+            className="xsm:mr-[3vw] xl:pr-0 flex items-center justify-center mt-[2px]"
+          >
+            <div className="shadow shadow-slate-400 bg-white p-1  rounded flex items-center">
+              <Link href="/profiles/cart">
+                <ShoppingCartCheckoutOutlinedIcon className="xsm:text-[14px] sm:!text-md " />
+              </Link>
+            </div>
+          </Badge>
+        </div>
+      </div>
+
       <div
-        className={`h-[10vh] xsm:w-[98vw] xl:w-screen flex flex-row  items-center justify-around  ${
+        className={`xsm:h-[8vh] md:!py-[3vh] xsm:w-[98vw] xl:w-screen flex flex-row  items-center justify-around  ${
           router.pathname.split("/").includes("allCat")
             ? "!shadow-none"
             : "shadow shadow-slate-100 bg-[white]"
@@ -86,10 +120,10 @@ function Navbar() {
             height={300}
           />
         </div>
-        <div className=" relative lg:w-[36vw] xsm:w-[60vw] text-gray-600">
-          <div className="relative mx-auto flex items-center  text-gray-600 h-[6vh] xsm:w-[70vw] sm:w-[42vw] ">
+        <div className="  lg:w-[36vw] xsm:w-[60vw] text-gray-600">
+          <div className="relative mx-auto flex items-center xsm:mt-1 md:mt-0 text-gray-600 h-[6vh] xsm:w-[70vw] sm:w-[42vw] ">
             <input
-              className="rounded-lg shadow  bg-white ml-[2vw] px-5 pr-16 xsm:w-[75%] md:w-[80%] xsm:h-[90%] sm:h-[100%] text-sm focus:outline-none"
+              className="rounded-lg shadow bg-white ml-[2vw] px-5 pr-16 xsm:w-[82%] md:w-[100%] md:h-[35px] xsm:h-[35px] lg:!h-[45px] sm:!h-[40px] sm:w-[100%] lg:w-[80%] xl:!h-[45px] text-sm focus:outline-none"
               type="search"
               name="search"
               placeholder="Search"
@@ -98,7 +132,7 @@ function Navbar() {
             />
             <button
               type="submit"
-              className="absolute md:right-[21%] xsm:right-[26%] xl:right-[18%] xsm:top-[8px] xl:top-[16px]  text-slate-500"
+              className="absolute md:right-[2vw]  xsm:right-[22%] xsm:top-[1.4vh] sm:right-[2vw] sm:top-[1.4vw] md:top-[1.5vh] lg:!top-[1.4vh] lg:right-[8vw] xl:right-[18%]  xl:top-[1vh]  text-slate-500"
               onClick={() => {
                 router.push({ pathname: `/subcat`, query: data });
               }}
@@ -132,9 +166,9 @@ function Navbar() {
           count={get(product, "length", "")}
           size="small"
           color="#943074"
-          className="xsm:mr-[3vw] xl:pr-0 flex items-center justify-center"
+          className="xsm:mr-[3vw] xl:pr-0 flex items-center justify-center xsm:hidden lg:block"
         >
-          <div className="shadow shadow-slate-400 bg-white p-1  rounded">
+          <div className="shadow shadow-slate-400 bg-white p-1  rounded ">
             <Link href="/profiles/SideNavbar#2">
               <ShoppingCartCheckoutOutlinedIcon className="xsm:text-[16px] sm:!text-lg " />
             </Link>
@@ -142,7 +176,7 @@ function Navbar() {
         </Badge>
 
         {isEmpty(activeUser) ? (
-          <div className="bg-white shadow shadow-slate-300 rounded p-2 xl:h-[4vh] xl:w-[5vw] xsm:w-[15vw] xsm:h-[3vh] sm:w-[8vw] flex items-center  justify-center">
+          <div className="bg-white shadow shadow-slate-300 rounded xsm:mt-1 md:mt-0 p-2 xl:h-[30px] xsm:!mr-[2vw] xl:w-[5vw] xsm:w-[18vw] xsm:h-[3.5vh] sm:w-[8vw] flex items-center  justify-center">
             <button
               className="pl-1 xsm:text-[10px]  sm:text-md flex gap-x-1 items-center font-medium text-[--second-color] border-none lg:text-lg"
               onClick={() => {

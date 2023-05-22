@@ -182,6 +182,13 @@ button,
   line-height: 1;
 }
 
+@media(max-width:940px) {
+  .swiper-button-next,
+  .swiper-button-prev{
+  visibility: hidden;
+  }
+}
+
 /* .swiper-wrapper{
   min-width: 2800px !important;
 } */
@@ -268,7 +275,6 @@ button,
   }
 }
 
-
 /* ant descripton */
 
 .ant-descriptions-item-container{
@@ -292,4 +298,21 @@ button,
 
 .ant-descriptions-item-content{
   font-size: 24px !important;
+}
+
+@media(max-width:1280px){
+
+  .ant-descriptions-view{
+  width: 140% !important;
+   padding-top: 5vh !important;
+ 
+}
+
+  .ant-descriptions-item-label{
+  font-size: 15px !important;
+}
+
+.ant-descriptions-item-content{
+  font-size: 15px !important;
+}
 }

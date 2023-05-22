@@ -36,18 +36,20 @@ export default function Home() {
           size="large"
           indicator={antIcon}
         >
-          {result.length > 0 ? (
-            <ProductFilter />
-          ) : (
-            <>
-              <Swiper setLoading={setLoading} />
+          <div className={`${loading ? "invisible" : "visible"}`}>
+            {result.length > 0 ? (
+              <ProductFilter />
+            ) : (
+              <>
+                <Swiper setLoading={setLoading} />
 
-              <Delivery />
-              <Categories setLoading={setLoading} />
-              <Bestdeals />
-              <Topproducts setLoading={setLoading} />
-            </>
-          )}
+                <Delivery />
+                <Categories setLoading={setLoading} />
+                <Bestdeals />
+                <Topproducts setLoading={setLoading} />
+              </>
+            )}
+          </div>
         </Spin>
       </main>
     </>

@@ -11,9 +11,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Link from "next/link";
 import { Divider } from "antd";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 function SideNavebar() {
   const [current, setProfileCurrent] = useState(1);
+
+  const router = useRouter();
 
   const sidenavData = [
     {
@@ -48,31 +51,78 @@ function SideNavebar() {
   };
 
   return (
-    <div className="flex justify-between w-[100vw] flex-row-reverse ">
-      <div className="w-[20vw] h-[85vh] flex flex-col gap-y-3  pt-[10vh]  p-10 overflow-y-hidden">
+    <div>
+      <div className="flex justify-between w-[100vw] flex-row-reverse xsm:hidden sm:flex">
+        <div className="xl:w-[20vw] h-[85vh] flex flex-col gap-y-3  pt-[10vh]  p-10 overflow-y-hidden">
+          {sidenavData.map((res, index) => {
+            return (
+              <div key={index}>
+                <div
+                  onClick={() => {
+                    setProfileCurrent(res.id);
+                  }}
+                  key={index}
+                  className={`${
+                    current === res.id
+                      ? "bg-[--third-color] text-white "
+                      : "bg-white"
+                  } h-[6vh] rounded`}
+                >
+                  <Link
+                    href={`${res.goto}`}
+                    onClick={() => {
+                      res.id === 4 && handleLogout();
+                    }}
+                  >
+                    <div className="flex items-center justify-start   xl:gap-1 h-[100%]">
+                      <div className="p-3">{res.img}</div>
+                      <div className="md:text-lg xl:text-xl font-bold sm:!pr-[2vw] xxl:!pr-0">
+                        {res.name}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+                <hr />
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="w-[80vw] h-[90vh]  overflow-y-scroll">
+          <div id="1" className="h-[90vh] flex justify-center ">
+            {<Profile />}
+          </div>
+          <div id="2" className="h-[90vh] flex justify-center">
+            {<Cart />}
+          </div>
+          <div id="3" className="h-[90vh] flex justify-center ">
+            {<Order />}
+          </div>
+        </div>
+      </div>
+      <div className="sm:hidden pl-[5vw]">
         {sidenavData.map((res, index) => {
           return (
-            <div key={index}>
-              <div
-                onClick={() => {
-                  setProfileCurrent(res.id);
-                }}
-                key={index}
-                className={`${
-                  current === res.id
-                    ? "bg-[--third-color] text-white "
-                    : "bg-white"
-                } h-[6vh] rounded`}
-              >
+            <div
+              key={index}
+              onClick={() => {
+                res.id === 2
+                  ? router.push({ pathname: "/profiles/cart" })
+                  : res.id === 3
+                  ? router.push({ pathname: "/profiles/Orders" })
+                  : router.push({ pathname: "/profiles/myaccount" });
+              }}
+            >
+              <div key={index} className={`${"bg-white"} h-[10vh] rounded`}>
                 <Link
                   href={`${res.goto}`}
                   onClick={() => {
                     res.id === 4 && handleLogout();
                   }}
                 >
-                  <div className="flex items-center justify-start gap-1 h-[100%]">
+                  <div className="flex items-center justify-start    h-[100%]">
                     <div className="p-3">{res.img}</div>
-                    <div className="text-xl font-bold ">{res.name}</div>
+                    <div className="font-bold text-lg">{res.name}</div>
                   </div>
                 </Link>
               </div>
@@ -81,67 +131,7 @@ function SideNavebar() {
           );
         })}
       </div>
-
-      <div className="w-[80vw] h-[90vh]  overflow-y-scroll">
-        <div id="1" className="h-[90vh] flex justify-center ">
-          {<Profile />}
-        </div>
-
-        <div id="2" className="h-[90vh] flex justify-center">
-          {<Cart />}
-        </div>
-
-        <div id="3" className="h-[90vh] flex justify-center ">
-          {<Order />}
-        </div>
-      </div>
     </div>
-    // <div className="flex w-screen ">
-    //   <div className=" xsm:w-[30vw] lg:w-[14vw] h-screen bg-red-500  flex flex-col text-xl gap-[2vh]  pt-[5vh]">
-    //     <div className="flex flex-col gap-[2vh] ">
-    //       <div className="flex justify-between items-center pl-[3vw] !text-[--third-color] font-semibold">
-    //         <span className="flex gap-2 items-center">
-    //           <AccountCircleIcon className="text-xl !text-[--third-color]" />
-    //           Profile
-    //         </span>
-    //       </div>
-    //       <span className="border-b w-[15vw]"></span>
-    //       <div className="flex items-center justify-between gap-2 pl-[3vw] !text-[--third-color] font-semibold">
-    //         <span className="flex gap-2 items-center">
-    //           <ShoppingCartCheckoutIcon className="text-xl !text-[--third-color]" />
-    //           Cart
-    //         </span>
-    //       </div>
-    //       <span className="border-b w-[15vw]"></span>
-    //       <div className="flex items-center justify-between gap-2 pl-[3vw] !text-[--third-color] font-semibold">
-    //         <span className="flex gap-2 items-center ">
-    //           <StoreIcon className="text-xl !text-[--third-color]" />
-    //           Orders
-    //         </span>
-    //       </div>
-    //       <span className="border-b w-[15vw]"></span>
-    //     </div>
-    //     <div className="flex items-center justify-between  gap-2 pl-[3vw] !text-[--third-color] font-semibold">
-    //       <span className="flex gap-2 items-center">
-    //         <LogoutIcon className="text-xl !text-[--third-color]" />
-    //         Logout
-    //       </span>
-    //     </div>
-
-    //     <span className="border-b w-[15vw]"></span>
-    //   </div>
-    //   <div>
-    //     <div id="1">
-    //       <Profile />
-    //     </div>
-    //     <div id="2">
-    //       <Cart />
-    //     </div>
-    //     <div id="3">
-    //       <Order />
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 

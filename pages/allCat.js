@@ -268,7 +268,7 @@ function AllCat() {
         } xsm:hidden xxl:block`}
       >
         <div className="flex">
-          <div className="w-[16vw]  h-[60vh] overflow-scroll pl-20 leading-10 ">
+          <div className="w-[16vw]  h-[85vh] overflow-scroll pl-20 leading-10 ">
             <div
               className={`flex items-center  font-bold pt-[3vh] ${
                 router.query._id === "123"
@@ -320,7 +320,7 @@ function AllCat() {
             })}
           </div>
           <div className="flex flex-col w-[80vw] m-auto ">
-            <div className="ml-10  h-[8vh] flex justify-center items-center bg-white  ">
+            <div className="ml-10   flex justify-center items-center bg-white  ">
               <div className="flex gap-[5vw] pb-5">
                 <div className="pt-[15px]">
                   <Select
@@ -405,7 +405,7 @@ function AllCat() {
                           actions={[
                             <div
                               key={"key"}
-                              className="bg-[--third-color] rounded-sm  text-[20px] p-[6px] w-[8vw] text-white flex items-center justify-center !border-none"
+                              className="bg-[--third-color] rounded-sm  text-[20px] !h-[40px] !w-[100px] text-white flex items-center justify-center !border-none"
                               onClick={() => {
                                 router.push({
                                   pathname: "/cart",
@@ -417,13 +417,13 @@ function AllCat() {
                             </div>,
                             <div
                               key={"key"}
-                              className="bg-[--third-color] p-[7px] text-white flex items-center justify-center rounded-sm float-right"
+                              className="bg-[--third-color] p-[7px] text-white flex items-center text-[12px] justify-center rounded-sm float-right"
                             >
                               {cart.find((res) => {
                                 return res.productId === data._id;
                               }) ? (
                                 <button
-                                  className="text-white p-[7px] rounded-md !text-[12px] leading-tight tracking-tight"
+                                  className="text-white !h-[30px] !w-[100px] rounded-md !text-[12px] leading-tight tracking-tight"
                                   onClick={() =>
                                     router.push({ pathname: "/cart" })
                                   }
@@ -466,9 +466,9 @@ function AllCat() {
 
                             {data.flashStatus == true ? (
                               <div>
-                                <span className="flex">
+                                <span className="flex gap-2">
                                   <s className="text-sm">&#8377;{data.price}</s>
-                                  -
+
                                   <p className="font-bold text-sm text-red-500">
                                     -{data.offer}% Off
                                   </p>
@@ -689,7 +689,7 @@ function AllCat() {
             </div>
           </Drawer>
         </div>
-        <div className="  flex  justify-center ">
+        <div className="  flex  justify-center items-center !w-[90vw] m-auto">
           <List
             grid={{
               gutter: 16,
@@ -731,7 +731,7 @@ function AllCat() {
                     actions={[
                       <div
                         key={"key"}
-                        className="bg-[--third-color] rounded-sm  text-[14px] py-[10px] md:!w-[8vw] !w-[20vw] text-white flex items-center justify-center !border-none"
+                        className="bg-[--third-color] rounded-sm  text-[14px] !h-[40px] !w-[100px] text-white flex items-center justify-center !border-none"
                         onClick={() => {
                           router.push({
                             pathname: "/cart",
@@ -743,13 +743,13 @@ function AllCat() {
                       </div>,
                       <div
                         key={"key"}
-                        className="bg-[--third-color] h-[5vh] md:w-[7vw] py-[10px] w-[15vw]  text-white flex items-center justify-center rounded-sm float-right"
+                        className="bg-[--third-color] p-[7px] text-white flex items-center text-[12px] justify-center rounded-sm float-right"
                       >
                         {cart.find((res) => {
                           return res.productId === data._id;
                         }) ? (
                           <button
-                            className="text-white text-[12px] rounded-md"
+                            className="text-white !h-[30px] !w-[100px] rounded-md !text-[12px] leading-tight tracking-tight"
                             onClick={() => router.push({ pathname: "/cart" })}
                           >
                             Go to Cart
@@ -757,7 +757,7 @@ function AllCat() {
                         ) : (
                           <ShoppingCartOutlined
                             style={{
-                              fontSize: "20px",
+                              fontSize: "28px",
                             }}
                             onClick={() => {
                               handleClick(data._id, data);
@@ -789,9 +789,53 @@ function AllCat() {
                         {data.title}
                       </h1>
 
-                      <h1 className="text-[16px] !mt-[5px] font-bold md:pt-[3vh] xl:pt-0">
-                        &#8377;{data.price}
-                      </h1>
+                      {data.flashStatus == true ? (
+                        <div>
+                          <span className="flex gap-2">
+                            <s className="text-sm">&#8377;{data.price}</s>
+
+                            <p className="font-bold text-sm text-red-500">
+                              -{data.offer}% Off
+                            </p>
+                          </span>
+
+                          {data.offer !== null || 0 ? (
+                            <p className="text-xl text-slate-800 pt-1">
+                              &#8377;
+                              {Math.round(
+                                data.price - (data.price / 100) * data.offer
+                              )}
+                            </p>
+                          ) : (
+                            <p className="text-xl text-slate-800 pt-1">
+                              &#8377;{data.price}
+                            </p>
+                          )}
+                        </div>
+                      ) : data.bestStatus === true ? (
+                        <div>
+                          <s>&#8377;{data.price}</s>{" "}
+                          <p className="font-bold text-sm text-red-500">
+                            -{data.bestOffer}% Off
+                          </p>
+                          {data.bestOffer !== null || 0 ? (
+                            <p className="text-xl text-slate-800 pt-1">
+                              &#8377;
+                              {Math.round(
+                                data.price - (data.price / 100) * data.bestOffer
+                              )}
+                            </p>
+                          ) : (
+                            <p className="text-xl text-slate-800 pt-1">
+                              &#8377;{data.price}
+                            </p>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-xl text-slate-800 pt-1">
+                          &#8377;{data.price}
+                        </p>
+                      )}
                     </div>
                   </Card>
                 </List.Item>

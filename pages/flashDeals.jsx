@@ -5,7 +5,7 @@ import { getAllproducts } from "@/helper/utilities/apiHelper";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { get } from "lodash";
-import { Spin } from "antd";
+import { Spin, Pagination } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 function FlashDeals() {
@@ -15,14 +15,14 @@ function FlashDeals() {
   const router = useRouter();
 
   const fetchData = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const result = await getAllproducts();
       setProducts(get(result, "data.data", []));
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -38,16 +38,17 @@ function FlashDeals() {
     );
   }, [product]);
 
-   const antIcon = (
+  const antIcon = (
     <LoadingOutlined style={{ fontSize: 40 }} className="animate-spin" />
   );
 
-
   return (
-    <Spin  spinning={loading}
-          tip="Loading Data..."
-          size="large"
-          indicator={antIcon}>
+    <Spin
+      spinning={loading}
+      tip="Loading Data..."
+      size="large"
+      indicator={antIcon}
+    >
       <div className="bg-[--third-color] w-[80vw] m-auto ">
         <div className="text-[6vw] text-white text-center xsm:p-[4vh] xl:p-[7vh]  ">
           <p>
@@ -58,20 +59,22 @@ function FlashDeals() {
             />
             Deals
           </p>
-        
         </div>
       </div>
+
       <div className="w-[80vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-3 grid xxl:!grid-cols-5  xxl:gap-14 ">
-        {product.map((data) => {  
+        {product.map((data) => {
           return (
             <>
-              <div className="xxl:h-[30vh] sm:w-[40vw] md:w-[25vw]  xl:w-[20vw] flex flex-col xsm:mt-[5vh] justify-between xxl:w-[14vw] border shadow-lg  relative">
-                <div onClick={() =>
+              <div className=" sm:w-[40vw] md:w-[25vw]  xl:w-[20vw] flex flex-col xsm:mt-[5vh] justify-between xxl:w-[14vw] border shadow-lg  relative">
+                <div
+                  onClick={() =>
                     router.push({
                       pathname: `/product/${data._id}`,
                       query: { id: data._id },
                     })
-                  }>
+                  }
+                >
                   <Image
                     width={100}
                     height={100}
@@ -85,22 +88,27 @@ function FlashDeals() {
                   </p>
                 </div>
 
-                <div onClick={() =>
+                <div
+                  onClick={() =>
                     router.push({
                       pathname: `/product/${data._id}`,
                       query: { id: data._id },
                     })
-                  }>
-                  <p className="text-center xxl:text-md xxl:h-[8vh] md:text-sm  font-bold pt-[8px] p-[10px]">
+                  }
+                >
+                  <p className="text-center xxl:text-md   md:text-sm  font-bold pt-[8px] p-[10px]">
                     {data.title}
                   </p>
-                  <div className="flex justify-between w-[100%]" >
-                    <p className="text-center pl-5 pt-3 text-xl m-auto " onClick={() =>
-                    router.push({
-                      pathname: `/product/${data._id}`,
-                      query: { id: data._id },
-                    })
-                  }>
+                  <div className="flex justify-between w-[100%]">
+                    <p
+                      className="text-center pl-5 pt-3 text-xl m-auto "
+                      onClick={() =>
+                        router.push({
+                          pathname: `/product/${data._id}`,
+                          query: { id: data._id },
+                        })
+                      }
+                    >
                       &#8377;{data.price}
                     </p>
                     <div className="pt-3">

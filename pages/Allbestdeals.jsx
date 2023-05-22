@@ -78,10 +78,11 @@ function Allbestdeals() {
       size="large"
       indicator={antIcon}
     >
-      <div className="w-[80vw] m-auto">
+      <div className="xsm:w-[90vw] xl:w-[80vw] m-auto">
         {banner
           .filter((data) => {
-            return data.status === "Bestdeals";
+            console.log(data);
+            return data.status === "Best Deals";
           })
           .map((res) => {
             return (
@@ -92,7 +93,7 @@ function Allbestdeals() {
                     alt="bestDeas"
                     width={100}
                     height={100}
-                    className="w-[80vw] "
+                    className="xsm:w-[90vw] xsm:h-[18vh] sm:h-[24vh] md:h-[26vh] xl:w-[80vw] xl:!h-[30vh]"
                   />
                 </div>
               </>
@@ -100,7 +101,7 @@ function Allbestdeals() {
           })}
 
         <div className="flex items-center justify-center pt-10 relative">
-          <div className="grid xsm:grid-cols-1 xl:grid-cols-4 xxl:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 xsm:gap-10 xl:gap-24 ">
+          <div className="grid xsm:grid-cols-1 xl:grid-cols-3 xxl:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 xsm:gap-10 xl:gap-24 ">
             {bestProducts.map((data) => {
               return (
                 <div
@@ -116,15 +117,15 @@ function Allbestdeals() {
                       })
                     }
                   >
-                    <div className="flex justify-between">
+                    <div className="flex justify-between pt-[2vh]">
                       <Image
                         width={100}
                         height={100}
                         alt="logo"
                         src={data.image[0]}
-                        className="xl:h-[18vh] xsm:h-[20vh] md:h-[12vh] lg:h-[16vh] w-fit pt-10 m-auto"
+                        className="xl:h-[18vh] xsm:h-[20vh] md:h-[12vh] lg:h-[16vh] w-fit  m-auto"
                       />
-                      <p className="bg-[--fifth-color] text-[12px] font-semibold text-black  p-[5px] tracking-tight leading-tight absolute top-0 right-0  flex flex-col  text-center">
+                      <p className="bg-[--fifth-color] xsm:text-[10px] xl:text-[12px] font-semibold text-black  p-[5px] tracking-tight leading-tight absolute top-0 right-0  flex flex-col  text-center">
                         <span>{data.bestOffer}%</span>
                         OFF
                       </p>
@@ -137,7 +138,7 @@ function Allbestdeals() {
                   <div className="flex justify-between">
                     <div className="pl-[2vw]  w-[100%] pt-[2vh]">
                       {data.offer !== null || 0 ? (
-                        <p className="text-lg text-center flex flex-row-reverse w-[60%] pb-[1vh] font-medium">
+                        <p className="text-lg text-center flex flex-row-reverse gap-[5px] w-[60%] pb-[1vh] font-medium">
                           <s>&#8377;{data.price}</s>
                           &#8377;
                           {Math.round(
@@ -152,7 +153,7 @@ function Allbestdeals() {
                     </div>
 
                     <div
-                      className="bg-[--fifth-color] xsm:w-[12vw] h-[5vh] flex items-center justify-center md:w-[6vw] md:h-[4vh] lg:w-[4vw] lg:h-[6vh] xl:w-[3vw] xl:h-[5vh] absolute bottom-0 right-0"
+                      className="bg-[--fifth-color] xsm:w-[40px] xsm:h-[35px] flex items-center justify-center md:w-[40px] md:h-[30px]  lg:w-[40px] lg:h-[35px] xl:w-[40px] xl:h-[35px] absolute bottom-0 right-0"
                       onClick={() => {
                         handleCart(data);
                         dispatch(addproduct({ ...data }));

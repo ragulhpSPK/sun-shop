@@ -25,18 +25,18 @@ function Orders() {
   }, []);
 
   return (
-    <div className="bg-[#ecf0f1] h-screen w-screen">
+    <div className="bg-[#ecf0f1] h-fit overflow-y-scroll w-screen xsm:p-[3vw]">
       <div className=" p-[10px] rounded-md  w-[90%]  overflow-y-scroll">
-        <h1 className="text-black text-[32px] text-center p-[2vh] ">
+        <h1 className="text-black xsm:text-[22px] sm:text-[32px] text-center p-[2vh] ">
           My Orders
         </h1>
       </div>
 
-      <div className="flex flex-col m-auto gap-[2vw]  items-center justify-center pt-[2vw]">
+      <div className="flex flex-col m-auto gap-[2vw]  items-center justify-center pt-[1vh]">
         {orders.map((data, index) => {
           return (
             <div
-              className=" m-auto shadow shadow-slate bg-[#E5E9EA] p-[4vh] xl:w-[50vw] flex flex-col items-center justify-center"
+              className=" m-auto shadow shadow-slate bg-[#E5E9EA] p-[4vh] md:!w-[50vw] xl:w-[50vw] flex flex-col items-center justify-center"
               key={index}
               onClick={() => {
                 router.push({
@@ -46,7 +46,7 @@ function Orders() {
               }}
             >
               <div className="flex  gap-[2vw] pt-[2vh]">
-                <div className="text-xl flex flex-row-reverse gap-[2vw]">
+                <div className="sm:text-sm md:text-md xl:text-xl flex flex-row-reverse gap-[2vw]">
                   <div className="flex flex-col gap-[5vh] ">
                     {data.productname.map((name, i) => {
                       return (
@@ -79,7 +79,7 @@ function Orders() {
               <div className="flex justify-start items-start">
                 <p className="text-slate-600 pt-2">
                   <Badge dot color="green" className="!text-xl" />
-                  <span className="pl-[3px] text-xl tracking-wider">
+                  <span className="pl-[3px] sm:text-sm md:text-md xl:text-xl tracking-wider">
                     {data.status} On Thu,sep 28,2019
                   </span>
                 </p>

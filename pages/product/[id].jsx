@@ -15,7 +15,7 @@ import {
   getAllCart,
 } from "../../helper/utilities/apiHelper";
 import { Drawer, Spin, notification } from "antd";
-import { get } from "lodash";
+import { get, set } from "lodash";
 import { ReloadOutlined } from "@ant-design/icons";
 import Buy from "../buy";
 
@@ -29,6 +29,7 @@ export default function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [openDraw, setopenDraw] = useState(false);
+  const [size, setSize] = useState();
 
   const result = AddCart.filter((data) => {
     return data.product_id == router.query.id;
@@ -128,7 +129,7 @@ export default function App() {
                                 current && current.includes(image)
                                   ? "border-4 border-[--third-color] "
                                   : "border-none"
-                              }  bg-slate-100 text-center`}
+                              }  bg-slate-100 text-center !w-[5vw]`}
                               id={styles.img_wrap}
                               key={i}
                               onMouseEnter={() => {
@@ -140,7 +141,7 @@ export default function App() {
                                 height={300}
                                 alt="logo"
                                 src={image}
-                                className="m-auto pb-[1vh]"
+                                className="m-auto "
                               />
                             </div>
                           </div>
@@ -226,7 +227,7 @@ export default function App() {
                         return res.productId === data._id;
                       }) ? (
                         <button
-                          className="bg-slate-300 text-[#000] shadow-2xl hover:bg-[--second-color] hover:scale-105 hover:font-medium hover:text-white duration-1000 text-sm rounded-md px-3 lg:h-[6vh] xl:h-[5vh] w-[8vw] py-2"
+                          className="bg-slate-300 text-[#000] shadow-2xl hover:bg-[--second-color] hover:scale-105 hover:font-medium hover:text-white duration-1000 text-sm rounded-md !h-[30px] px-2"
                           onClick={() => {
                             router.push({ pathname: "/cart" });
                           }}
@@ -235,7 +236,7 @@ export default function App() {
                         </button>
                       ) : (
                         <button
-                          className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 xl:text-xl rounded-md lg:h-[6vh] px-3 xl:h-[5vh] xl:w-[10vw] xl:py-[8px] xsm:h-[4vh]"
+                          className="bg-[var(--second-color)] text-[#fff] hover:bg-[--first-color] hover:scale-105 hover:font-medium hover:text-black duration-1000 xl:text-xl rounded-md !h-[30px] px-2"
                           onClick={() => {
                             handleClick(data);
                             dispatch(addproduct({ products: true }));
@@ -249,17 +250,27 @@ export default function App() {
                       )}
 
                       <button
-                        className="bg-[var(--second-color)] hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md lg:h-[6vh] xl:h-[5vh] xl:w-[8vw]  xl:px-3 xl:py-2 xsm:h-[4vh] xsm:w-[25vw] sm:w-[12vw]"
+                        className="bg-[var(--second-color)] lg:hidden hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md !h-[30px] px-2"
                         onClick={() => {
                           setopenDraw(true);
+                          setSize(250);
+                        }}
+                      >
+                        Buy Now
+                      </button>
+                      <button
+                        className="bg-[var(--second-color)] xsm:hidden lg:block hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md !h-[30px] px-2"
+                        onClick={() => {
+                          setopenDraw(true);
+                          setSize(400);
                         }}
                       >
                         Buy Now
                       </button>
                     </div>
                     <Drawer
-                      width={500}
                       open={openDraw}
+                      width={size}
                       onClose={() => {
                         setopenDraw(false);
                       }}

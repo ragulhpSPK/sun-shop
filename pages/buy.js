@@ -115,7 +115,9 @@ function Buy({ id }) {
                 <div>
                   <Image src={res.image[0]} alt="img" height={50} width={50} />
                 </div>
-                <div className="text-lg text-slate-500">{res.title}</div>
+                <div className="xsm:text-[10px] lg:text-lg text-slate-500">
+                  {res.title}
+                </div>
                 <div className="flex items-center">
                   <span className="text-lg pr-[1vw]">Qty:</span>
                   <InputNumber
