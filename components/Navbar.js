@@ -58,8 +58,7 @@ function Navbar() {
 
   useEffect(() => {
     fetchData();
-    console.log("triggered");
-  }, [cart.products.length, userDetails]);
+  }, [cart.products.length, userDetails, product]);
 
   useEffect(() => {
     setData(
@@ -67,7 +66,7 @@ function Navbar() {
         return data.category.toLowerCase().includes(search);
       })
     );
-  }, [search]);
+  }, [search, cart.products.length]);
 
   return (
     <div className="flex flex-col p-[5px]">
