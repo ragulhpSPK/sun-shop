@@ -5,8 +5,9 @@ import { getAllproducts } from "@/helper/utilities/apiHelper";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { get } from "lodash";
-import { Spin, Pagination } from "antd";
+import { Spin, Pagination, Drawer } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import Buy from "./buy";
 
 function FlashDeals() {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -63,7 +64,7 @@ function FlashDeals() {
       </div>
 
       <div className="w-[80vw] m-auto xsm:mt-5 xsm:grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 xl:!grid-cols-3 grid xxl:!grid-cols-5  xxl:gap-14 ">
-        {product.map((data) => {
+        {filteredProducts.map((data) => {
           return (
             <>
               <div className=" sm:w-[40vw] md:w-[25vw]  xl:w-[20vw] flex flex-col xsm:mt-[5vh] justify-between xxl:w-[14vw] border shadow-lg  relative">
@@ -112,15 +113,7 @@ function FlashDeals() {
                       &#8377;{data.price}
                     </p>
                     <div className="pt-3">
-                      <button
-                        className="w-20 bg-[--third-color] h-8 text-white"
-                        onClick={() => {
-                          router.push({
-                            pathname: "/cart",
-                            query: { _id: data._id },
-                          });
-                        }}
-                      >
+                      <button className="w-20 bg-[--third-color] h-8 text-white ">
                         Buy now
                       </button>
                     </div>

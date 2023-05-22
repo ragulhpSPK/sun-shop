@@ -19,6 +19,7 @@ function Profile() {
   const [profile, setProfile] = useState([]);
   const [form] = Form.useForm();
   const { TextArea } = Input;
+  const [size, setSize] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -64,9 +65,22 @@ function Profile() {
             onClick={() => {
               setOpenDrawer(true);
               handleEdit(profile[0]);
+              setSize(260);
             }}
             type="primary"
-            className="flex flex-row gap-x-1 items-center justify-center "
+            className="flex flex-row gap-x-1 items-center justify-center md:hidden"
+          >
+            <EditOutlined />
+            <div> Edit</div>
+          </Button>
+          <Button
+            onClick={() => {
+              setOpenDrawer(true);
+              handleEdit(profile[0]);
+              setSize(400);
+            }}
+            type="primary"
+            className="flex flex-row gap-x-1 items-center justify-center xsm:hidden md:block"
           >
             <EditOutlined />
             <div> Edit</div>
@@ -106,7 +120,7 @@ function Profile() {
         </Descriptions>
         <Drawer
           open={openDrawer}
-          width={400}
+          width={size}
           onClose={() => setOpenDrawer(false)}
         >
           <Form

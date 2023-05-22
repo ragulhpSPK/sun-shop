@@ -48,6 +48,7 @@ function Orders() {
           id: id,
         };
         await updateOrder(formData);
+        fetchData();
         notification.success({ message: "You cancel Your Order" });
       } catch (err) {
         console.log(err);
@@ -65,71 +66,77 @@ function Orders() {
           return data._id === router.query.id;
         })
         .map((res, i) => {
-          console.log(res);
           return (
             <>
               <div
-                className="pt-[3vh] xsm:!w-[90vw] sm:!pt-[10vh] md:pt-0 md:py-[5vh]  xsm:self-center xsm:pl-[5vw] xl:pl-0 steps:!w-[100vw] xl:!w-[70vw] flex items-center justify-center xl:p-[4vw]"
-                id={styles.shadow3}
+                className="pt-[3vh] xsm:!w-[90vw] sm:!pt-[10vh] md:pt-0 md:py-[5vh]  xsm:self-center xsm:pl-[2vw] xl:pl-0 steps:!w-[100vw] xl:!w-[70vw] flex items-center justify-center xl:p-[4vw]"
                 key={i}
               >
-                <Steps
+                {console.log(res.status, "tfghbjnm")}
+                <div
                   className={`${
-                    res.status === "Cancelled" ? "invisible" : "visible"
-                  } xxl:pl-[3vw] `}
-                  size="small"
-                  lineWidth={1}
-                  items={[
-                    {
-                      title: "Confirmed",
-                      status: res.status === "Confirmed" ? "process" : "finish",
-                      icon: (
-                        <DoneIcon
-                          style={{ fontSize: "30px" }}
-                          className=" text-[--third-color] "
-                        />
-                      ),
-                    },
-                    {
-                      title: "Order Shipped",
-                      status:
-                        res.status === "Out_For_Delivery"
-                          ? "finish"
-                          : res.status === "Delivered"
-                          ? "finish"
-                          : "process",
-                      icon: (
-                        <CodeSandboxOutlined
-                          style={{ fontSize: "30px" }}
-                          className="text-[--third-color]"
-                        />
-                      ),
-                    },
-                    {
-                      title: "Order out for delivery",
-                      status: res.status === "Delivered" ? "finish" : "process",
-                      icon: (
-                        <LocalShippingIcon
-                          style={{ fontSize: "30px" }}
-                          className="text-[--third-color]"
-                        />
-                      ),
-                    },
+                    res.status === "Cancelled" ? "!hidden" : "!block"
+                  } pt-[3vh] xsm:!w-[90vw] sm:!pt-[10vh] md:pt-0 md:py-[5vh]  xsm:self-center xsm:pl-[5vw] xl:pl-0 steps:!w-[100vw] xl:!w-[70vw] flex items-center justify-center xl:p-[4vw]`}
+                  id={styles.shadow3}
+                >
+                  <Steps
+                    className={` xxl:pl-[3vw] `}
+                    size="small"
+                    lineWidth={1}
+                    items={[
+                      {
+                        title: "Confirmed",
+                        status:
+                          res.status === "Confirmed" ? "process" : "finish",
+                        icon: (
+                          <DoneIcon
+                            style={{ fontSize: "30px" }}
+                            className=" text-[--third-color] "
+                          />
+                        ),
+                      },
+                      {
+                        title: "Order Shipped",
+                        status:
+                          res.status === "Out_For_Delivery"
+                            ? "finish"
+                            : res.status === "Delivered"
+                            ? "finish"
+                            : "process",
+                        icon: (
+                          <CodeSandboxOutlined
+                            style={{ fontSize: "30px" }}
+                            className="text-[--third-color]"
+                          />
+                        ),
+                      },
+                      {
+                        title: "Order out for delivery",
+                        status:
+                          res.status === "Delivered" ? "finish" : "process",
+                        icon: (
+                          <LocalShippingIcon
+                            style={{ fontSize: "30px" }}
+                            className="text-[--third-color]"
+                          />
+                        ),
+                      },
 
-                    {
-                      title: "Order Delivered",
-                      status: "finish",
+                      {
+                        title: "Order Delivered",
+                        status: "finish",
 
-                      icon: (
-                        <HomeRoundedIcon
-                          style={{ fontSize: "30px" }}
-                          className="text-[--third-color]"
-                        />
-                      ),
-                    },
-                  ]}
-                  responsive={true}
-                />
+                        icon: (
+                          <HomeRoundedIcon
+                            style={{ fontSize: "30px" }}
+                            className="text-[--third-color]"
+                          />
+                        ),
+                      },
+                    ]}
+                    responsive={true}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col ">
@@ -141,24 +148,24 @@ function Orders() {
                     <h1 className="xsm:text-[16px] md:text-2xl p-4">
                       Purchased Item
                     </h1>
-                    {status[0] === "Delivered" ? (
+                    {res.status === "Delivered" ? (
                       <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center">
                         <DoneIcon className="bg-[green] rounded-3xl h-[30px] w-[30px] text-white" />
 
                         <span>Order Reached You SuccessFully!</span>
                       </p>
-                    ) : status[0] === "Cancelled" ? (
+                    ) : res.status === "Cancelled" ? (
                       <p className="text-3xl text-slate-600 mt-10 flex items-center justify-center">
-                        <span className="tracking-wider text-4xl pl-2 ">
+                        <span className="tracking-wider xsm:text-xl sm:text-2xl md:text-4xl pl-2 ">
                           Order Cancelled
                         </span>
-                        <CancelIcon className="bg-[red] rounded-3xl h-[30px] w-[30px] text-white" />
+                        <CancelIcon className="bg-red-500 rounded-3xl md:h-[30px] md:w-[30px] text-white" />
                       </p>
                     ) : (
                       <button
                         className="bg-red-600 !text-white p-[5px] xsm:mb-[8px] xl:mb-0 xsm:w-[40vw] xl:!h-[5vh] md:w-[20vw] xl:w-[9vw] lg:h-[7vh] rounded-md"
                         onClick={() => {
-                          handleClick(data._id, data);
+                          handleClick(res._id, res);
                         }}
                       >
                         Cancel Order
@@ -168,6 +175,7 @@ function Orders() {
 
                   <div className="flex  w-[70vw] flex-wrap xsm:gap-x-10 md:gap-x-6 xl:gap-x-10 gap-y-20 xsm:items-center xsm:justify-center">
                     {res.image.map((img, i) => {
+                      console.log(img, "dki");
                       return (
                         <div
                           className="xxl:!w-[10vw] xsm:!w-[40vw] sm:!w-[20vw] md:w-[10vw] lg:min-h-[20vh]  flex  shadow-2xl rounded-box items-center justify-center flex-col h-[15vh]"
@@ -175,7 +183,7 @@ function Orders() {
                         >
                           <div>
                             <Image
-                              src={img[0]}
+                              src={img || img[0]}
                               alt="order"
                               width={70}
                               height={70}

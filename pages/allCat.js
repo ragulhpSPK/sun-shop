@@ -380,7 +380,7 @@ function AllCat() {
                   xxl: 4,
                 }}
                 pagination={{
-                  pageSize: 20,
+                  pageSize: 8,
                   align: "end",
                   position: "top",
                   size: "small",

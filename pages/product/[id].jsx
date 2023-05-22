@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
 import { addproduct } from "@/redux/cartSlice";
 import { useRouter } from "next/router";
 import { AddCart } from "@/helper/Addcart";
-import Link from "next/link";
-import style from "../../styles/Home.module.css";
+
 import Image from "next/image";
 import {
   createCart,
@@ -104,26 +103,28 @@ export default function App() {
         } flex lg:h-[80vh] justify-center xsm:w-[100vw] lg:[80vw]`}
       >
         <div className="xsm:flex-col flex lg:!flex-row !pt-[12vh]">
-          <div className={`${styles.container} lg:pt-[15vh]`}>
-            <div className={`${styles.left} md:h-[40vh] lg:!h-[50vh]`}>
+          <div className={`${styles.container} lg:pt-[8vh]`}>
+            <div
+              className={`${styles.left} xsm:!h-[25vh] xsm:!pr-[2vw] sm:!h-[35vh] md:h-[50vh] lg:h-[40vh] xl:h-[50vh] xsm:!w-[80vw] lg:!w-[50vw] `}
+            >
               <div
-                className={`${styles.left_2} flex items-center justify-center md:h-[30vh] lg:pl-[8vw] lg:!h-[20vh]`}
+                className={`${styles.left_2} flex items-center justify-center xsm:h-[16vh] lg:!pl-[14vw] sm:h-[26vh] xl:h-[42vh] md:h-[40vh] lg:h-[36vh] `}
               >
                 <Image
                   width={300}
                   height={300}
                   alt="logo"
                   src={current || imgs}
-                  className="xsm:w-[50vw] sm:w-[50vw] lg:w-fit lg:!h-[40vh] md:h-[30vh] flex items-center justify-center xsm:pb-[2vh] lg:ml-[6vw]"
+                  className=" flex items-center justify-center xsm:!h-[15vh] w-fit sm:!h-[25vh] md:h-[30vh] lg:!h-[35vh] xl:!h-[40vh]"
                 />
               </div>
-              <div className={`${styles.left_1} `}>
+              <div className={`${styles.left_1}`}>
                 {result &&
                   filterData.map((img) => {
                     return img.image.map((image, i) => {
                       return (
                         <>
-                          <div className="xl:pt-[5vh]  xsm:pl-[3vw] sm:!pl-[5vw] lg:!pl-[3vw] lg:!pt-[13vh]  flex items-center justify-center">
+                          <div className="xl:pt-[5vh]  xsm:pl-[3vw] sm:!pl-[5vw]  lg:!pl-[2vw] lg:!pt-[13vh]  flex items-center justify-center">
                             <div
                               className={`${
                                 current && current.includes(image)
@@ -152,7 +153,7 @@ export default function App() {
               </div>
             </div>
           </div>
-          <div className="xsm:pt-[3vh] lg:pt-0 xl:pt-[8vh] xxl:pt-[1vh] flex items-center justify-center">
+          <div className="xsm:pt-[3vh] lg:!pt-[8vh] xl:pt-[8vh] xxl:!pt-[1vh] flex items-center justify-center">
             {result &&
               filterData.map((data, index) => {
                 return (
@@ -253,7 +254,7 @@ export default function App() {
                         className="bg-[var(--second-color)] lg:hidden hover:bg-[--first-color] hover:scale-105  hover:text-black duration-1000 hover:font-medium text-[#fff] xl:text-xl rounded-md !h-[30px] px-2"
                         onClick={() => {
                           setopenDraw(true);
-                          setSize(250);
+                          setSize(260);
                         }}
                       >
                         Buy Now

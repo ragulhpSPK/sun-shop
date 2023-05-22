@@ -63,7 +63,6 @@ function Buy({ id }) {
   };
 
   const handleSubmit = async (e) => {
-    console.log(e, "djuhjkm,l");
     try {
       const formData = {
         data: {

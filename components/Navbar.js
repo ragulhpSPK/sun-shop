@@ -58,6 +58,7 @@ function Navbar() {
 
   useEffect(() => {
     fetchData();
+    console.log("triggered");
   }, [cart.products.length, userDetails]);
 
   useEffect(() => {
@@ -70,22 +71,22 @@ function Navbar() {
 
   return (
     <div className="flex flex-col p-[5px]">
-      <div className="bg-[--third-color] p-[8px] rounded-sm lg:hidden">
-        <div className=" pr-[110px] h-[3vh] flex xsm:gap-x-24 justify-between">
+      <div className="bg-[--second-color] p-[8px] rounded-sm lg:hidden">
+        <div className=" pr-[110px] h-[2vh] flex xsm:gap-x-36 justify-between">
           <div className="flex flex-row xsm:gap-x-1 gap-x-2 pl-[2vw]">
-            <div className="group shadow shadow-slate-400 bg-white p-2  rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+            <div className="group shadow shadow-slate-400 bg-white p-[3px]  rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
               <FacebookIcon className="group-hover:text-[#1673eb] text-[12px]" />
             </div>
-            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+            <div className="group shadow shadow-slate-400 bg-white  p-[3px] rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
               <InstagramIcon className="group-hover:text-[#f40873] text-[12px]" />
             </div>
-            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+            <div className="group shadow shadow-slate-400 bg-white p-[3px]  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
               <TwitterIcon className="group-hover:text-[#1c96e8] text-[12px]" />
             </div>
-            <div className="group  shadow shadow-slate-400 bg-white p-2  rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+            <div className="group  shadow shadow-slate-400 bg-white  p-[3px] rounded hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
               <WhatsAppIcon className="group-hover:text-[#1ad03f] text-[12px]" />
             </div>
-            <div className="group shadow shadow-slate-400 bg-white p-2  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
+            <div className="group shadow shadow-slate-400 bg-white p-[3px]  rounded  hover:font-semibold cursor-pointer flex flex-row items-center gap-x-2">
               <LocalPhoneOutlinedIcon className="group-hover:text-[#d02f1a] text-[12px]" />
             </div>
           </div>
