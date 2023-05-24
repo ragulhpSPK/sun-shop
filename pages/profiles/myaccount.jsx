@@ -35,7 +35,6 @@ function Profile() {
   }, []);
 
   const handleEdit = (data) => {
-    console.log(data);
     form.setFieldsValue(data);
   };
 
