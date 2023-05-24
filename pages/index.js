@@ -12,6 +12,7 @@ import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import SyncIcon from "@mui/icons-material/Sync";
 
 export default function Home() {
+  const isLoading = useSelector((state) => state.loader.isLoading);
   const [loading, setLoading] = useState(true);
   const result = useSelector((data) => {
     return data.search.searches;
@@ -30,27 +31,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Spin
+        {/* <Spin
           spinning={loading}
           tip="Loading Data..."
           size="large"
           indicator={antIcon}
-        >
-          <div className={`${loading ? "invisible" : "visible"}`}>
-            {result.length > 0 ? (
-              <ProductFilter />
-            ) : (
-              <>
-                <Swiper setLoading={setLoading} />
+        > */}
+        <div className={`${loading ? "invisible" : "visible"}`}>
+          {result.length > 0 ? (
+            <ProductFilter />
+          ) : (
+            <>
+              <Swiper setLoading={setLoading} />
 
-                <Delivery />
-                <Categories setLoading={setLoading} />
-                <Bestdeals />
-                <Topproducts setLoading={setLoading} />
-              </>
-            )}
-          </div>
-        </Spin>
+              <Delivery />
+              <Categories setLoading={setLoading} />
+              <Bestdeals />
+              <Topproducts setLoading={setLoading} />
+            </>
+          )}
+        </div>
+        {/* </Spin> */}
       </main>
     </>
   );

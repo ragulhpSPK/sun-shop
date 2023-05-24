@@ -13,21 +13,23 @@ import { get, set } from "lodash";
 import { Spin } from "antd";
 // import Home from "../pages/index"
 import { useRouter } from "next/router";
+import { showLoader, hideLoader } from "@/redux/loadingSlice";
+import { useDispatch } from "react-redux";
 
 export default function Swipper({ setLoading }) {
+  const dispatch = useDispatch();
   const [banner, setBanner] = useState([]);
-
   const router = useRouter();
 
   const fetchData = async () => {
     try {
-      setLoading(true);
+      dispatch(showLoader());
       const result = await getAllBanner();
       setBanner(get(result, "data.data"));
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false);
+      dispatch(hideLoader());
     }
   };
 
