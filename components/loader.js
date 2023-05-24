@@ -6,7 +6,7 @@ const Loader = () => {
   console.log(isLoading);
 
   if (!isLoading) {
-    return null; // Render nothing if not loading
+    return null;
   }
 
   return (
